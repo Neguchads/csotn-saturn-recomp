@@ -13,12 +13,14 @@ teste aprovado. Actions usa apenas runners padrão em repositório público, sem
 Dependabot verifica pip, uv e Actions às segundas, 06:00 de São Paulo. PRs de dependências passam pelo
 mesmo workflow dos demais PRs; atualizações não recebem merge automático.
 
-Bootstrap do GitHub criou apenas README/base main; importação trabalha em codex/import-project.
+Bootstrap do GitHub criou apenas README/base main; o PR1 contém a importação e sua integração de CI.
 PR, revisão e limites dos gates ficam explícitos. Não apresentar a importação como release jogável.
 
 O revisor Codex está em `.codex/agents/feature-dev-code-reviewer.toml`, com o nome exato
 `feature-dev:code-reviewer`. Uma sessão nova precisa carregar o catálogo; sessões abertas não ganham
-o papel retroativamente. Uma revisão inconclusiva mantém o PR aberto.
+o papel retroativamente. Uma revisão inconclusiva mantém o PR aberto até decisão explícita do usuário.
+No PR1, o usuário autorizou o merge após conhecer a revisão integral inconclusiva;
+a aprovação da configuração de CI continua sendo uma revisão de escopo separado.
 
 Conferência local da integração (PowerShell):
 

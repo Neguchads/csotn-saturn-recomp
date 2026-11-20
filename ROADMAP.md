@@ -6,11 +6,14 @@
 - Correções offline de overlays, salvamento, DMA e divisão; compositor GPU D3D12/Vulkan.
 - Separação explícita de mídia, saves e tabela privada de mapa.
 - Comandos locais de teste sem janela e registro separado de gameplay.
+- Snapshot público validado localmente: código, runtime nativo, host SDL e GPU offscreen.
+- CI de PRs aprovado em Python 3.11/3.13, runtime Release e publicação/segredos.
+- Dependabot pip/uv/Actions e revisor Codex configurados; alertas de segurança ativos.
 
 ## Em andamento
 
-- Validar o snapshot público sem dependências dos arquivos privados.
-- Revisar seleção, segredos, licenças e documentação antes de enviar alterações.
+- Manter a seleção pública sincronizada com as futuras correções locais.
+- Completar a revisão estática integral da importação; o usuário autorizou o merge com esse limite registrado.
 
 ## Planejado
 

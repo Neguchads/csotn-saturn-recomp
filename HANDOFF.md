@@ -12,3 +12,13 @@ Gere sotn_map_markers.local.h conforme docs/SETUP.md. Não publicar o resultado.
 
 Próximo trabalho: seguir ROADMAP.md e conferir docs/VALIDATION.md. Não abrir jogo ou janela por rotina.
 Campanha é manual; manter saves normais nas salas. Não alegar 100% funcional/60FPS por suíte verde.
+
+Integração de20/11/2026: CI de Python3.11/3.13, runtime Release e publicação/segredos aprovado;
+Dependabot pip/uv/Actions semanal, alertas e atualizações de segurança ativos. A configuração de CI
+foi aprovada pelo subagente feature-dev:code-reviewer. A revisão integral do import ficou inconclusiva;
+o usuário autorizou explicitamente o merge do PR1 após esse limite ser informado.
+
+Conferência dos fontes locais atuais contra o manifesto de exportação: 282 registros sem drift ou
+arquivo ausente. Diferenças públicas são adaptações de caminhos, fixtures e documentação identificadas.
+Os dois arquivos SoftFloat sem extensão foram acrescentados no build do export; marcadores privados
+continuam excluídos. Mudanças futuras na instalação local precisam de envio explícito para o GitHub.

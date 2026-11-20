@@ -64,3 +64,14 @@ Ela não cobre SDL/Windows, GPU ou campanha. As provas locais anteriores continu
 O papel feature-dev:code-reviewer foi carregado e executado em uma sessão nova do Codex.
 A revisão inicial do import foi inconclusiva por leitura parcial, sem achado confirmado;
 isso não é aprovação. Resultado final da revisão é registrado no PR, sem deduzir aprovação dos testes.
+
+A fatia CI/Dependabot/revisor foi aprovada pelo papel exato, sem achado confirmado, no diff
+351d59c..c8ec6d4. O usuário autorizou o merge do PR1 após conhecer o limite da revisão integral.
+[Actions44785895307](https://github.com/Neguchads/csotn-saturn-recomp/actions/runs/44785895307)
+passou: 13 unittest, 94 testes portáveis e 309 upstream em cada Python3.11/3.13; runtime/CTest2/2;
+actionlint, fronteiras de publicação e Gitleaks. O ajuste final de documentação preserva os fontes testados.
+
+Antes do merge, os 282 registros do manifesto de exportação foram comparados aos fontes privados
+atuais: nenhum fonte alterado desde a exportação e nenhum ausente. As adaptações públicas documentadas
+permanecem distintas dos arquivos privados. Essa conferência confirma a atualização dos fontes selecionados,
+não uma cópia de todos os dados da instalação nem uma certificação do jogo completo.
