@@ -833,7 +833,7 @@
     },
     {
       "path": "engine/uv.lock",
-      "sha256": "d3760764316682dd82fec031c72fc22a9c6c0ba54994ce23d7f8610331407b30"
+      "sha256": "4411b497a60c374e4b8871a74376e86abe351dacc9b75fbb83a59597bc840abd"
     },
     {
       "path": "scripts/check-code.ps1",
@@ -1154,6 +1154,10 @@
     {
       "path": "sotn-experiment/tools/write-crashlog.ps1",
       "sha256": "f8abe2ae96a54ee76337cd5f43fa7e2a776f9a4ab481c25d14060e4900111132"
+    },
+    {
+      "path": "scripts/test_vendor_checkout.py",
+      "sha256": "1a51eac698543dc0359f7edf2d4143e79cba95c737471fb80a9a851472296d01"
     }
   ],
   "excluded": [

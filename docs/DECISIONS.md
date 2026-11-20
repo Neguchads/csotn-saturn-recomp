@@ -31,3 +31,9 @@ Os testes usam dados sintéticos e não removem asserts para esconder essa depen
 Vulkan permanece preferência de Auto com base nas medianas locais; D3D12 continua suportado.
 Não alterar relógios/HD/CPU para prometer60FPS. GPU trabalha sobre snapshots; RAM conserva dados,
 e a lógica com dependências de escrita continua ordenada.
+
+## Dependências em conjunto e checkout FSR — 20/11/2026
+
+Integrar os PRs2–6 em uma branch permite testar pytest9.2.0, uv0.13.9, Pillow13 e Actions7 juntos.
+O teste local revelou CRLF automático nos fontes FSR: fixar LF nesses arquivos preserva os hashes upstream.
+Um teste novo exercita checkout-index real com autocrlf=true; nenhum assert anterior foi alterado.
