@@ -833,7 +833,7 @@
     },
     {
       "path": "engine/uv.lock",
-      "sha256": "e3846376cd208ccbf186ba13c1d48939c1edf391dd55a066ac27b6e8c0cd515e"
+      "sha256": "4411b497a60c374e4b8871a74376e86abe351dacc9b75fbb83a59597bc840abd"
     },
     {
       "path": "scripts/check-code.ps1",
