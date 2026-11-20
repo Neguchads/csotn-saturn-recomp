@@ -1,0 +1,12 @@
+title = "SotN source scan"
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+  [[rules.allowlists]]
+  description = "Comparação de enums de teclado do ImGui upstream v1.92.9b, blob 7fa2d49e8dfa3d676399b4863126ba9ab1609ca6"
+  condition = "AND"
+  paths = ['''^engine/runtime/third_party/imgui/imgui\.cpp$''']
+  regexTarget = "line"
+  regexes = ['''^\s*if \(\((?:k)ey >= ImGuiKey_0 && (?:k)ey <= ImGuiKey_9\) \|\| \((?:k)ey >= ImGuiKey_A && (?:k)ey <= ImGuiKey_Z\) \|\| \((?:k)ey >= ImGuiKey_Keypad0 && (?:k)ey <= ImGuiKey_Keypad9\)\s*$''']

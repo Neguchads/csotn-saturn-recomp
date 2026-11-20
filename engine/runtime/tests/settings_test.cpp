@@ -1,0 +1,133 @@
+// The player's settings: defaults, a file over them, values that do not read, and the write.
+#include "settings.h"
+#include "test.h"
+#include <filesystem>
+#include <string>
+#include <vector>
+
+TEST(settings_default_to_the_documented_file) {
+    Settings s;
+    CHECK_EQ(s.number("display", "scale"), 3);
+    CHECK_EQ(s.flag("display", "fullscreen"), false);
+    CHECK_EQ(s.get("keyboard", "start") == "Return", true);
+    CHECK_EQ(s.get("gamepad", "l") == "leftshoulder", true);
+    CHECK_EQ(s.get("gamepad", "a") == "x", true);
+    CHECK_EQ(s.keys("keyboard").size(), 13);
+}
+
+TEST(a_file_sets_what_it_names_and_leaves_the_rest) {
+    Settings s;
+    std::vector<std::string> problems;
+    s.read("[display]\nscale = 2\n; a comment\n[keyboard]\na = Space, J\n", problems);
+    CHECK_EQ(problems.size(), 0);
+    CHECK_EQ(s.number("display", "scale"), 2);
+    CHECK_EQ(s.get("keyboard", "a") == "Space, J", true);
+    CHECK_EQ(s.get("keyboard", "b") == "X", true);
+}
+
+TEST(values_that_do_not_read_keep_their_default) {
+    Settings s;
+    std::vector<std::string> problems;
+    s.read("[display]\nscale = 40\nfullscreen = yes\nsize = 2\n[sound]\nvolume = 5\nnonsense\n", problems);
+    CHECK_EQ(problems.size(), 5);
+    CHECK_EQ(s.number("display", "scale"), 3);
+    CHECK_EQ(s.flag("display", "fullscreen"), false);
+    CHECK_EQ(problems[0].find("line 2") != std::string::npos, true);
+}
+
+TEST(one_models_gamepad_section_starts_from_the_gamepad_defaults) {
+    Settings s;
+    std::vector<std::string> problems;
+    s.read("[gamepad 0300abcd]\na = b\nstick = 30\n", problems);
+    CHECK_EQ(problems.size(), 0);
+    CHECK_EQ(s.has_section("gamepad 0300abcd"), true);
+    CHECK_EQ(s.get("gamepad 0300abcd", "a") == "b", true);
+    CHECK_EQ(s.get("gamepad 0300abcd", "c") == "b", true);
+    CHECK_EQ(s.number("gamepad 0300abcd", "stick"), 30);
+    CHECK_EQ(s.get("gamepad", "a") == "x", true);
+}
+
+TEST(changed_settings_are_written_over_the_players_file) {
+    Settings s;
+    std::vector<std::string> problems;
+    std::string file = "; mine\n[display]\nscale = 2\n\n[keyboard]\na = Space\n";
+    s.read(file, problems);
+    s.set("display", "scale", "4");
+    s.set("display", "fullscreen", "true");
+    s.set("launcher", "multitap", "2");
+    s.set("gamepad 0300abcd", "a", "b");
+    std::string out = s.write_over(file);
+    CHECK_EQ(out == "; mine\n[display]\nscale = 4\nfullscreen = true\n\n[keyboard]\na = Space\n"
+                    "\n[gamepad 0300abcd]\na = b\n\n[launcher]\nmultitap = 2\n", true);
+    Settings back;
+    back.read(out, problems);
+    CHECK_EQ(problems.size(), 0);
+    CHECK_EQ(back.number("display", "scale"), 4);
+    CHECK_EQ(back.get("gamepad 0300abcd", "c") == "b", true);
+    CHECK_EQ(Settings().write_over(Settings::default_text()) == Settings::default_text(), true);
+}
+
+TEST(the_first_default_gamepad_layout_becomes_the_current_one) {
+    std::string first = "; mine\n[gamepad]\nup = dpup\ndown = dpdown\nleft = dpleft\nright = dpright\nstart = start\n"
+                        "a = a\nb = b\nc = rightshoulder\nx = x\ny = y\nz = leftshoulder\nl = lefttrigger\nr = righttrigger\n"
+                        "stick = 30\n";
+    Settings s;
+    std::vector<std::string> problems;
+    s.read(settings_upgrade(first), problems);
+    CHECK_EQ(problems.size(), 0);
+    for (const char* key : {"a", "b", "c", "x", "y", "z", "l", "r"})
+        CHECK_EQ(s.get("gamepad", key) == Settings().get("gamepad", key), true);
+    CHECK_EQ(s.number("gamepad", "stick"), 30);
+    std::string mine = "[gamepad]\na = a\nb = b\nc = rightshoulder\n";
+    CHECK_EQ(settings_upgrade(mine) == mine, true);
+    CHECK_EQ(settings_upgrade(Settings::default_text()) == Settings::default_text(), true);
+}
+
+TEST(settings_are_written_whole_and_read_back) {
+    namespace fs = std::filesystem;
+    fs::path dir = fs::temp_directory_path() / "saturn-settings-test";
+    fs::remove_all(dir);
+    std::string path = (dir / "nested" / "settings.ini").string();
+    CHECK_EQ(settings_store(path, Settings::default_text()), true);
+    CHECK_EQ(fs::exists(path + ".new"), false);
+    bool found = false;
+    std::string text = settings_load(path, found);
+    CHECK_EQ(found, true);
+    Settings s;
+    std::vector<std::string> problems;
+    s.read(text, problems);
+    CHECK_EQ(problems.size(), 0);
+    settings_load((dir / "missing.ini").string(), found);
+    CHECK_EQ(found, false);
+    fs::remove_all(dir);
+}
+
+TEST(the_touch_settings_take_only_their_words) {
+    Settings s;
+    std::vector<std::string> problems;
+    s.read("[touch]\ncontrols = on\nstyle = purple\n", problems);
+    CHECK_EQ(problems.size(), 1);
+    CHECK_EQ(s.get("touch", "controls") == "on", true);
+    CHECK_EQ(s.get("touch", "style") == "western", true);
+}
+
+TEST(a_touch_setting_changes_in_place_and_the_comments_stay) {
+    auto with = [](const std::string& text, const char* key, const char* value) {
+        Settings s;
+        std::vector<std::string> problems;
+        s.read(text, problems);
+        s.set("touch", key, value);
+        return s.write_over(text);
+    };
+    std::string text = "; mine\n[display]\nscale = 2\n[touch]\n; a note\ncontrols = auto\n[audio]\nvolume = 50\n";
+    CHECK_EQ(with(text, "controls", "off") ==
+                 "; mine\n[display]\nscale = 2\n[touch]\n; a note\ncontrols = off\n[audio]\nvolume = 50\n", true);
+    CHECK_EQ(with(text, "style", "japanese") ==
+                 "; mine\n[display]\nscale = 2\n[touch]\n; a note\ncontrols = auto\nstyle = japanese\n[audio]\nvolume = 50\n", true);
+    CHECK_EQ(with("[display]\nscale = 2\n", "style", "japanese") == "[display]\nscale = 2\n\n[touch]\nstyle = japanese\n", true);
+    Settings s;
+    std::vector<std::string> problems;
+    s.read(with(Settings::default_text(), "controls", "on"), problems);
+    CHECK_EQ(problems.size(), 0);
+    CHECK_EQ(s.get("touch", "controls") == "on", true);
+}

@@ -1,0 +1,192 @@
+// saturn-recomp runtime — the raster timing that drives the frame, and the video
+// and sound chips' place on the bus (the sound side is sound.cpp's).
+//
+// Timing is NTSC: 263 lines at 59.826 Hz, whatever the disc's area (TVSTAT's
+// PAL bit reads 0). Each line reached runs the SCU's timer 0 compare and
+// raises HBlank-IN; line 0 raises VBlank-OUT, the first line after the
+// display (224, or 240 with TVMD's VRESO 1; 224 too for VRESO 2, PAL's 256
+// lines, which a 60 Hz raster has no room for) VBlank-IN. At VBlank-IN the
+// field that has ended is composed (vdp2.cpp) when a window or a picture
+// file wants it; at VBlank-OUT VDP1 erases and changes frame (vdp1.cpp).
+//
+// VDP1 is vdp1.cpp, VDP2's picture vdp2.cpp; VDP2's registers, VRAM and
+// colour RAM keep what is written.
+#include "saturn.h"
+#include "state.h"
+#include "video.h"
+#include "video_perf.h"
+#include <filesystem>
+#include <fstream>
+#include "host.h"
+#include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <string>
+#include <vector>
+
+// A line is 1708 cycles of φ at the master clock over 65 (1820 over 61 in 352-dot mode, the same
+// time), as Mednafen counts it.
+static const uint64_t kLineNs = 63556;
+static const int kLines = 263;
+static uint64_t g_line_abs;                      // raster lines since power-on
+static uint64_t g_vblanks;
+static Frame g_frame;
+
+uint64_t sat_vblanks() { return g_vblanks; }
+uint64_t video_frame_changes() { return vdp1_frame_changes(); }
+uint64_t video_frame_ns() { return kLineNs * kLines; }
+uint64_t video_draws() { return vdp1_draws(); }
+
+static uint16_t reg16(const uint8_t* r, uint32_t o) { return (uint16_t)(r[o] << 8 | r[o + 1]); }
+static void set16(uint8_t* r, uint32_t o, uint16_t v) { r[o] = v >> 8; r[o + 1] = (uint8_t)v; }
+
+void video_init() {
+    if (g_cfg.video_profile) VideoPerf::set_enabled(true, sat_vblanks());
+    vdp2_reset_fetch();
+    vdp1_init();
+    if (!host_open()) {                         // the host has said why
+        std::fprintf(stderr, "saturn: no window could be opened; --headless runs without one\n");
+        std::exit(3);
+    }
+}
+
+void video_reboot() { std::memset(g_vdp2_regs, 0, sizeof g_vdp2_regs); vdp2_reset_fetch(); }
+
+static int display_lines() {
+    int vreso = reg16(g_vdp2_regs, 0x00) >> 4 & 3;
+    return vreso == 1 ? 240 : 224;
+}
+
+static bool listed(const std::string& list, const std::string& item) {
+    return !list.empty() && ("," + list + ",").find("," + item + ",") != std::string::npos;
+}
+
+// --dump: VDP1 VRAM, its draw framebuffer, VDP1's registers, VDP2 VRAM, CRAM and VDP2's registers, one after the other
+static void dump(const char* prefix, uint64_t n) {
+    char path[512];
+    std::snprintf(path, sizeof path, "%s/dump-%s%llu.bin", g_cfg.out.c_str(), prefix, (unsigned long long)n);
+    FILE* f = std::fopen(path, "wb");
+    if (!f) return;
+    vdp1_dump(f);
+    std::fwrite(g_vdp2_vram, 1, sizeof g_vdp2_vram, f);
+    std::fwrite(g_vdp2_cram, 1, sizeof g_vdp2_cram, f);
+    std::fwrite(g_vdp2_regs, 1, sizeof g_vdp2_regs, f);
+    std::fclose(f);
+}
+
+// Pacote gráfico offline: inclui ambos os framebuffers e a cópia interlace VDP1.
+// Não contém CPU, WRAM, backup ou lógica para continuar uma partida.
+bool video_capture_graphics(const std::string& path) {
+    State vdp1, vdp2;
+    vdp1_state(vdp1); vdp2_state(vdp2);
+    const uint64_t size1 = vdp1.data.size(), size2 = vdp2.data.size();
+    const std::filesystem::path output(std::u8string(path.begin(), path.end()));
+    std::ofstream stream(output, std::ios::binary);
+    if (!stream) return false;
+    stream.write("SOTNVDP1", 8);
+    stream.write(reinterpret_cast<const char*>(&size1), 8);
+    stream.write(reinterpret_cast<const char*>(&size2), 8);
+    stream.write(reinterpret_cast<const char*>(vdp1.data.data()), std::streamsize(size1));
+    stream.write(reinterpret_cast<const char*>(vdp2.data.data()), std::streamsize(size2));
+    stream.close();
+    return bool(stream);
+}
+
+static void vblank_in(uint64_t now) {
+    VideoPerf::mark_vblank();
+    ++g_vblanks;
+    std::string n = std::to_string(g_vblanks);
+    if (listed(g_cfg.dump, n)) dump("", g_vblanks);
+    bool shot = listed(g_cfg.shots, n);
+    bool compose = shot || host_wants_frame() || movie_on();
+    if (vdp1_interp_field(compose) && compose) {
+        uint8_t saved[0x30];
+        std::copy(g_vdp2_regs + 0x70, g_vdp2_regs + 0xA0, saved);
+        vdp1_interp_scroll(g_vdp2_regs + 0x70);
+        {
+            VideoPerf::Scope profile(VideoPerf::Stage::Vdp2);
+            if (!host_vdp2_gpu_compose(g_frame)) vdp2_compose(g_frame);
+        }
+        std::copy(saved, saved + 0x30, g_vdp2_regs + 0x70);
+        if (shot) write_png(g_cfg.out + "/shot-" + n + ".png", g_frame);
+        movie_frame(g_frame);
+        host_present(g_frame);
+    } else if (compose) {
+        {
+            VideoPerf::Scope profile(VideoPerf::Stage::Vdp2);
+            if (!host_vdp2_gpu_compose(g_frame)) vdp2_compose(g_frame);
+        }
+        if (shot) write_png(g_cfg.out + "/shot-" + n + ".png", g_frame);
+        movie_frame(g_frame);
+        host_present(g_frame);
+    }
+    scu_raise(IRQ_VBLANK_IN);
+    scu_frame_event(0);
+    host_pace(now);
+}
+
+uint64_t video_next_blanking_line(uint64_t now) {
+    uint64_t m = now / kLineNs + 1;
+    if (m % kLines > 1) m += kLines - m % kLines;      // on to the next line 0
+    return m * kLineNs;
+}
+
+void video_tick(uint64_t now) {
+    uint64_t target = now / kLineNs;
+    while (g_line_abs < target) {
+        ++g_line_abs;
+        int line = (int)(g_line_abs % kLines);
+        if (line == 0) { scu_raise(IRQ_VBLANK_OUT); scu_frame_event(1); }
+        if (line == 1) vdp1_vblank_out();       // the first HBlank after VBlank-OUT, as Mednafen decides
+        if (line == display_lines()) vblank_in(g_line_abs * kLineNs);
+        scu_raise(IRQ_HBLANK_IN);
+        scu_line(line);
+        if (line == 0) break;                   // VBlank-OUT's handler runs before line 1 comes
+    }
+    vdp1_tick(now);
+}
+
+// ---- the bus -------------------------------------------------------------------------
+bool video_owns(uint32_t a) {
+    return (a >= 0x05A00000u && a < 0x05B01000u) || (a >= 0x05C00000u && a < 0x05D00020u) ||
+           (a >= 0x05E00000u && a < 0x05F80200u);
+}
+
+static uint8_t* area(uint32_t a, uint32_t& off) {
+    if (a < 0x05C80000u) { off = a & 0x7FFFF; return g_vdp1_vram; }
+    if (a < 0x05E00000u) return nullptr;                  // VDP1's framebuffer and registers
+    if (a < 0x05F00000u) { off = a & 0x7FFFF; return g_vdp2_vram; }
+    if (a < 0x05F80000u) { off = a & 0xFFF; return g_vdp2_cram; }
+    return nullptr;
+}
+
+uint32_t video_read(uint32_t a, int size) {
+    if (a < 0x05B01000u) return sound_read(a, size);
+    uint32_t off;
+    if (uint8_t* p = area(a, off)) return mem_rd(p, off, size);
+    if (a < 0x05D00000u) return vdp1_fb_read(a & 0x3FFFF, size);
+    if (a < 0x05D00020u) return vdp1_reg_read(a & 0x1F, size);
+    off = a & 0x1FF;
+    if (off == 0x04 || off == 0x08 || off == 0x0A) {   // TVSTAT, HCNT, VCNT: from the raster
+        int line = (int)(g_line_abs % kLines);
+        // HBLANK: the last sixth of every line (about 10.9 of NTSC's 63.6 us)
+        const uint64_t line_ns = kLineNs;
+        bool hblank = sat_now() % line_ns >= line_ns - line_ns / 6;
+        uint16_t tvstat = (uint16_t)((line >= display_lines() ? 8 : 0) | (hblank ? 4 : 0) | ((g_vblanks & 1) ? 2 : 0));
+        set16(g_vdp2_regs, 0x04, tvstat);
+        set16(g_vdp2_regs, 0x0A, (uint16_t)line);
+    }
+    return mem_rd(g_vdp2_regs, off, size);
+}
+
+void video_write(uint32_t a, uint32_t v, int size) {
+    if (a < 0x05B01000u) { sound_write(a, v, size); return; }
+    uint32_t off;
+    if (uint8_t* p = area(a, off)) { mem_wr(p, off, v, size); return; }
+    if (a < 0x05D00000u) { vdp1_fb_write(a & 0x3FFFF, v, size); return; }
+    if (a < 0x05D00020u) { vdp1_reg_write(a & 0x1F, v, size); return; }
+    mem_wr(g_vdp2_regs, a & 0x1FF, v, size);
+}
+
+void video_state(State& s) { s(g_line_abs), s(g_vblanks); }

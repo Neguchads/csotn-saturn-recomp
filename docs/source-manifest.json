@@ -1,0 +1,1175 @@
+{
+  "engine_upstream": "https://github.com/callumjenkins/saturn-recomp",
+  "engine_revision": "f20de940e8013fc84103a5b39c4069ed8071b1f9",
+  "runtime_candidate": "audit-20261026 / build2870742E",
+  "files": [
+    {
+      "path": "engine/LICENSE",
+      "sha256": "20f1e425fdc43998a56853d780523461e688fe617fd7b80ccc37f1cc13017c8a"
+    },
+    {
+      "path": "engine/pyproject.toml",
+      "sha256": "01cfe4797e42c5403d2c987301048ee9af4fa7ff22c9a6bc1af62b0ef78f16db"
+    },
+    {
+      "path": "engine/README.md",
+      "sha256": "cb7776466e285dc8bd79ed060a6096f24c1f2322da2f203c1e114c878b7dd366"
+    },
+    {
+      "path": "engine/runtime/embed.cmake",
+      "sha256": "645156a3ef4f98772bf27a4b82f4cc1b0c6169d7087543c918f52eb41b69a231"
+    },
+    {
+      "path": "engine/runtime/include/saturn/sh2.h",
+      "sha256": "340735b31d8b076daa17aec152dc606799f0645a4f9493744a4f6976d094fca4"
+    },
+    {
+      "path": "engine/runtime/runtime.cmake",
+      "sha256": "0887fd9dc937097c7a472446dd57c1562d0277efc1299913b4936c2db826cf47"
+    },
+    {
+      "path": "engine/runtime/src/app/main.cpp",
+      "sha256": "d34b1a06cbd11bf7572a921df2f3e45d7bc9df43b3db4d19cae7aec504ee5e81"
+    },
+    {
+      "path": "engine/runtime/src/app/selftest.cpp",
+      "sha256": "e35855b8a2551b8060691e5a8f4d85673e7970a83f92cadbf24b9cb9137f810f"
+    },
+    {
+      "path": "engine/runtime/src/core/core.cpp",
+      "sha256": "15ebf9a614d4dbb344beceda83bccabda50e032361c11057d2c24b915cbf730d"
+    },
+    {
+      "path": "engine/runtime/src/host/host.cpp",
+      "sha256": "11fa19b3647258f27160532ebfa33ac3d60bf2b0b1f8e450ef0522118782598b"
+    },
+    {
+      "path": "engine/runtime/src/host/host.h",
+      "sha256": "3b32803c1328b3fd3aaf077b226e6d7aab109038079bf60a540638a38f32cec4"
+    },
+    {
+      "path": "engine/runtime/src/host/host_null.cpp",
+      "sha256": "bf7173a093ae4c04a51b14cdad880b2ce61c195f28219e9af396545db3833398"
+    },
+    {
+      "path": "engine/runtime/src/host/host_sdl.h",
+      "sha256": "89b620575f70c6ea5132ba20f3694c6941696cdc15bd19758b0287afa272ae03"
+    },
+    {
+      "path": "engine/runtime/src/host/launcher.cpp",
+      "sha256": "9c9073a51aecea79c813b66892c2089bbee702c8dcad6fc9f992b7e91742d0fc"
+    },
+    {
+      "path": "engine/runtime/src/host/pace.h",
+      "sha256": "87212988cf6fcc5b37738cad1e40a8d31ea5b1835599e8b9de03854785db9ec8"
+    },
+    {
+      "path": "engine/runtime/src/host/pad_slots.h",
+      "sha256": "b8e0633005e6e5b3347c21be30ce81f5c1c96d6b8a02ad9e3d12b9824b1cc6ea"
+    },
+    {
+      "path": "engine/runtime/src/host/settings.cpp",
+      "sha256": "bb15f5c9b6afa364e272b896025f60070598c073dd42c03aec120089d921a303"
+    },
+    {
+      "path": "engine/runtime/src/host/settings.h",
+      "sha256": "5a58d81a0f22626fbfeab6d4e1db380b0f7c0f6f51d7cf6681a5c67a4aefaebb"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_bug_report.h",
+      "sha256": "0e280c000f4800cfcf6d76e70da3ed51501c50141f7cdd8d932f1dba56049eda"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_dev_input.h",
+      "sha256": "3ef14e790e10ee0322e4cfeff23589a681e45974bb48fba10a5524059bf11211"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_dev_layout.h",
+      "sha256": "5d2068b15497119e420cce5316488920571ecfe58353649811cee62c706d3f29"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_dev_report.h",
+      "sha256": "629f1d9bf1dc5ad902fdbeb04fe98a1c90ee5e9b28a3ebad58a39e2b539640ce"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_dev_speed.h",
+      "sha256": "acd9d223a6da921bc5909ec88a2eb5d4fc9b6695d4b711b13ef486ee2ed7ef59"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_fsr.h",
+      "sha256": "abb6d149c43fe0092cba80a002e43cdf90e56e886b7090a224ce19ee897382a1"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_fsr.hlsl",
+      "sha256": "2e9cb79794fc80b0cecd5f8fe8320d5a48d8772e07785c037a1b05fb937afbb4"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_fsr_dxil.h",
+      "sha256": "5bbff92dff823c1fe971e9f5a9984789df6c2ea0a7bf52a507cc21711c0420ad"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_fsr_spirv.h",
+      "sha256": "f961479548fb903cfa0b7d24bfae160391f497af4b74e91a67fa465708bb7e93"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_gpu_shader.h",
+      "sha256": "7dbcb4f94e2a64e0a78a27e4e14a461ed965876218b47e60d29270d59c4a0912"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_gpu_shader.hlsl",
+      "sha256": "d6116f1b58feb3c86a9b0d85784a0aa166014015a3c545dbd32db8dd47c19a8a"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_gpu_shader_dxil.h",
+      "sha256": "6c4789bf5c719817a43632b27a7c3dd3af6e4a94cb8981ba48fc518c38533fb5"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_gpu_shader_spirv.h",
+      "sha256": "31569f66270c0358344b41b063a3b4ef9ac53e0b9640ac95c6da3acbad57447c"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_hd_scaler.h",
+      "sha256": "04efef6028e67836b3c1027ace1d1f559c4bce32978bd74e9a433b4490dc37b6"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_map_markers.h",
+      "sha256": "aa9e2db4f915bf8c4902ac30e195239f3357156fbf22f0e5031684e0cc746e3a"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_map_overlay.h",
+      "sha256": "c178c4c84812fb32128bb7759316a24ed90d8902561add9577c17a6b62e75060"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_report_layout.h",
+      "sha256": "42d51e23923e142aeb561b0628a966c3fa6c2a7385a42526e292d2dd72d6d765"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_vdp2_compute.hlsl",
+      "sha256": "1e88519758bd3a70b669228372f37217c932a440b3831e2673c4c55603b48f41"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_vdp2_dxil.h",
+      "sha256": "b7bd4f370b80e45a7ddca79cc113be987533c97ae218b365cc939c0deff116d8"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_vdp2_gpu.h",
+      "sha256": "fba467242f8d0290608bd5cd168bfe15d94c0de3e9ad15f8ac58fde05a358daf"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_vdp2_spirv.h",
+      "sha256": "26aea1e331df41d3a3c6f456894b3b3ac6522c2f9324ad96911ccacf33d03eda"
+    },
+    {
+      "path": "engine/runtime/src/host/sotn_video.h",
+      "sha256": "3add3f1520fab0b95543a5471a5d3abfd93cb30943adc910324a050afb08a74f"
+    },
+    {
+      "path": "engine/runtime/src/host/touch_pad.h",
+      "sha256": "717fade14ec472ca0a8e52503841b029c30690031ac6c5f895766b97ca512cf6"
+    },
+    {
+      "path": "engine/runtime/src/host/ui.cpp",
+      "sha256": "454806afad1ced9bc7db43b995ef582c532986b9d72f171410e0e72f677b11a9"
+    },
+    {
+      "path": "engine/runtime/src/host/ui.h",
+      "sha256": "07e94313a8b2d4aeb7832c58442813f240e81e217725797d099531d280b7ee83"
+    },
+    {
+      "path": "engine/runtime/src/host/uinput_pad.cpp",
+      "sha256": "ef63f2c02f47cd6b0d5209b741043dec78a4fdc9803cdc03d496e9feed4acb18"
+    },
+    {
+      "path": "engine/runtime/src/host/uinput_pad.h",
+      "sha256": "c3451e93355bda8f443f85327d92bd3a4d6e74a763e279bf045b95bd16a36196"
+    },
+    {
+      "path": "engine/runtime/src/host/unplugs.h",
+      "sha256": "bd18e1e2acc093d5e05e230dfe2e81a39c9783145fc554f387abc5b11d56b847"
+    },
+    {
+      "path": "engine/runtime/src/host/windows/saturn.manifest",
+      "sha256": "bf9c399a748c41c0e8d9573eadf0cb5466c7b6b61edd58a7de8c198f204a9d5f"
+    },
+    {
+      "path": "engine/runtime/src/machine/agent.cpp",
+      "sha256": "90ba94f62a1ef4c946aa341cead435a006ad944a18cff190d6ddc8361ff1712e"
+    },
+    {
+      "path": "engine/runtime/src/machine/bios.cpp",
+      "sha256": "ab5783d90f587cc54e42b45c74d4b21fd880b75ee823472adfd785dfc5f79ce1"
+    },
+    {
+      "path": "engine/runtime/src/machine/cdblock.cpp",
+      "sha256": "37c30b4543e67fe26379723467c27abe8b3e607050e4ac92fd64ebc0dbae5175"
+    },
+    {
+      "path": "engine/runtime/src/machine/cdrom.cpp",
+      "sha256": "78ea47ac9084db8f0d2aab9d72bee6266f9f08b3a9ef5cab0cdcd85974e3a308"
+    },
+    {
+      "path": "engine/runtime/src/machine/machine.cpp",
+      "sha256": "54e2ef957bcd8bbcf2a7bf43f35449736ef3e3a82b613145d91cc3d60bbf7b8a"
+    },
+    {
+      "path": "engine/runtime/src/machine/mmio.cpp",
+      "sha256": "18b281a9d00543c08665de40177f472417f25559a68b7d51bd2279b96e1327af"
+    },
+    {
+      "path": "engine/runtime/src/machine/modem.cpp",
+      "sha256": "356388f29963ee7fcaec75ec17893cf10172dfb05c135c719acc308d7a1e266a"
+    },
+    {
+      "path": "engine/runtime/src/machine/modem.h",
+      "sha256": "7655140ef16d6a8ce50aa31f577d72bd55531aa7f6540c5eaeb9b79c1936f9fd"
+    },
+    {
+      "path": "engine/runtime/src/machine/modem_tcp.cpp",
+      "sha256": "8e7c7bba6a2504191c26c1a0c99abded38019f01098f940cf2d4c40255fc4e81"
+    },
+    {
+      "path": "engine/runtime/src/machine/onchip.cpp",
+      "sha256": "509de09f64db2fff2f1f2d3fa1ca1f67960b819592e2ccb3732eb2731f86b0f0"
+    },
+    {
+      "path": "engine/runtime/src/machine/saturn.h",
+      "sha256": "661bd898dad0b09c8ad394b4463874a114cbd82d648641cae697d335134080d5"
+    },
+    {
+      "path": "engine/runtime/src/machine/scu.cpp",
+      "sha256": "66afbcdeef61a5a6936310b5eeb332246e79b3fa7c7fdad31dd21a9fc3b76cc9"
+    },
+    {
+      "path": "engine/runtime/src/machine/scudsp.cpp",
+      "sha256": "ec6d470efed30aa5ea81752708aa1305ee2ef84f8d514fd863a897247d586019"
+    },
+    {
+      "path": "engine/runtime/src/machine/smpc.cpp",
+      "sha256": "2d36f809c057b17eab3932a793c4c4c531c07c0adc7f607ec836f148cd600e08"
+    },
+    {
+      "path": "engine/runtime/src/machine/sotn_mods.h",
+      "sha256": "5e41d2a78bc5627cb7e912b41e64e8bba65cf3af417c780045c8d849b8cece9f"
+    },
+    {
+      "path": "engine/runtime/src/machine/sotn_overlay_evidence.h",
+      "sha256": "447f55141de0d2fddb22fded73281a51272f4ec8893af96a552b206d7c780765"
+    },
+    {
+      "path": "engine/runtime/src/machine/sotn_presets.h",
+      "sha256": "90b6a4516a8461a64bb1d3527c0c509b757bd3219fbf02e91dc1f34dab8b90f4"
+    },
+    {
+      "path": "engine/runtime/src/machine/state.cpp",
+      "sha256": "2c97e50db9afb1c6c524aa94b7b5a03298d92d191d2de979fafd487a8038e18d"
+    },
+    {
+      "path": "engine/runtime/src/machine/state.h",
+      "sha256": "cc507e3f6d2810b8edf6eabf821b8705bd69692a28f4325d6ba61cd12dde0c33"
+    },
+    {
+      "path": "engine/runtime/src/machine/tasks.cpp",
+      "sha256": "c27aed90894375b6a6ac771faa2fc83a12516424f4fbd526c7fd59e324516933"
+    },
+    {
+      "path": "engine/runtime/src/sound/m68k_state.c",
+      "sha256": "f4be32d375d9a67778a60f0a4ae1c64d6c320e79918dcfbfad289657e29f2fcb"
+    },
+    {
+      "path": "engine/runtime/src/sound/scsp.cpp",
+      "sha256": "5ecf541b349a00e5394ca3a8160cff67361bc5b7ee10d37d7e3286e46265c446"
+    },
+    {
+      "path": "engine/runtime/src/sound/sound.cpp",
+      "sha256": "de4e2f91a1cc9dba19cc11d7833779236f28599652467f9f4f0ab67294b93cdf"
+    },
+    {
+      "path": "engine/runtime/src/sound/sound.h",
+      "sha256": "86b1d18bc8d40ce2f45941c81d327ed3f7e1367061a2440cc499652ced30fc08"
+    },
+    {
+      "path": "engine/runtime/src/stub/services_stub.cpp",
+      "sha256": "d14c345a8d103284a7381085518ce11d48bb284d78d5e4dbd85ddd504679243b"
+    },
+    {
+      "path": "engine/runtime/src/video/movie.cpp",
+      "sha256": "62f15dcfa47ed63641cb4acc85b7ed6540049657ec1aca9f0cd10ca6e0a88a1d"
+    },
+    {
+      "path": "engine/runtime/src/video/png.cpp",
+      "sha256": "416576b0324d54683ad2a1e201d7f16ca1e36e626989adf2ca62eeb20ac5ef29"
+    },
+    {
+      "path": "engine/runtime/src/video/vdp1.cpp",
+      "sha256": "aa75f231c38ddb07bb255152fc452283631b3acac5da2231a2da3cf5219f5522"
+    },
+    {
+      "path": "engine/runtime/src/video/vdp1_raster.inc",
+      "sha256": "9747325bb73405b6f80f125519004a5971894e6b4901db96e9100efcd1b7dd01"
+    },
+    {
+      "path": "engine/runtime/src/video/vdp1_raster_gpl.inc",
+      "sha256": "eb5647cc0a3d3930d869c6b2962b10a3c222957cba5c6b4e4ec9a72f826a0900"
+    },
+    {
+      "path": "engine/runtime/src/video/vdp2.cpp",
+      "sha256": "f9c3b6c7a397e87e6aac128450e009167240d2348f382f62f7d16d06d9ba6cc2"
+    },
+    {
+      "path": "engine/runtime/src/video/vdp2_gpu_snapshot.h",
+      "sha256": "67ec5c58533bd453e42ded2ee12adb99cba6abe859f47082b406fb0b93af918a"
+    },
+    {
+      "path": "engine/runtime/src/video/video.cpp",
+      "sha256": "0bbaa59f549e8c94671f15e96a3a3383dda0954ef1075a6fcb2412c6090d89fb"
+    },
+    {
+      "path": "engine/runtime/src/video/video.h",
+      "sha256": "fe9dcd5aa711c42cfba4ec476dd40bb1b110d814821ab35c72449fd775fe055b"
+    },
+    {
+      "path": "engine/runtime/src/video/video_perf.h",
+      "sha256": "61ed3db65c8c9da1c2f0ee4395b053eef1a133b08389fa3a81c573b9ddd4000b"
+    },
+    {
+      "path": "engine/runtime/tests/bup_test.cpp",
+      "sha256": "7792c3ad7d8dcfd6c8e3df05b1c5a0b2032a6faa5e9d5a9f8a4c7f2161a19893"
+    },
+    {
+      "path": "engine/runtime/tests/cdblock_test.cpp",
+      "sha256": "8d102395f2bd24fb52a9ea77b8c8118cf410cc4a0bddbdaee477711b50f56151"
+    },
+    {
+      "path": "engine/runtime/tests/cdrom_test.cpp",
+      "sha256": "ecf93e4a34c06ac08e837b12b45d30b1f3ac033bcb37cf808cda97e3684a98c9"
+    },
+    {
+      "path": "engine/runtime/tests/clock_test.cpp",
+      "sha256": "83eb0bf42ef2062dd9b58c479f3df5edd3410bde8ba9729e03cf8d473cd2cce4"
+    },
+    {
+      "path": "engine/runtime/tests/CMakeLists.txt",
+      "sha256": "2710c0e94d30faa266d5ac2ed1663c85cae8985413efc89d741f9a92772c6fd0"
+    },
+    {
+      "path": "engine/runtime/tests/frame_change_test.cpp",
+      "sha256": "ea45ab9925907efa4d5a0a2cf9eabd2c64e95b4839dd61bb481c0b10f0e19eb1"
+    },
+    {
+      "path": "engine/runtime/tests/main.cpp",
+      "sha256": "fc368694e4880386c448d89bd2aae98df19b6510f405e049c91de968d4ab4701"
+    },
+    {
+      "path": "engine/runtime/tests/modem_test.cpp",
+      "sha256": "69600ba6712c685f0aa36fe260f9243aa0bddfbf9cff6791b1584074266ef6d9"
+    },
+    {
+      "path": "engine/runtime/tests/no_modules.cpp",
+      "sha256": "e3c786c0ab4b7ce9fc8466d6c70b1d956d05328cf1df2b8875978f0df7269f52"
+    },
+    {
+      "path": "engine/runtime/tests/onchip_test.cpp",
+      "sha256": "c1ece3f6674312aa266a8050e8cbe9bd8f1c2fa6013ba6bb90d1cf26d78b660c"
+    },
+    {
+      "path": "engine/runtime/tests/pace_test.cpp",
+      "sha256": "1a10bec1ea7059de921ffbf23fa08f62dc0220de77f8377b4a63fa9b43043f90"
+    },
+    {
+      "path": "engine/runtime/tests/pads_test.cpp",
+      "sha256": "82e5739921b64c5074c6e61a3ebfa779db881f4c7531b269078affb214b06d2c"
+    },
+    {
+      "path": "engine/runtime/tests/scsp_test.cpp",
+      "sha256": "574ec8a1c9313f0245fead648f75e82d30fcf3a0ef7c3a7df1452c3c72dbe41c"
+    },
+    {
+      "path": "engine/runtime/tests/scu_test.cpp",
+      "sha256": "41c0ec9d85f1bb255d7aeb2ff233e1f3be54ebdfbe921b9f11a33e7e7452ed00"
+    },
+    {
+      "path": "engine/runtime/tests/settings_test.cpp",
+      "sha256": "a193e7e80e9b1c72787ecfc5c7a67c6c5c457021fa8d06cff05ebc0a80fef470"
+    },
+    {
+      "path": "engine/runtime/tests/tasks_test.cpp",
+      "sha256": "03cc01891b1a1860c1a492c253d47815e5aaeb5d5b432b0265a904eb7457c99e"
+    },
+    {
+      "path": "engine/runtime/tests/test.h",
+      "sha256": "93a0035e4b1fce361a75e716fbd427bfda03d05b63929c42c30b437945a2e3a4"
+    },
+    {
+      "path": "engine/runtime/tests/touch_test.cpp",
+      "sha256": "a993e47f2687d1e6cc02995cc2365de6ce2afbc679edac22b784cede3d612a1e"
+    },
+    {
+      "path": "engine/runtime/tests/vdp1_timing_test.cpp",
+      "sha256": "8e80edd81b89f9bd739784d932227f040043e92bd7567bf14f46ad515f11ff93"
+    },
+    {
+      "path": "engine/runtime/tests/vdp2_gpu_compare.cpp",
+      "sha256": "c3209e78f19a3f59cb5d78f30172f313157c77824d2a39f7253f366b6015a4fd"
+    },
+    {
+      "path": "engine/runtime/tests/vdp2_gpu_test.cpp",
+      "sha256": "39dc73143d8474fa8e20bf2ff72406f20cbd8d18db6e9d91b3b7b3dfb5a91cde"
+    },
+    {
+      "path": "engine/runtime/tests/vdp2_test.cpp",
+      "sha256": "dc13ce0c9547e8ca18c9a63e510b5df30d787bf21326823970bd6fc2c516fcdf"
+    },
+    {
+      "path": "engine/runtime/tests/video_capture_test.cpp",
+      "sha256": "93464a404ceb87b50d437ef686e3d082fe0e8655997ff7f1ef9f8a0198be045b"
+    },
+    {
+      "path": "engine/runtime/tests/video_perf_test.cpp",
+      "sha256": "9d887c714fe52e75f1ec56c27a995eca3437750f9a0cef35598e72e3dc33cb95"
+    },
+    {
+      "path": "engine/runtime/third_party/fsr1/ffx_a.h",
+      "sha256": "f60e2722fcd13989523b9164d776ab382b3692791767f3bf8bb19967f763f3fb"
+    },
+    {
+      "path": "engine/runtime/third_party/fsr1/ffx_fsr1.h",
+      "sha256": "93c3922362ea7fc99cbcc698ca30c98de4f8c246d1fbb0b09e015ddef38ce3a5"
+    },
+    {
+      "path": "engine/runtime/third_party/fsr1/LICENSE",
+      "sha256": "db089274ce766da70f5b7d791029c3486f9f9e27c8c79c652689603d3192e802"
+    },
+    {
+      "path": "engine/runtime/third_party/fsr1/manifest.json",
+      "sha256": "21f0041d72511bc17393494f459f434219ef9f486324dbd73206a22dbad0b2ac"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdl3.cpp",
+      "sha256": "76c9f8afc82b9118e6433261a9e923304a075dfb95f2b1c8a33e4dcc17aa6bb5"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdl3.h",
+      "sha256": "1a7fbbc41af9c093da895ee2f48c5fcee0350303c18e4ab6ce7d3f265ef42b29"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdlrenderer3.cpp",
+      "sha256": "e4a0e5c88def2032f87a4acf6da12363809831ffb23dbf9993fd093bf7e120d6"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdlrenderer3.h",
+      "sha256": "3a21ac3d29044de2397b69e70651a71624b0b57b472fb85346845f85f0e734b2"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imconfig.h",
+      "sha256": "58ca417d54cc576fb89e69b24880b9d2ad4b380b2acdb149386c417ff36d7cdc"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui.cpp",
+      "sha256": "01cd8afb847fe33f6d3386eca9fa057bb87783364bf3bd13b0fc582d1f3fb5ff"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui.h",
+      "sha256": "9e172dc5b03d5b6a7795ddd24faae0912641f0a92c1c8b1d5423f35fad1b927a"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_draw.cpp",
+      "sha256": "ce39607b566fac1123cd8089ce34f4a4cbe8c95fa2f78509aff9a7335333c438"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_internal.h",
+      "sha256": "59e92be94d1a1443c68ad65d6c70ae713d234da97926564b45585d01ff40b314"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_tables.cpp",
+      "sha256": "a0e7e3e874abb06da252cb8bf2b7ac87941aa176eeec51d9d81335d937851e0c"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_widgets.cpp",
+      "sha256": "1938176e90bb32ed4e3a59ef269239a95a191615bc0251f48ca6e5534e3c9642"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imstb_rectpack.h",
+      "sha256": "7f9bffb8ac5e79d20787fdc20d29d29f7474dca673f64d4a9a8a9f9373e40972"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imstb_textedit.h",
+      "sha256": "24a8db00354af8f4057417841635a1b6dfd8986f1608336fe6f10d6fd9769aaa"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imstb_truetype.h",
+      "sha256": "a4131c7a2e324c0625250830af6976adb5732b453f0fc6e8bc5ad70065bc2b79"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/LICENSE.txt",
+      "sha256": "f20418b409e53c8c9f4e90917ff395554a60320d4dfbf833da89b339cad8628a"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/VERSION.txt",
+      "sha256": "563d1b14a35585b1621c94a6f77eb5e308c949048a055e92ffd1cd3d2007202c"
+    },
+    {
+      "path": "engine/runtime/third_party/inter/Inter-Regular.ttf",
+      "sha256": "89dc9d7fbea042e7f91f16a92b0c2dc5afc75c4b8e54843a942a6b59665c4150"
+    },
+    {
+      "path": "engine/runtime/third_party/inter/Inter-SemiBold.ttf",
+      "sha256": "1e365918ca9df61d56a46fb32e706fda6714ad36ec7253d1a94a5af60bbf391e"
+    },
+    {
+      "path": "engine/runtime/third_party/inter/LICENSE.txt",
+      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+    },
+    {
+      "path": "engine/runtime/third_party/minicoro/minicoro.h",
+      "sha256": "df94a4fc7f71a9be7c7581ad7a872bb8c651ec5897fc46f281eb59fb6ce82f60"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/history.txt",
+      "sha256": "0225deb29d8ceab2727637ed54207b9eec12379d793a17362adec36d6667b6a7"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68k.h",
+      "sha256": "1124004a772eb55887c1cae3c53810b26b58eff4171d75c1ade82868e9786641"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kconf.h",
+      "sha256": "0c82a4a8b27904e276572e28316b843da2df461bd36466f6ddcff719b1934ab0"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kcpu.c",
+      "sha256": "00fa82eee4f3d7ea966eab561a10361681b36b519d8fe8949f1a31f8225cdde1"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kcpu.h",
+      "sha256": "9cba59992d4e3adfcb6ff9c25ae9c8625df991e73e177305b5df4126308519d6"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kdasm.c",
+      "sha256": "97451eb69c2d761e49b6007ebb9fa7caf79e260d8f3baed3cf95a08c38b50451"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kfpu.c",
+      "sha256": "cb03019b2d00974feb023a80691fcee76db59821d6a350abae6f299b9659e972"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kmmu.h",
+      "sha256": "6bb2c4ca4d37acddbf3ab99d87a674e8bf656d3b254b30ddf59af7b71fdfd67b"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kops.c",
+      "sha256": "eb4bb8c9cb12bf10521658f9150d092438623164a11e35c6b46ddc6aa585a3fc"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kops.h",
+      "sha256": "17676951e3eaaebdfd59dc4c4e6d030143ffa693589087be237fd0170c97407e"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/README.md",
+      "sha256": "ff5524e9d94aff8454c60875f5aa58a7200a6f38dfd1c4514f9cacbffcb466d4"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/readme.txt",
+      "sha256": "995597498f5f3f8fa7d1c85ec7cbe290856463c1e1ad5c5757cf07daee76af4e"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/mamesf.h",
+      "sha256": "75bdc490b75389c78abae0de57ca0b4f40c3cd1a8a17d9d9ad63d33e6f05e74c"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/milieu.h",
+      "sha256": "c3af7dd07259773325574bf000bc391fd3b0f50b1ef0a8b66255e0e7d59d8daf"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/README.txt",
+      "sha256": "035ad9d003f77a87a311dc7acddb99cc5a03ced506c2db098e9e4c7435cfaa86"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/softfloat-macros",
+      "sha256": "12f2c8b581c8ab02ba14e4f1e4e7c5ad76ee45e645debf40306db69b927238d0"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/softfloat-specialize",
+      "sha256": "bb06f1a272c951187e6efa0375080ba4ac4b4bf9893d786bfe7b2e82593729ad"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/softfloat.c",
+      "sha256": "774708f04a859d39b800cc91925bf2db141c045aabcb747da23ca483e92fb835"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/softfloat.h",
+      "sha256": "b0be68f69e91cac7edd795de169f089c65911d432403d38076e313845902de80"
+    },
+    {
+      "path": "engine/runtime/third_party/stb/stb_truetype.h",
+      "sha256": "2d119d54c88197764a6494c3c79fb6cdb4bd3e8d6708c82b57cbb508b8a70090"
+    },
+    {
+      "path": "engine/src/saturnrecomp/__init__.py",
+      "sha256": "af7df2c9e577cf01f47e293ff19d2c4ce4031387de88d9b94781ab73e8ea2982"
+    },
+    {
+      "path": "engine/src/saturnrecomp/agent.py",
+      "sha256": "0e1f680497d39e48baeb0840d7adf1dbbdc06f70d23e92275b2b46c78549a9ac"
+    },
+    {
+      "path": "engine/src/saturnrecomp/analysis/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "engine/src/saturnrecomp/analysis/resume.py",
+      "sha256": "0474745d58f0d27ea1dcba27a014920bc075486ec4c6e3a068219a94d1bdeca3"
+    },
+    {
+      "path": "engine/src/saturnrecomp/audio.py",
+      "sha256": "de966a0d2a9b515334adc388daeedfabe993372dc676564bd1d01fd0821e5015"
+    },
+    {
+      "path": "engine/src/saturnrecomp/build.py",
+      "sha256": "2b2c48b2f3761c3e8b91873b0ed914a5d24530d9b060722de34bf716399ed688"
+    },
+    {
+      "path": "engine/src/saturnrecomp/config.py",
+      "sha256": "f2c75a7c406a846dd0152bd0c63494d49ad568ca8436f6789053e7dfa62c2c74"
+    },
+    {
+      "path": "engine/src/saturnrecomp/disc.py",
+      "sha256": "52837d7658ca24acaf9a6ec6f0025fcfdc3fdc14ae0ee350df195451fa6a77a0"
+    },
+    {
+      "path": "engine/src/saturnrecomp/executed.py",
+      "sha256": "4a89148ef02eb00d9e6f6e901ea2397f94b58773430956cbd4d328bfff27cee0"
+    },
+    {
+      "path": "engine/src/saturnrecomp/hw.py",
+      "sha256": "c3eb2a951b209c73da8fda150bd7c31ff375215df067511a5686a6467398a61f"
+    },
+    {
+      "path": "engine/src/saturnrecomp/inventory.py",
+      "sha256": "12ee88bd989a492c933b180d11e1715c383b97556e72e178fddcde9230cd44cf"
+    },
+    {
+      "path": "engine/src/saturnrecomp/learn.py",
+      "sha256": "81954795dba2df32b627a881141436595deb82bd81ad515c5aeb744e87a60ad3"
+    },
+    {
+      "path": "engine/src/saturnrecomp/m68k.py",
+      "sha256": "856e1363b0a45612d71e7431a19f4be75ac9cdfee87a101ad735acf7288aa0a4"
+    },
+    {
+      "path": "engine/src/saturnrecomp/native.py",
+      "sha256": "cf4ac43f3ce2bcb00802224e5307a22800bf44d7e4c9358b303c1feb7c57a171"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/__init__.py",
+      "sha256": "4caa9771ad61fe9d0d0a1bd75ac9abd86df17262afd2caea1959fd6f4654301f"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/__main__.py",
+      "sha256": "ec0359d0c7f149924f57d8bbfaca56385c7906507d262dd2453d171f5c2b65a1"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/coverage.py",
+      "sha256": "9b72cf16b64b5e749dda6deb90268d4562406d6af56cfce01b03d8be05e1045a"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/disc_image.py",
+      "sha256": "e7d71a7783e38794d9435f84d3bbbf86f9c1c88dd2c98088c06a6a49d1064ff8"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/launcher.py",
+      "sha256": "5f0b50dcd99114d21e9d66156f86a28861c229d2764d01e7ee83f3209b3fc62f"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/paths.py",
+      "sha256": "af38f86466d4a469532a3a687d916c3749adddecbf9cdcc7506099bb568d2693"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/review.py",
+      "sha256": "9d5d3be9b32f82ce75e53b235ae8076ae7157699807679edaf6715ef021696eb"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/session.py",
+      "sha256": "4afa08d64be2c2ca389b6bbd04196808cf4c15f3d323cf9c794a9d8c3bec75e0"
+    },
+    {
+      "path": "engine/src/saturnrecomp/playtest/upload.py",
+      "sha256": "b1c1404f6194594ae335551f073711b734610d5972ba9d43e2e37e8cab0f3c9f"
+    },
+    {
+      "path": "engine/src/saturnrecomp/prereqs.py",
+      "sha256": "9ad37fe64d41f15c035ed0d68d0faa5b6c42760e308c3248bfc6df9191a69cc6"
+    },
+    {
+      "path": "engine/src/saturnrecomp/recomp/__init__.py",
+      "sha256": "dbb88eef54bb912e94edf397a103ca4c030edd82b66d23267333e7aa33055f2e"
+    },
+    {
+      "path": "engine/src/saturnrecomp/recomp/__main__.py",
+      "sha256": "53f55a2b4a2091a08346f0fd34bf043c25450dfa9b0adb669bc9ac6988a9d0fc"
+    },
+    {
+      "path": "engine/src/saturnrecomp/recomp/discover.py",
+      "sha256": "11ddb6c94cd465ec5344acf0432760899153c761f937d4b7dbf0d25220599dc8"
+    },
+    {
+      "path": "engine/src/saturnrecomp/recomp/emit.py",
+      "sha256": "852428f78ce24064c654f00d5f8b57b809f5362a1a618a545a8b651e4e7a6049"
+    },
+    {
+      "path": "engine/src/saturnrecomp/recomp/match.py",
+      "sha256": "afa75de538f0cbb96b716edc458a71d24378154b1bd0a58818e4e6c2617c58ba"
+    },
+    {
+      "path": "engine/src/saturnrecomp/recomp/selftest.py",
+      "sha256": "8a644187079f9415e4139f0214cd682a058fc1cb3d576b824f2b23dc5dd1f2cc"
+    },
+    {
+      "path": "engine/src/saturnrecomp/recomp/versions.py",
+      "sha256": "2fa590116530d01ca1c16dfe34614e78b8314e5c1c72d702061dd8658bf1be99"
+    },
+    {
+      "path": "engine/src/saturnrecomp/reference.py",
+      "sha256": "d6b77610520c7adc9b5f3d7035e3e3507850fe4b146ef88aa10c0cb880d1301c"
+    },
+    {
+      "path": "engine/src/saturnrecomp/scudsp.py",
+      "sha256": "75a4823bcb4a00e2c12ff0697a1d036282b285844e5f67475bdf6ced44fb78a4"
+    },
+    {
+      "path": "engine/src/saturnrecomp/sh2.py",
+      "sha256": "80341878b090bfa3a59182fa87c31236102d7d0215395e7d784a0a7d9201f152"
+    },
+    {
+      "path": "engine/src/saturnrecomp/sh2emu.py",
+      "sha256": "d9ac8dd1508e34b53ff58fe12db376bb7d637b7263e0cdc3fe6957884e7de4e6"
+    },
+    {
+      "path": "engine/tests/conftest.py",
+      "sha256": "fc813b57253720929dbd504d7f91d85b06549ace1f09abe45b39ddb8e728f5ed"
+    },
+    {
+      "path": "engine/tests/test_agent.py",
+      "sha256": "917a15670cde7d603fe7f167370a201232dac780ea0a4e48e3a012e752db656c"
+    },
+    {
+      "path": "engine/tests/test_audio.py",
+      "sha256": "a4a32152ecf9477efa47864924dabdbce68ef2ceaec466af021a6f2b9bd68eb4"
+    },
+    {
+      "path": "engine/tests/test_build.py",
+      "sha256": "f532abcd73f9abce7010541e7c712ae3024d67df6b679d9f2d25cc44639a9b9f"
+    },
+    {
+      "path": "engine/tests/test_config.py",
+      "sha256": "15452d432fd1cc91286714ad09a94cd3a8cc5a277da198dd87d3a71a4472086a"
+    },
+    {
+      "path": "engine/tests/test_disc.py",
+      "sha256": "7da17cf65dc526a7941d4a990794f84d0f8b89ee2248f2790c740848fba6300d"
+    },
+    {
+      "path": "engine/tests/test_discover.py",
+      "sha256": "8985c20f823d6b9d15debd8a318c5aa4f4709d734eeab499085f66bf3ea20da3"
+    },
+    {
+      "path": "engine/tests/test_executed.py",
+      "sha256": "e0bc166db8bf7194f3a8d1ea518560a96b38348523b9fb5e89c943bd99c215cf"
+    },
+    {
+      "path": "engine/tests/test_inventory.py",
+      "sha256": "a2afafeea82df62ddef46dd61c3a39f7e6e1a5076c9eee5ba3ba1d6c49b4bfec"
+    },
+    {
+      "path": "engine/tests/test_learn.py",
+      "sha256": "1c477c0c980ae307dde31ae3b757243c7c430020bdeda5ded3364eaa4bace120"
+    },
+    {
+      "path": "engine/tests/test_m68k.py",
+      "sha256": "9adf5995c53bfa22a8982505ec93ea2ae1b610ab076ec7624bf308c1cc62e2c0"
+    },
+    {
+      "path": "engine/tests/test_map.py",
+      "sha256": "3d3869b7a922a09b01c723c07ff88f7b65653a688bd044e91e64af61670354e3"
+    },
+    {
+      "path": "engine/tests/test_native.py",
+      "sha256": "9bfb24665b3dc3eb71c4d78f3b2dce35457481879624e4164d0af65e00df4494"
+    },
+    {
+      "path": "engine/tests/test_playtest.py",
+      "sha256": "e7e94a55cc4368a91446a625b50a4d18273377a114b05d1bc856c77065790b27"
+    },
+    {
+      "path": "engine/tests/test_prereqs.py",
+      "sha256": "3dd500f72769bfeb77004a092cdda583e01a4f8b62009d1835fe9a635498bc27"
+    },
+    {
+      "path": "engine/tests/test_reference.py",
+      "sha256": "07611bfd6e00f0ed81a16faf26d6fe0ca3a9cc3895a9f5ad1a25d3aca02f80fc"
+    },
+    {
+      "path": "engine/tests/test_resume.py",
+      "sha256": "8eed13546205e4a735d5e15914a2a7aa82e183834fd8ab9974bd50b0a4e27d68"
+    },
+    {
+      "path": "engine/tests/test_sh2.py",
+      "sha256": "ee21fbdc30a648c92d60bbb0884e9cd1140d89738848209537154021afd65f18"
+    },
+    {
+      "path": "engine/tests/test_versions.py",
+      "sha256": "a316c0414426b9d755c0dca3e8174c2934569f982a4f3c16f21ccaec760b7bbd"
+    },
+    {
+      "path": "engine/THIRD_PARTY.md",
+      "sha256": "a756d9f755fc67cb2216377d7ac62d1e5fa6014b60bd161f8ac2f2a50888013e"
+    },
+    {
+      "path": "engine/tools/check.sh",
+      "sha256": "a9a184bec4816ea7230543c4839627d07a5b674c1b3852b71262bd0021c33e79"
+    },
+    {
+      "path": "engine/tools/windows-imports.sh",
+      "sha256": "b5bd8df6a899ffeb18b385eb36e566c0c5113afd4aec151eb32b421036db4793"
+    },
+    {
+      "path": "engine/uv.lock",
+      "sha256": "d3760764316682dd82fec031c72fc22a9c6c0ba54994ce23d7f8610331407b30"
+    },
+    {
+      "path": "scripts/check-code.ps1",
+      "sha256": "833e3b4d2278cdc85427abfbd543966f1330613e421c9983916c08ecfc437b8a"
+    },
+    {
+      "path": "scripts/check-gpu.py",
+      "sha256": "abf2fc8753d29f2620963765d0a7f6dd3e3c326db6ef51ba217abaaeca133cf8"
+    },
+    {
+      "path": "scripts/check_ci_config.py",
+      "sha256": "6d594f179f24ecb364d02d1314f72f8c653480430da2c18c005a20cb6c60b390"
+    },
+    {
+      "path": "scripts/check_repository.py",
+      "sha256": "d5e41b4d25a1027ee2146e8225916bc948b70c9f1c724e3046cf72db74f8bf11"
+    },
+    {
+      "path": "scripts/code_only_plugin.py",
+      "sha256": "abb00a4c3da9c751d6229d8aec27d50ffdfb645e9a9c832f7daa8d20dcfc1cfc"
+    },
+    {
+      "path": "scripts/generate-map-markers.py",
+      "sha256": "461e1dc2abde355500cca459039650155b3596de6f54c53aea0707da8b1db838"
+    },
+    {
+      "path": "scripts/offscreen/bug_report_offscreen.cpp",
+      "sha256": "640103719eb3ef70e7a4ffc4c4f87ed3996871cd49ba0b4663159f45e564931c"
+    },
+    {
+      "path": "scripts/offscreen/differential_fuzz.cpp",
+      "sha256": "5e6ca73c8b760eb1730debbab4f76fa2f5fc6251244801102fbac20164c050c2"
+    },
+    {
+      "path": "scripts/offscreen/fsr_offscreen.cpp",
+      "sha256": "61b56f41b700177528e99223461a639d39412937f6a340fa240e4a67ab7d66ee"
+    },
+    {
+      "path": "scripts/offscreen/gpu_shader_offscreen.cpp",
+      "sha256": "c05fe00c5aef12088dc98bf8fde73bab47ea2de3a20b0ac182bd4e509ca76235"
+    },
+    {
+      "path": "scripts/runtime-host/CMakeLists.txt",
+      "sha256": "c07f1661a7d4d5d2ae4721d60ce940312694dfcefb09670bc279607b0e845696"
+    },
+    {
+      "path": "scripts/test_ci_config.py",
+      "sha256": "86b7c305fff38bf5f87625daf88882f4346f54ebe3fcd964fdee4204640c7c1f"
+    },
+    {
+      "path": "scripts/test_repository_checks.py",
+      "sha256": "4f42defd96f36cb565b6d6ed7c00e924c936a3b27416df4ba6d2121aebab41e1"
+    },
+    {
+      "path": "sotn-experiment/tests/bug_report_test.cpp",
+      "sha256": "8068ef125d3e94e4f6e31ec3df010e2ab1109698cd180d6c5ddc3cf8fd7e47aa"
+    },
+    {
+      "path": "sotn-experiment/tests/dev_controls_test.cpp",
+      "sha256": "9e168b3d71648086a2ea53093a554e8d042c8f3e3abb1f7b091112cdbc3ee6b6"
+    },
+    {
+      "path": "sotn-experiment/tests/dev_host_input_test.cpp",
+      "sha256": "e4d16077a826a706e657025dc84e1feacdca1955bd14f0d769bac3e316d376b6"
+    },
+    {
+      "path": "sotn-experiment/tests/dev_layout_test.cpp",
+      "sha256": "3730ab254b6069d68087f47d5c3fdbd0b463851cbfabb681262b5c4286335327"
+    },
+    {
+      "path": "sotn-experiment/tests/fsr_test.cpp",
+      "sha256": "09f1028782fada0011449729d188f4dfacb01696e72178f0b4d1b68a816d8e70"
+    },
+    {
+      "path": "sotn-experiment/tests/gpu_shader_test.cpp",
+      "sha256": "dd320eee288d9b2605baf944343ef36d8ed48af336c6b364f1e5a998ef08a4b8"
+    },
+    {
+      "path": "sotn-experiment/tests/host_menu_test.cpp",
+      "sha256": "5e62361e38260d5599b61dadd5266b7e627ea97bab9d822442277a42fdef98ee"
+    },
+    {
+      "path": "sotn-experiment/tests/map_report_test.cpp",
+      "sha256": "346a388bc0e322caf2e263a55cefd4c7fa580bbc7f14a62815911680cc41d913"
+    },
+    {
+      "path": "sotn-experiment/tests/mod_menu_test.cpp",
+      "sha256": "515198ae3083fe1b183988027583e582fe90ce4febc6860a03669cf52f4b1757"
+    },
+    {
+      "path": "sotn-experiment/tests/overlay_evidence_test.cpp",
+      "sha256": "bc64a25c7e0fa225c3c870f1a84d5c2715bfe89a0a72a32139137b7c4cdf3aef"
+    },
+    {
+      "path": "sotn-experiment/tests/overlay_residency_test.cpp",
+      "sha256": "27dcb342e3d16f84c68af75e4af4c28e1dc79b1ec66536f34947bc3769a02efa"
+    },
+    {
+      "path": "sotn-experiment/tests/settings_video_test.cpp",
+      "sha256": "113d4affecfdeb0aabb05ed4e7ad60c2c953e774693b58163ad00cf06a138bfd"
+    },
+    {
+      "path": "sotn-experiment/tests/test_bug_report.py",
+      "sha256": "0a7bce68e501edf3fc53d38ef8207a0c75f48f1fd028fa2c63422c55c1902846"
+    },
+    {
+      "path": "sotn-experiment/tests/test_dev_controls.py",
+      "sha256": "847171ce0bc82e5f4b3ef0b57c51bee95145ec357ff72b03d5f70cbf7ca41404"
+    },
+    {
+      "path": "sotn-experiment/tests/test_dev_host_input.py",
+      "sha256": "2c99690c7f6cd3448726db61ec77aa2a5962f0f0b652b16fe1a7d7147a01e96f"
+    },
+    {
+      "path": "sotn-experiment/tests/test_dev_layout.py",
+      "sha256": "03ec817445014f8951d4acc7212b8e5d445a5f2d13c24c87fd7981976408fbfc"
+    },
+    {
+      "path": "sotn-experiment/tests/test_discover_delay_slots.py",
+      "sha256": "b2044c8a8f656a1643d792928ec9136ee28528384b5c092f149e9ef873c06821"
+    },
+    {
+      "path": "sotn-experiment/tests/test_fsr.py",
+      "sha256": "76138fb3bc1b5e361f5d579e9181714bd0f1195a1a6a0da1eb19956af6cef8ea"
+    },
+    {
+      "path": "sotn-experiment/tests/test_generate_jp.py",
+      "sha256": "05a438783e221b38d15614e6a870140d2ee6afeb3ccaa77c3e7ed11ff5f6553c"
+    },
+    {
+      "path": "sotn-experiment/tests/test_gpu_launcher.py",
+      "sha256": "3c7b8a39d131050fca12ac483d24039df71698efb5e3824ecd2898be39d22375"
+    },
+    {
+      "path": "sotn-experiment/tests/test_gpu_shader.py",
+      "sha256": "75d482e80e6b1f0f9f2769b337f42aa646d78d84ba9be9d46ef91a1185949260"
+    },
+    {
+      "path": "sotn-experiment/tests/test_host_menu.py",
+      "sha256": "fde64433c883f1d6bf28dbfc4d7a498fd710b09762d088d8f6e0678a0d6f5bd2"
+    },
+    {
+      "path": "sotn-experiment/tests/test_inventory_jp.py",
+      "sha256": "10caba3cd20a11bf94eba626011643c76742b52bc54bf36c76436dfbe46c78db"
+    },
+    {
+      "path": "sotn-experiment/tests/test_make_all_config.py",
+      "sha256": "b79fa5ef73751ea82df375d9436f394667fd01648880d71cfd3c7c2fd42f65b8"
+    },
+    {
+      "path": "sotn-experiment/tests/test_make_config.py",
+      "sha256": "e5bff4d0d63c0b1c5db150531c54b12fe178d47935734e529b7e3ec881c88286"
+    },
+    {
+      "path": "sotn-experiment/tests/test_map_report.py",
+      "sha256": "287b38b6d2921b70594b0767f4e9b734c05a0bdd99ca1d9f2a773b70d83acac7"
+    },
+    {
+      "path": "sotn-experiment/tests/test_mod_menu.py",
+      "sha256": "8ef5cd71b0dec0f1c6746afacfdf8503b13fe493a62ec63b4706ccf74113be63"
+    },
+    {
+      "path": "sotn-experiment/tests/test_overlay_evidence.py",
+      "sha256": "d1d482a0f4c0fff2c695f889155cf9e6cfd4491b5cf3fd48e30a8a57820c52d2"
+    },
+    {
+      "path": "sotn-experiment/tests/test_overlay_residency.py",
+      "sha256": "2ef974493f5eb40a2a768b70c04b0a259fa804e3ff9056e5415dfe48d0a1534d"
+    },
+    {
+      "path": "sotn-experiment/tests/test_resolve_cue.py",
+      "sha256": "173fe6ace62d0c0e06c4168b46f3fff3223761eee84a620f4e9d3bbd30535db5"
+    },
+    {
+      "path": "sotn-experiment/tests/test_settings_video.py",
+      "sha256": "5a93614be34a928c9255ddae2b442d8df5e47436e457b87235c8858b9a63732d"
+    },
+    {
+      "path": "sotn-experiment/tests/test_turbo_cadence.py",
+      "sha256": "a68c1a1a54f58dc7efb003fd634b476c094acf915bf5ca9bcbaef6c47fabd12f"
+    },
+    {
+      "path": "sotn-experiment/tests/test_upscaler_policy.py",
+      "sha256": "c75e69c66c184f89c622939f77dab631c9ababcf05b5848b8a2e4015149eb5f4"
+    },
+    {
+      "path": "sotn-experiment/tests/test_video_options.py",
+      "sha256": "0ec203627bf6d5bfa60bfbb83cf48302e8a756ee0e873f4dff46020ad7e3f4d1"
+    },
+    {
+      "path": "sotn-experiment/tests/test_video_perf.py",
+      "sha256": "1b67d84afb7b419b8af4b883dd3cb6620d0fc7f3e1cbfe457d388f9b95727979"
+    },
+    {
+      "path": "sotn-experiment/tests/test_vulkan_shader.py",
+      "sha256": "6fa8a3a51c631a8f9732ddf9d4433e9a5f3cf33644d092c0e4853ea96b339ae1"
+    },
+    {
+      "path": "sotn-experiment/tests/turbo_cadence_test.cpp",
+      "sha256": "81410e18721814d494da768f11c80c5178a898c456c4980a7e43df16e5c2560e"
+    },
+    {
+      "path": "sotn-experiment/tests/upscaler_policy_test.cpp",
+      "sha256": "9ecbacb05dded901795fe0a0f95462ddc7355bb6859273f3edba811393f58c8f"
+    },
+    {
+      "path": "sotn-experiment/tests/video_options_test.cpp",
+      "sha256": "a2e880c07e0e2cdd1f230a134a2dead66579aebe9b7ad291933c02a09ba9b3f5"
+    },
+    {
+      "path": "sotn-experiment/tests/video_perf_test.cpp",
+      "sha256": "639eb9f002dae6774f1088d7e264e8fcc8a5045629be8d8042d3205b14aebd6f"
+    },
+    {
+      "path": "sotn-experiment/tests/vulkan_shader_test.cpp",
+      "sha256": "f576272e5fe284355ff6816f9b8f2ba95619568a3300fb26e75e99c1a544a2bb"
+    },
+    {
+      "path": "sotn-experiment/tools/analyze-jp.py",
+      "sha256": "71adcc2bd71e5fe325bd938ec2526bc7521a7d461ea241e8abd2d4b748d0685f"
+    },
+    {
+      "path": "sotn-experiment/tools/build-fsr-shader.py",
+      "sha256": "cef01a79dc42777467805f321d00c9c34efde76a37324e876c225def00159724"
+    },
+    {
+      "path": "sotn-experiment/tools/build-gpu-shader.py",
+      "sha256": "2e6c4362d80425a0a3d52f6902cba774bb58db2f7a531cc9b52a3c46210bb227"
+    },
+    {
+      "path": "sotn-experiment/tools/build-windows-all.cmd",
+      "sha256": "7bbcfa0545c18ad3007cfb27e3d5e2cd704ffe1d5e6542c70fcc5ef92b12381e"
+    },
+    {
+      "path": "sotn-experiment/tools/build-windows-common.cmd",
+      "sha256": "e2467821b5fa0d14be524f89f4c2e3f228b1b4215b3d0310a4baabf952c221cc"
+    },
+    {
+      "path": "sotn-experiment/tools/build-windows-reference.cmd",
+      "sha256": "e5fe388e2b50a8e033b740af1e3c917c6e4c6ae189911ac0433c13c067561837"
+    },
+    {
+      "path": "sotn-experiment/tools/build-windows.cmd",
+      "sha256": "a8d2d9ccd3c0338b0921ddfbcaf8a5ef5d3d06367b77b30f25b30f0ed4407a7b"
+    },
+    {
+      "path": "sotn-experiment/tools/generate-jp.py",
+      "sha256": "a43579349215beef5673a2ab7f92b0819e289b2441abafbc002be5df599b94a1"
+    },
+    {
+      "path": "sotn-experiment/tools/inventory-jp.py",
+      "sha256": "e737d36516c9ecc9cd6236582f1a3e29a4cccec48488e4213fafda072d6f27ae"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/build-jp.sh",
+      "sha256": "67c111784506a46aecb9669c3fb331eef92ad7f9656eb455346ef0c0f6bbe3cf"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/check-engine.sh",
+      "sha256": "dfec3490d00e022eb963d69ee927cb75e9bfcdfe9e456088a4670a8b07cf7562"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/install-sdl3.sh",
+      "sha256": "1b4d2b62bc47b5f6eb11a1063e957da5255cc90b75067607cdb2a77be92809f5"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/learn-jp.sh",
+      "sha256": "03ee3f37f7f18c74209fbd2c97d20714324d6ca7042fe386e6b70e6355772ef9"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/play-jp-software.sh",
+      "sha256": "727bf94b80b87d9c402d16e5c630fdf36e8e2a5b94ade031ce773b8272ef2afd"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/play-jp.sh",
+      "sha256": "6f29b002166b01487c9d0e893a672d9f7227070dda6bd640061658d760491ad4"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/run-jp-headless.sh",
+      "sha256": "a91dbb9cf8541854476e59526fc92846315618c29619bebabc94ee1794e9311d"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/validate-faststart.sh",
+      "sha256": "28330cd81bf0a3e4279ff674c154cabb045b6e4b345f9a2972334b5baa0b9b0f"
+    },
+    {
+      "path": "sotn-experiment/tools/linux/validate-prologue.sh",
+      "sha256": "982da4e39fa2f899879fae3c6d0afec6fb429b97d1fe4ce8a17c1a3b7db81205"
+    },
+    {
+      "path": "sotn-experiment/tools/make_all_config.py",
+      "sha256": "1075ac5ef33ee9f3101a809bee52ab51868ae2f0f917c252cf6e957b70d868a8"
+    },
+    {
+      "path": "sotn-experiment/tools/make_config.py",
+      "sha256": "0f0960fa692a2a9c83896fdf17331da1ad95624c05b2490a38f43f7ea51d4db3"
+    },
+    {
+      "path": "sotn-experiment/tools/play-windows-gpu.ps1",
+      "sha256": "8f2afdd87872f5f48230c4daad446b39ee4daea662ff87ddf52a081267b08f3b"
+    },
+    {
+      "path": "sotn-experiment/tools/play-windows.ps1",
+      "sha256": "1333abe8cb821d485e4978e1725bcc6e5eb0b483319a6dd261e575f4e59c0b70"
+    },
+    {
+      "path": "sotn-experiment/tools/resolve-cue.ps1",
+      "sha256": "1fdc86cfc8569d3723c153743468de075a5a86e40d6f786f2de1fdf7890defaf"
+    },
+    {
+      "path": "sotn-experiment/tools/sotn-gameshark.txt",
+      "sha256": "0603a89cf124d316f5b0d238a2ab978d48549909c5d8c8d7f4b1a941bb3207f1"
+    },
+    {
+      "path": "sotn-experiment/tools/windows/CMakeLists.txt",
+      "sha256": "3101a4681eece7756d52dab3d19dcb8665db08f526563ade963d544f94c45b3d"
+    },
+    {
+      "path": "sotn-experiment/tools/write-crashlog.ps1",
+      "sha256": "f8abe2ae96a54ee76337cd5f43fa7e2a776f9a4ab481c25d14060e4900111132"
+    }
+  ],
+  "excluded": [
+    "game media",
+    "derived C++",
+    "saves",
+    "private map markers",
+    "dumps",
+    "private studies",
+    "credentials"
+  ],
+  "public_changes": [
+    "engine paths",
+    "external toolchain/reference environment",
+    "local-only map marker provider",
+    "synthetic marker test fixture",
+    "source-only native/GPU gates"
+  ]
+}
