@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.20)
+project(sotn_runtime_compile_check LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 20)
+set(SATURN_REQUIRE_SDL ON CACHE BOOL "Compilar o host real com SDL")
+set(SATURN_VDP1_GPL ON CACHE BOOL "Compilar também o rasterizador de referência")
+include(${CMAKE_CURRENT_LIST_DIR}/../../engine/runtime/runtime.cmake)

@@ -1,0 +1,399 @@
+"""A game's game.toml: the programs to recompile, names for addresses, the task switch and hooks.
+
+    [game]
+    name = "Saturn Bomberman (USA)"
+    seeds = "tools/seeds.json"      # seeds the learning loop found, by module
+    build = "build"
+    cmake = ["SATURN_VDP1_GPL=ON"]  # optional: the runtime's build options (runtime/runtime.cmake)
+
+    [symbols]
+    krnl_setjmp = 0x060061C4
+
+    [[module]]
+    name = "KRNL"
+    file = "build/extract/BOMSS/0KRNL.BIN"
+    base = 0x06006000
+    seeds = [0x06006100]            # optional
+    source = "/0"                   # optional: the disc file a prepared module comes from ...
+    source_offset = 0x3B4B0         # ... and where in it; the inventory reports the bytes that differ
+
+    [inventory]                     # optional: what python -m saturnrecomp.inventory reads
+    manifest = "disc.json"          # the disc's files and audio tracks (saturnrecomp.disc --manifest)
+    files = "build/extract"         # the disc's files, extracted
+    treatments = "inventory.tsv"    # what became of the files no module is made from
+
+    [[inventory.sound]]             # optional: a 68000 program the game loads into sound RAM
+    name = "SND"
+    source = "/BOMSS/PROGRAM.BIN"   # the disc file holding it ...
+    offset = 0x44                   # ... where in it (default 0) ...
+    bytes = 0x63D4                  # ... and how long (default to the file's end)
+
+    [tasks]                         # optional: a game that switches its own tasks
+    module = "KRNL"
+    setjmp = "krnl_setjmp"
+    longjmp = "krnl_longjmp"
+    yields = ["krnl_setjmp", "krnl_yield"]
+    unknown_yields = true           # a call to a target discovery cannot name may yield too
+
+    [[task_switch]]                 # optional: a program that switches tasks by swapping stacks
+    module = "XBAND"
+    save = 0x06006098               # where the outgoing task's stack pointer goes into its block
+    save_key = "r1"                 # ... the register holding that block
+    resume_sp = 84                  # how far the stack there is below where the task resumes
+    switch = 0x060060C4             # where the incoming task's stack pointer comes out of its block
+    switch_key = "r0"
+    yields = [0x06006110]           # optional: functions that reach the switch through jumps discovery can't follow
+    unknown_yields = true           # optional, as in [tasks]
+
+    [[hook]]
+    module = "KRNL"
+    at = "bomber_hit_flag"
+
+    [playtest]                      # optional: builds for playtesters (saturnrecomp.playtest)
+    endpoint = "https://saturn-playtest.example.workers.dev"
+    repo = "OWNER/NAME"             # the GitHub repository whose releases hold the builds
+    disc = "disc.json"              # the supported disc's manifest (saturnrecomp.disc --manifest)
+    coverage = ["build/test/*/coverage.txt"]   # the runs a session's new code is measured against
+    args = []                       # saturn arguments every session plays with
+    boxart = "https://..."          # the box art the Android app shows, fetched by the app, never bundled
+
+    [playtest.other_disc]           # optional: files and audio tracks a player can take from another disc of theirs
+    label = "Japanese voices"       # what the launchers' option says
+    disc = "disc-jp.json"           # that disc's manifest
+    files = "/BOMSS/M_058.AIF=/M_058.AIF"   # saturn's --from-other
+    tracks = "2"                    # saturn's --track-from-other
+    cue = "iso-jp/GAME.cue"         # this machine's copy, which replays use in place of the tester's
+
+    [checkpoint]                    # optional: a start a session's Continue can rebuild when its dump won't load
+    keep = [["stage_2", 2], ["score", 8], ["objects+0x5E", 1]]   # the first's changes start one
+    accept = [[0x0001, 0x0006], [0x0100, 0x0108]]   # ranges of the first's values, big-endian, it can be rebuilt from
+    presses = ["1900:START", "1910:"]   # from power-on to where the writes go in
+    writes = ["4250:stage=stage_2", "4600:score", "4600:objects+0x5E&08"]   # AT:TARGET[=KEPT][&MASK]
+    resume = 4610                   # the player's pads take over here
+    show = [["Stage {}", "stage_2", "world-stage"], ["{} pts", "score", "u32"],
+            ["Skates {}", "objects+0x3A", "u8@3?"], ["{}", "objects+0x70", "bits:01=Kick,02=Glove"],
+            ["{} dino", "dino_colours", "names:,Pink,Blue", "objects+0x5E&08"]]
+
+A restore point shows each of `show` it can, as TEMPLATE, KEPT, FORMAT and optionally a condition, a
+kept range whose first byte must have a bit of the mask. The formats read the range's first bytes,
+big-endian: u8, u16, u32; world-stage, a byte each, numbered from 1; steps:BASE:STEP, how many STEPs
+the range is above or below BASE, signed ("+1", "-2"); names:A,B,... the byte's name, from 0; bits:MASK=NAME,...
+the names of the first byte's bits. "@N" reads from the range's Nth byte on, and a trailing "?" leaves
+out a 0 (or no name).
+
+An address is a number, a name from [symbols], or either plus an offset ("objects+0x5E"). Paths are
+relative to the file.
+"""
+import json
+import os
+import tomllib
+from dataclasses import dataclass, field
+
+
+@dataclass
+class Module:
+    name: str
+    file: str
+    base: int
+    seeds: list[int] = field(default_factory=list)
+    runtime_literals: bool = False
+    callable_entry: bool = False
+    unwind_returns: bool = False
+    source: str = ""           # the disc file it comes from, when that file is not `file` itself
+    source_offset: int = 0
+
+
+@dataclass
+class Sound:
+    name: str
+    source: str
+    offset: int = 0
+    bytes: int = 0             # 0: to the file's end
+
+    def read(self, files):
+        """The program's bytes, from the extracted disc files at `files`."""
+        with open(os.path.join(files, self.source.lstrip("/")), "rb") as f:
+            data = f.read()[self.offset:]
+        return data[:self.bytes] if self.bytes else data
+
+
+@dataclass
+class Inventory:
+    manifest: str
+    files: str
+    treatments: str = ""
+    sound: list[Sound] = field(default_factory=list)
+
+
+@dataclass
+class Tasks:
+    module: str
+    setjmp: int
+    longjmp: int
+    yields: list[int]
+    unknown_yields: bool = False
+
+
+@dataclass
+class OtherDisc:
+    """Files and audio tracks a player can take from another disc of their own, such as another region's."""
+    label: str
+    disc: str                  # its manifest
+    files: str                 # saturn's --from-other
+    tracks: str                # saturn's --track-from-other
+    cue: str = ""              # this machine's copy, for replays
+
+
+@dataclass
+class Playtest:
+    endpoint: str
+    repo: str
+    disc: str
+    coverage: list[str] = field(default_factory=list)
+    args: list[str] = field(default_factory=list)
+    boxart: str = ""
+    classes: str = ""          # the coverage classes file, or "" for none
+    other_disc: OtherDisc | None = None
+
+    @property
+    def manifest(self):
+        return json.load(open(self.disc))
+
+    @property
+    def product(self):
+        """The disc's product number and version as the runtime names its save directory, such as MK-81070_V1.003."""
+        m = self.manifest
+        return f"{m['product']}_{m['version']}"
+
+
+@dataclass
+class Checkpoint:
+    """Ranges a session notes whenever the first changes (the runtime's --progress), and how a start is
+    rebuilt from a line of them: presses from power-on, then the kept bytes written back."""
+    keep: list[tuple[int, int]]                 # (address, bytes)
+    accept: list[tuple[int, int]]
+    presses: list[str]
+    writes: list[tuple[int, int, int, bytes | None]]   # (VBlank, address, index into keep, mask)
+    resume: int
+    show: list[tuple[str, int, str, tuple[int, int] | None]] = field(default_factory=list)   # (template, kept, format, (kept, mask))
+
+    @property
+    def keep_arg(self):
+        return ",".join(f"{a:08X}:{n}" for a, n in self.keep)
+
+    def rebuild(self, line):
+        """The --write arguments that rebuild the start a --progress line names, or None when its first
+        range is outside `accept`."""
+        kept = self.kept(line)
+        if kept is None or not any(lo <= int.from_bytes(kept[0], "big") <= hi for lo, hi in self.accept):
+            return None
+        out = []
+        for at, addr, k, mask in self.writes:
+            data = kept[k] if mask is None else bytes(b & m for b, m in zip(kept[k], mask))
+            out.append(f"{at}:{addr:08X}={data.hex().upper()}")
+        return out
+
+    def kept(self, line):
+        """A --progress line's ranges, or None when they are not keep's (a line from another build's keep)."""
+        kept = [bytes.fromhex(f) for f in line.split()[1:]]
+        if [len(k) for k in kept] != [n for _, n in self.keep]:
+            return None
+        return kept
+
+    def describe(self, line):
+        """What a --progress line shows of the game, by `show`: a phrase each, as the launcher shows them."""
+        kept = self.kept(line)
+        if kept is None:
+            return []
+        out = []
+        for template, k, fmt, cond in self.show:
+            if cond and not kept[cond[0]][0] & cond[1]:
+                continue
+            value = show_value(fmt.rstrip("?"), kept[k])
+            if fmt.endswith("?") and value in ("", "0"):
+                continue
+            out.append(template.replace("{}", value))
+        return out
+
+    def to_json(self):
+        return {"keep": self.keep_arg, "accept": [list(a) for a in self.accept], "presses": ",".join(self.presses), "resume": self.resume,
+                "writes": [[at, f"{addr:08X}", k, mask.hex() if mask else None] for at, addr, k, mask in self.writes],
+                "show": [[t, k, f, list(c) if c else None] for t, k, f, c in self.show]}
+
+
+def show_value(fmt, data):
+    """A kept range as one of [checkpoint] show's formats gives it; the launcher's Kotlin does the same."""
+    fmt, _, at = fmt.partition("@")
+    data = data[int(at or 0):]
+    kind, _, arg = fmt.partition(":")
+    if kind in ("u8", "u16", "u32"):
+        n = int(kind[1:]) // 8
+        return f"{int.from_bytes(data[:n], 'big'):,}"
+    if kind == "world-stage":
+        return f"{data[0] + 1}-{data[1] + 1}"
+    if kind == "steps":
+        base, step = (int(x, 16) for x in arg.split(":"))
+        n = (int.from_bytes(data, "big") - base) // step
+        return f"{n:+d}" if n else "0"
+    if kind == "names":
+        names = arg.split(",")
+        return names[data[0]] if data[0] < len(names) else ""
+    if kind == "bits":
+        return ", ".join(name for bit, name in (b.split("=", 1) for b in arg.split(",")) if data[0] & int(bit, 16))
+    raise SystemExit(f"[checkpoint] show: no format {fmt}")
+
+
+def _checkpoint(c, symbols):
+    names = [k[0] for k in c["keep"]]
+    keep = [(_addr(name, symbols), n) for name, n in c["keep"]]
+    writes = []
+    for w in c["writes"]:
+        at, rest = w.split(":", 1)
+        rest, _, mask = rest.partition("&")
+        target, _, kept = rest.partition("=")
+        kept = kept or target
+        if kept not in names:
+            raise SystemExit(f"[checkpoint]: the write {w} names {kept}, which keep does not")
+        k = names.index(kept)
+        mask = bytes.fromhex(mask) if mask else None
+        if mask is not None and len(mask) != keep[k][1]:
+            raise SystemExit(f"[checkpoint]: the write {w} has a mask of another length than {kept}")
+        writes.append((int(at), _addr(target, symbols), k, mask))
+    def kept(name, why):
+        if name not in names:
+            raise SystemExit(f"[checkpoint]: {why} names {name}, which keep does not")
+        return names.index(name)
+    show = []
+    for s in c.get("show", []):
+        template, name, fmt, *cond = s
+        show_value(fmt.rstrip("?"), bytes(4))                # a format it doesn't know stops here
+        when = None
+        if cond:
+            what, _, mask = cond[0].partition("&")
+            when = (kept(what, f"show {template}"), int(mask or "FF", 16))
+        show.append((template, kept(name, f"show {template}"), fmt, when))
+    return Checkpoint(keep, [tuple(a) for a in c["accept"]], list(c["presses"]), writes, c["resume"], show)
+
+
+@dataclass
+class TaskSwitch:
+    """A task switch that saves the running task's stack pointer in its block and loads another's, then
+    returns into that task: hooked where each happens, keyed by the block. The saved task resumes at the
+    PR it had when saved, with its stack resume_sp bytes higher."""
+    module: str
+    save: int
+    save_key: int
+    resume_sp: int
+    switch: int
+    switch_key: int
+    yields: list[int] = field(default_factory=list)
+    unknown_yields: bool = False
+
+
+@dataclass
+class Game:
+    name: str
+    root: str
+    build: str
+    seeds_file: str
+    modules: list[Module]
+    symbols: dict[str, int]
+    tasks: Tasks | None
+    hooks: dict[str, list[int]]
+    cmake: list[str] = field(default_factory=list)
+    playtest: Playtest | None = None
+    checkpoint: Checkpoint | None = None
+    task_switches: list[TaskSwitch] = field(default_factory=list)
+    inventory: Inventory | None = None
+    executable: str = ""
+
+    @property
+    def saturn(self):
+        return self.executable or os.path.join(self.build, "recomp-build", "saturn")
+
+    def module(self, name):
+        return next(m for m in self.modules if m.name == name)
+
+    def learned_seeds(self):
+        """{module name: [address, ...]} from the seeds file, empty if there is none yet."""
+        if not os.path.exists(self.seeds_file):
+            return {}
+        return {k: [int(x, 16) for x in v] for k, v in json.load(open(self.seeds_file)).items()}
+
+    def save_learned_seeds(self, seeds):
+        with open(self.seeds_file, "w") as f:
+            json.dump({k: [f"{x:08X}" for x in v] for k, v in seeds.items()}, f, indent=1)
+            f.write("\n")
+
+
+def load(path):
+    path = os.path.abspath(path)
+    root = os.path.dirname(path)
+    with open(path, "rb") as f:
+        t = tomllib.load(f)
+    symbols = dict(t.get("symbols", {}))
+    modules = [Module(m["name"], os.path.join(root, m["file"]), m["base"],
+                      [_addr(s, symbols) for s in m.get("seeds", [])],
+                      m.get("runtime_literals", False), m.get("callable_entry", False),
+                      m.get("unwind_returns", False), m.get("source", ""), m.get("source_offset", 0))
+               for m in t.get("module", [])]
+    names = {m.name for m in modules}
+
+    def known(module, where):
+        if module not in names:
+            raise SystemExit(f"{path}: {where} names module {module}, which no [[module]] defines")
+        return module
+
+    tasks = None
+    if "tasks" in t:
+        k = t["tasks"]
+        tasks = Tasks(known(k["module"], "[tasks]"), _addr(k["setjmp"], symbols), _addr(k["longjmp"], symbols),
+                      [_addr(y, symbols) for y in k.get("yields", [])], k.get("unknown_yields", False))
+    hooks = {}
+    if tasks:
+        hooks.setdefault(tasks.module, []).extend([tasks.setjmp, tasks.longjmp])
+    switches = []
+    for s in t.get("task_switch", []):
+        sw = TaskSwitch(known(s["module"], "a [[task_switch]]"), _addr(s["save"], symbols), _register(s["save_key"]),
+                        int(s["resume_sp"]), _addr(s["switch"], symbols), _register(s["switch_key"]),
+                        [_addr(y, symbols) for y in s.get("yields", [])], s.get("unknown_yields", False))
+        hooks.setdefault(sw.module, []).extend([sw.save, sw.switch])
+        switches.append(sw)
+    for h in t.get("hook", []):
+        hooks.setdefault(known(h["module"], "a [[hook]]"), []).append(_addr(h["at"], symbols))
+    game = t.get("game", {})
+    playtest = None
+    if "playtest" in t:
+        p = t["playtest"]
+        playtest = Playtest(p["endpoint"].rstrip("/"), p["repo"], os.path.join(root, p.get("disc", "disc.json")),
+                            [os.path.join(root, g) for g in p.get("coverage", [])], list(p.get("args", [])),
+                            p.get("boxart", ""), os.path.join(root, p["classes"]) if "classes" in p else "")
+        if "other_disc" in p:
+            o = p["other_disc"]
+            playtest.other_disc = OtherDisc(o["label"], os.path.join(root, o["disc"]), o.get("files", ""),
+                                            str(o.get("tracks", "")), os.path.join(root, o["cue"]) if "cue" in o else "")
+    inventory = None
+    if "inventory" in t:
+        i = t["inventory"]
+        inventory = Inventory(os.path.join(root, i["manifest"]), os.path.join(root, i["files"]),
+                              os.path.join(root, i["treatments"]) if "treatments" in i else "",
+                              [Sound(s["name"], s["source"], s.get("offset", 0), s.get("bytes", 0)) for s in i.get("sound", [])])
+    return Game(game.get("name", os.path.basename(root)), root, os.path.join(root, game.get("build", "build")),
+                os.path.join(root, game.get("seeds", "seeds.json")), modules, symbols, tasks, hooks,
+                list(game.get("cmake", [])), playtest, _checkpoint(t["checkpoint"], symbols) if "checkpoint" in t else None,
+                switches, inventory)
+
+
+def _register(name):
+    if not (name.startswith("r") and name[1:].isdigit() and 0 <= int(name[1:]) <= 15):
+        raise SystemExit(f"{name}: a register is r0 to r15")
+    return int(name[1:])
+
+
+def _addr(value, symbols):
+    if isinstance(value, int):
+        return value
+    name, plus, offset = value.partition("+")
+    if name not in symbols:
+        raise SystemExit(f"no symbol named {name}")
+    return symbols[name] + (int(offset, 0) if plus else 0)

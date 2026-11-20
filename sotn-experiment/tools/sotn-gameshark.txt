@@ -1,0 +1,31 @@
+# SotN Saturn JP V1.400. Todos os scripts iniciam DESLIGADOS.
+# Editar, salvar e usar Esc > Hacks / GameShark > Recarregar scripts do arquivo.
+# 1XXXXXXX YYYY: escrita16; 3XXXXXXX 00YY: escrita8; DXXXXXXX YYYY: condicao16.
+# 0XXXXXXX YYYY: escrita16 uma vez por ativacao. Nao usar codigos PS1 ou master F/B.
+# Os valores abaixo alteram dados permanentes se voce salvar a partida.
+# HP/MP/coracoes sao32 bits BE: cada valor usa DUAS escritas16.
+
+[HP e maximo 999]
+1605C940 0000
+1605C942 03E7
+1605C944 0000
+1605C946 03E7
+
+[MP e maximo 999]
+1605C950 0000
+1605C952 03E7
+1605C954 0000
+1605C956 03E7
+
+[Coracoes e maximo 99]
+1605C948 0000
+1605C94A 0063
+1605C94C 0000
+1605C94E 0063
+
+[Ouro 999999 Alucard]
+# O campo de personagem e32bit; a metade baixa0 identifica Alucard.
+D605C6D2 0000
+1605C990 000F
+D605C6D2 0000
+1605C992 423F

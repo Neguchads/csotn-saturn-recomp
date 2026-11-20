@@ -1,0 +1,230 @@
+// saturn-recomp runtime — boots a disc into the recompiled programs of this
+// build and runs it, in a window or headless.
+//
+//     saturn --cue GAME.cue [--out DIR] [--headless] [--fullscreen] [--scale N]
+//            [--vblanks N] [--starts N] [--trace] [--realtime] [--accurate-drive] [--input VBLANK:BUTTONS,...|@FILE]
+//            [--record-input FILE] [--resume N] [--shot N,...] [--dump N,...] [--peek ADDR[:WORDS],...] [--watch LO:HI]
+//            [--watch-vblanks FROM:TO] [--wav FILE] [--interp] [--hook ADDR:rN=VALUE ...]
+//            [--tasks SETJMP:LONGJMP] [--multitap N] [--clock YYYY-MM-DDTHH:MM:SS] [--agent FD]
+//            [--write VBLANK:ADDR=HEX,...] [--video FILE] [--save FILE|-] [--coverage FILE] [--checkpoint SECONDS]
+//            [--log FILE] [--state-in FILE] [--state-out FILE] [--state-every SECONDS] [--state-at VBLANK]
+//            [--progress FILE --progress-keep ADDR:BYTES,...] [--after FILE] [--launcher]
+//            [--modem line|dial=HOST:PORT[,listen=PORT]]
+//
+// --accurate-drive seeks before each read and reads at double speed, as the hardware's drive does
+// (cdblock.cpp), for comparing with Beetle Saturn; loads take longer.
+// --vblanks and --starts end the run after that many VBlanks or program
+// starts; the log of the hardware touched goes to DIR/hw-log.txt. --shot
+// saves the picture at those VBlank-INs (DIR/shot-N.png), --dump the video
+// memories (DIR/dump-N.bin), --wav the sound of the whole run. --hook sets
+// register N to VALUE (hex) after the hooked instruction at ADDR (the build's
+// recomp --hook). --watch LO:HI logs each access to a memory area in the
+// range with --trace; in the work RAMs, each store, with the function that
+// made it, with or without --trace; --watch-vblanks FROM:TO narrows that to
+// those VBlanks. --record-input writes the pads as the host presses them (the
+// keyboard and gamepads, a player each), sampled once a VBlank, as an --input
+// script: given back with --input @FILE, the run goes the same way again, and
+// takes nothing from the host's controllers. --resume N plays an --input script that far as fast as the host
+// can, without sound, a card saying how far it has got in place of the picture (--resume-label TEXT says
+// what it is getting to), then hands the pads to the host's controllers; with
+// --record-input, the script's presses are written too, so the file plays the whole run. --virtual-input SCRIPT, for tests, presses the
+// script's pads on virtual gamepads instead, a player each, through the window's input. They are SDL's,
+// or the kernel's on Linux with --virtual-pads uinput. --virtual-unplug PAD:FROM-TO,... unplugs pad PAD
+// from VBlank FROM to TO. --interp draws the fields between the game's frames with
+// everything moved part of the way (vdp1.cpp), one frame behind. --tasks names
+// the game's setjmp and longjmp when it switches its own tasks with them
+// (tasks.cpp); the build hooks both addresses. --multitap puts 6-player
+// multitaps on port 1, or (2) on both ports (smpc.cpp). --input takes "N."
+// before a pad's buttons for player N, numbered across the ports. --clock sets the SMPC's clock at power-on,
+// which then runs with the run's time; without it the clock is the host's.
+// --agent hands the run to another program through the socket at FD
+// (agent.cpp): it steps VBlanks, presses the pads, reads memory and frames.
+// --coverage writes every recompiled function, with its module, address, instruction count and
+// whether it ran, when the run ends, an error that ends it included; --checkpoint SECONDS writes it again every
+// SECONDS of the host's time. --video writes the run's pictures and sound as an MP4 through ffmpeg, an
+// error that ends it included (movie.cpp). --modem fits a NetLink modem (modem.cpp): "line" with nothing on
+// its line, or a TCP line on which every number dialled calls HOST:PORT and a connection to PORT rings.
+// --other-disc CUE with --from-other PATH=OTHERPATH,... and --track-from-other N,... plays those files and
+// audio tracks from that disc instead (cdrom.cpp).
+// --write sets memory at a VBlank-IN, as the agent's write does: a stage
+// select, say, given as data.
+// --cheat sets memory, or ors bits into it, once a VBlank while a module is active: a game's
+// invincibility flag, say, written only while that game is loaded.
+// --save names the file the game's saves (the backup memory) are kept in; "-"
+// keeps them for the run alone, starting empty. Without it they go to
+// saturn-recomp/PRODUCT_VERSION/backup.bin in the user's data directory
+// ($XDG_DATA_HOME or ~/.local/share, ~/Library/Application Support, %APPDATA%).
+// --settings names the player's settings file, which a run with a window reads (the window, the
+// volume, the controls; host.cpp): "-" keeps the defaults. Without it, it is settings.ini in that
+// directory's saturn-recomp folder, written with the defaults if it is missing.
+// --launcher opens a menu in the window before the run, for the players, the controls, the display
+// and the volume (launcher.cpp), and the game's start options when --options names a file of them.
+// What it chooses for the run, as saturn's own arguments, goes to DIR/launch.txt (with --out), one a
+// line, for a replay.
+// --log writes what would go to stdout and stderr to FILE instead, for a host that shows neither (Android).
+// --state-in starts the run from a dump of the machine instead of power-on (state.cpp), and
+// --state-out writes one: at the first safe moment from VBlank --state-at, every --state-every
+// SECONDS of the host's time, and when the window is closed or Quit chosen in its menu, which then wait for it.
+// A safe moment is a task switch (--tasks), so a game without one makes no dumps.
+// --progress adds a line to FILE whenever the first --progress-keep range changes: the VBlank, then
+// each range's bytes in hex. A game's stage number, say, then what a stage start has to be rebuilt from.
+// --after gives the window's menu Save files, which writes "saves" to FILE and quits, for a launcher to
+// open its save files once the run has ended.
+#include "saturn.h"
+#include "host.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#if defined(__ANDROID__)
+#include <SDL3/SDL_main.h>                   // SDL's Java side starts the run through SDL_main
+#endif
+
+// YYYY-MM-DDTHH:MM:SS as seconds since 1970, no time zone; -1 if it does not parse.
+static int64_t clock_seconds(const char* s) {
+    int y, mo, d, h, mi, se;
+    if (std::sscanf(s, "%d-%d-%dT%d:%d:%d", &y, &mo, &d, &h, &mi, &se) != 6 || y < 1970 || mo < 1 || mo > 12) return -1;
+    y -= mo <= 2;                                // days from civil (H. Hinnant's algorithm)
+    int64_t era = y / 400, yoe = y - era * 400;
+    int64_t doy = (153 * (mo + (mo > 2 ? -3 : 9)) + 2) / 5 + d - 1;
+    int64_t days = era * 146097 + yoe * 365 + yoe / 4 - yoe / 100 + doy - 719468;
+    return days * 86400 + h * 3600 + mi * 60 + se;
+}
+
+// 2 and the usage on stderr when an argument does not read; 0 otherwise.
+static int parse_args(SaturnConfig& cfg, bool& launcher, int argc, char** argv) {
+    for (int i = 1; i < argc; ++i) {
+        const char* a = argv[i];
+        bool more = i + 1 < argc;
+        if (!std::strcmp(a, "--cue") && more) cfg.cue = argv[++i];
+        else if (!std::strcmp(a, "--out") && more) cfg.out = argv[++i];
+        else if (!std::strcmp(a, "--save") && more) cfg.save = argv[++i];
+        else if (!std::strcmp(a, "--vblanks") && more) cfg.stop_vblanks = std::strtoull(argv[++i], nullptr, 10);
+        else if (!std::strcmp(a, "--starts") && more) cfg.stop_starts = std::atoi(argv[++i]);
+        else if (!std::strcmp(a, "--host-speed") && more) {
+            const char* value = argv[++i];
+            if (std::strcmp(value, "1") && std::strcmp(value, "2") && std::strcmp(value, "4") &&
+                std::strcmp(value, "6") && std::strcmp(value, "8") && std::strcmp(value, "10")) {
+                std::fprintf(stderr, "--host-speed: use 1, 2, 4, 6, 8 ou 10\n"); return 2;
+            }
+            cfg.host_speed = unsigned(std::atoi(value));
+        }
+        else if (!std::strcmp(a, "--trace")) cfg.trace = true;
+        else if (!std::strcmp(a, "--video-profile")) cfg.video_profile = true;
+        else if (!std::strcmp(a, "--peek") && more) cfg.peek = argv[++i];
+        else if (!std::strcmp(a, "--coverage") && more) cfg.coverage = argv[++i];
+        else if (!std::strcmp(a, "--checkpoint") && more) cfg.checkpoint = std::atoi(argv[++i]);
+        else if (!std::strcmp(a, "--log") && more) {
+            const char* log = argv[++i];
+            if (!std::freopen(log, "a", stdout) || !std::freopen(log, "a", stderr)) return 2;
+            std::setvbuf(stdout, nullptr, _IONBF, 0);
+            std::setvbuf(stderr, nullptr, _IONBF, 0);       // a stream reopened on a file may come back buffered (bionic's does)
+        }
+        else if (!std::strcmp(a, "--watch") && more) {
+            const char* w = argv[++i];
+            cfg.watch_lo = (uint32_t)std::strtoul(w, nullptr, 16);
+            const char* colon = std::strchr(w, ':');
+            cfg.watch_hi = colon ? (uint32_t)std::strtoul(colon + 1, nullptr, 16) : cfg.watch_lo;
+        }
+        else if (!std::strcmp(a, "--watch-vblanks") && more) {
+            const char* w = argv[++i];
+            cfg.watch_from = std::strtoull(w, nullptr, 10);
+            const char* colon = std::strchr(w, ':');
+            cfg.watch_to = colon ? std::strtoull(colon + 1, nullptr, 10) : ~0ull;
+        }
+        else if (!std::strcmp(a, "--realtime")) cfg.realtime = true;
+        else if (!std::strcmp(a, "--title-menu")) cfg.title_menu = true;
+        else if (!std::strcmp(a, "--accurate-drive")) cfg.accurate_drive = true;
+        else if (!std::strcmp(a, "--input") && more) cfg.input = argv[++i];
+        else if (!std::strcmp(a, "--record-input") && more) cfg.record_input = argv[++i];
+        else if (!std::strcmp(a, "--resume") && more) cfg.resume = std::strtoull(argv[++i], nullptr, 10);
+        else if (!std::strcmp(a, "--resume-label") && more) cfg.resume_label = argv[++i];
+        else if (!std::strcmp(a, "--state-in") && more) cfg.state_in = argv[++i];
+        else if (!std::strcmp(a, "--state-out") && more) cfg.state_out = argv[++i];
+        else if (!std::strcmp(a, "--state-every") && more) cfg.state_every = std::atoi(argv[++i]);
+        else if (!std::strcmp(a, "--state-at") && more) cfg.state_at = argv[++i];
+        else if (!std::strcmp(a, "--progress") && more) cfg.progress = argv[++i];
+        else if (!std::strcmp(a, "--progress-keep") && more) cfg.progress_keep = argv[++i];
+        else if (!std::strcmp(a, "--virtual-input") && more) cfg.virtual_input = argv[++i];
+        else if (!std::strcmp(a, "--virtual-pads") && more) cfg.virtual_pads = argv[++i];
+        else if (!std::strcmp(a, "--virtual-unplug") && more) cfg.virtual_unplug = argv[++i];
+        else if (!std::strcmp(a, "--dump") && more) cfg.dump = argv[++i];
+        else if (!std::strcmp(a, "--shot") && more) cfg.shots = argv[++i];
+        else if (!std::strcmp(a, "--headless")) cfg.headless = true;
+        else if (!std::strcmp(a, "--launcher")) launcher = true;
+        else if (!std::strcmp(a, "--fullscreen")) cfg.fullscreen = true;
+        else if (!std::strcmp(a, "--scale") && more) cfg.scale = std::atoi(argv[++i]);
+        else if (!std::strcmp(a, "--settings") && more) cfg.settings = argv[++i];
+        else if (!std::strcmp(a, "--after") && more) cfg.after = argv[++i];
+        else if (!std::strcmp(a, "--wav") && more) cfg.wav = argv[++i];
+        else if (!std::strcmp(a, "--video") && more) {
+#if defined(_WIN32)
+            std::fprintf(stderr, "--video: not available on Windows\n");     // movie.cpp quotes for a POSIX shell
+            return 2;
+#else
+            cfg.video = argv[++i];
+#endif
+        }
+        else if (!std::strcmp(a, "--interp")) cfg.interp = true;
+        else if (!std::strcmp(a, "--multitap") && more) cfg.multitap = std::atoi(argv[++i]);
+        else if (!std::strcmp(a, "--modem") && more) cfg.modem = argv[++i];
+        else if (!std::strcmp(a, "--other-disc") && more) cfg.other_disc = argv[++i];
+        else if (!std::strcmp(a, "--from-other") && more) cfg.from_other = argv[++i];
+        else if (!std::strcmp(a, "--track-from-other") && more) cfg.tracks_from_other = argv[++i];
+        else if (!std::strcmp(a, "--agent") && more) cfg.agent_fd = std::atoi(argv[++i]);
+        else if (!std::strcmp(a, "--write") && more) cfg.writes += (cfg.writes.empty() ? "" : ",") + std::string(argv[++i]);
+        else if (!std::strcmp(a, "--cheat") && more) cfg.cheats += (cfg.cheats.empty() ? "" : ",") + std::string(argv[++i]);
+        else if (!std::strcmp(a, "--sotn-mods") && more) cfg.sotn_mods = argv[++i];
+        else if (!std::strcmp(a, "--options") && more) cfg.options = argv[++i];
+        else if (!std::strcmp(a, "--clock") && more) {
+            cfg.clock = clock_seconds(argv[++i]);
+            if (cfg.clock < 0) { std::fprintf(stderr, "--clock: YYYY-MM-DDTHH:MM:SS\n"); return 2; }
+        }
+        else if (!std::strcmp(a, "--tasks") && more) {
+            if (std::sscanf(argv[++i], "%x:%x", &cfg.task_setjmp, &cfg.task_longjmp) != 2) {
+                std::fprintf(stderr, "saturn: --tasks SETJMP:LONGJMP, not %s\n", argv[i]);
+                return 2;
+            }
+        }
+        else if (!std::strcmp(a, "--hook") && more) {
+            unsigned addr, reg, v;
+            if (std::sscanf(argv[++i], "%x:r%u=%x", &addr, &reg, &v) != 3 || reg > 15) {
+                std::fprintf(stderr, "saturn: --hook ADDR:rN=VALUE, not %s\n", argv[i]);
+                return 2;
+            }
+            sh2_hook_set(addr, (int)reg, v);
+        }
+        else {
+            std::fprintf(stderr, "usage: saturn --cue GAME.cue [--out DIR] [--headless] [--fullscreen] [--scale N] [--settings FILE]\n"
+                                 "             [--vblanks N] [--starts N] [--trace] [--realtime] [--accurate-drive] [--input VBLANK:BUTTONS,...|@FILE]\n"
+                                 "             [--record-input FILE] [--resume N] [--shot N,...] [--dump N,...] [--peek ADDR[:WORDS],...] [--watch LO:HI]\n"
+                                 "             [--wav FILE] [--hook ADDR:rN=VALUE ...] [--tasks SETJMP:LONGJMP] [--multitap N]\n"
+                                 "             [--clock YYYY-MM-DDTHH:MM:SS] [--agent FD] [--write VBLANK:ADDR=HEX,...] [--video FILE]\n"
+                                 "             [--save FILE|-] [--coverage FILE] [--checkpoint SECONDS] [--log FILE]\n"
+                                 "             [--state-in FILE] [--state-out FILE] [--state-every SECONDS] [--state-at VBLANK]\n"
+                                 "             [--progress FILE --progress-keep ADDR:BYTES,...] [--after FILE] [--launcher [--options FILE]]\n"
+                                 "             [--cheat MODULE:ADDR=HEX|MODULE:ADDR|=HEX,...] [--sotn-mods FILE] [--video-profile] [--modem line|dial=HOST:PORT[,listen=PORT]]\n"
+                                 "             [--other-disc CUE --from-other PATH=OTHERPATH,... --track-from-other N,...]\n");
+            return 2;
+        }
+    }
+    return 0;
+}
+
+int main(int argc, char** argv) {
+    SaturnConfig cfg;
+    bool launcher = false;
+    if (int bad = parse_args(cfg, launcher, argc, argv)) return bad;
+    if (cfg.cue.empty()) { std::fprintf(stderr, "saturn: --cue is required\n"); return 2; }
+    if (launcher && !cfg.headless) {
+        if (!host_launch(cfg)) return host_wants_frame() ? 0 : 2;       // closed, or no window to show it in
+        std::vector<char*> extra{argv[0]};
+        for (auto& arg : cfg.launch_args) extra.push_back(arg.data());
+        if (int bad = parse_args(cfg, launcher, (int)extra.size(), extra.data())) return bad;
+        if (FILE* f = cfg.out == "." ? nullptr : std::fopen((cfg.out + "/launch.txt").c_str(), "w")) {
+            std::fprintf(f, "--multitap\n%d\n", cfg.multitap);
+            for (auto& arg : cfg.launch_args) std::fprintf(f, "%s\n", arg.c_str());
+            std::fclose(f);
+        }
+    }
+    return saturn_main(cfg);
+}
