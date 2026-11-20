@@ -1,0 +1,2 @@
+-r requirements-dev.txt
+uv==0.12.17

@@ -844,8 +844,12 @@
       "sha256": "abf2fc8753d29f2620963765d0a7f6dd3e3c326db6ef51ba217abaaeca133cf8"
     },
     {
+      "path": "scripts/check_ci_config.py",
+      "sha256": "6d594f179f24ecb364d02d1314f72f8c653480430da2c18c005a20cb6c60b390"
+    },
+    {
       "path": "scripts/check_repository.py",
-      "sha256": "d95aa8728fe9f84eb8fe0e89e239a20fcaf97ca7dd6f33612353843f2ef8a375"
+      "sha256": "d5e41b4d25a1027ee2146e8225916bc948b70c9f1c724e3046cf72db74f8bf11"
     },
     {
       "path": "scripts/code_only_plugin.py",
@@ -874,6 +878,10 @@
     {
       "path": "scripts/runtime-host/CMakeLists.txt",
       "sha256": "c07f1661a7d4d5d2ae4721d60ce940312694dfcefb09670bc279607b0e845696"
+    },
+    {
+      "path": "scripts/test_ci_config.py",
+      "sha256": "86b7c305fff38bf5f87625daf88882f4346f54ebe3fcd964fdee4204640c7c1f"
     },
     {
       "path": "scripts/test_repository_checks.py",

@@ -39,6 +39,17 @@ Os comandos de [instalação e testes](docs/SETUP.md) usam dependências forneci
 O provisionamento inteiro de uma máquina nova e a geração a partir de uma nova cópia do disco ainda
 precisam de validação. Este repositório não é uma release pronta para jogar.
 
+## Revisão e dependências
+
+[GitHub Actions](.github/workflows/ci.yml) verifica PRs, inclusive os do Dependabot: Python 3.11/3.13,
+runtime nativo sem SDL, publicação, sintaxe do workflow e segredos. Não abre o jogo nem certifica GPU ou campanha.
+[Dependabot](.github/dependabot.yml) verifica Python, `engine/uv.lock` e Actions semanalmente,
+com até três PRs abertos por ecossistema. A configuração entra em vigor na branch padrão após o merge.
+
+O papel Codex [`feature-dev:code-reviewer`](.codex/agents/feature-dev-code-reviewer.toml) está incluído
+no projeto e herda o modelo da sessão. Abra uma sessão nova após instalar o arquivo para carregar o papel.
+É revisão assistida separada dos testes; não é um job do GitHub Actions nem faz merge automático.
+
 ## Provas e diferenças da cópia local
 
 O snapshot de código vem da auditoria local de 26/10/2026: perfil com 205 módulos e 11020 funções

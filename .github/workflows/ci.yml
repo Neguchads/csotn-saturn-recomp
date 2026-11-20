@@ -1,0 +1,101 @@
+name: Code and runtime checks
+
+'on':
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.13']
+    env:
+      PYTHONPATH: scripts:engine/src
+      UV_PYTHON_DOWNLOADS: never
+      UV_NO_CACHE: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install project test dependencies
+        run: python -m pip install -r requirements-ci.txt
+      - name: Publication and configuration tests
+        run: python -m unittest discover -s scripts -p 'test_*.py'
+      - name: Portable project tests without game or window
+        run: >-
+          python -m pytest
+          sotn-experiment/tests/test_make_config.py
+          sotn-experiment/tests/test_make_all_config.py
+          sotn-experiment/tests/test_generate_jp.py
+          sotn-experiment/tests/test_inventory_jp.py
+          sotn-experiment/tests/test_discover_delay_slots.py -q
+      - name: Engine tests using its exact dependency lock
+        working-directory: engine
+        env:
+          PYTHONPATH: src
+        run: uv run --locked --group dev python -m pytest tests -q
+
+  runtime:
+    name: Native runtime
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Configure a fresh source-only runtime
+        run: >-
+          cmake -S engine/runtime/tests -B build/runtime-tests -G Ninja
+          -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang
+          -DCMAKE_CXX_COMPILER=clang++ -DSATURN_NO_SDL=ON -DSATURN_VDP1_GPL=ON
+      - name: Build real runtime and tests
+        run: cmake --build build/runtime-tests --target runtime_tests video_perf_tests -j 2
+      - name: Run native tests without SDL or game
+        run: ctest --test-dir build/runtime-tests --output-on-failure
+
+  quality:
+    name: Publication and secrets
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13'
+      - name: Check published tree and Python syntax
+        run: python scripts/check_repository.py
+      - name: Install checksum-pinned source checkers
+        shell: bash
+        run: |
+          set -euo pipefail
+          tools="$(mktemp -d)"
+          curl --fail --location --retry 3 https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz -o "$tools/gitleaks.tar.gz"
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $tools/gitleaks.tar.gz" | sha256sum --check
+          tar -xzf "$tools/gitleaks.tar.gz" -C "$tools" gitleaks
+          curl --fail --location --retry 3 https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz -o "$tools/actionlint.tar.gz"
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  $tools/actionlint.tar.gz" | sha256sum --check
+          tar -xzf "$tools/actionlint.tar.gz" -C "$tools" actionlint
+          echo "$tools" >> "$GITHUB_PATH"
+      - name: Validate workflow expressions and shell
+        run: actionlint
+      - name: Scan public Git history for credentials
+        run: gitleaks git . --config .gitleaks.toml --redact --no-banner

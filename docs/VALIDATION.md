@@ -46,3 +46,21 @@ dump, save ou pacote de evidência privada foi enviado. A campanha não foi exec
 Campanha integral, todas as transições/chefes/finais, salvar/curar/carregar em gameplay e 60 FPS constantes.
 DMA com IRQ/solicitações externas e alguns serviços/modos do hardware continuam lacunas explícitas.
 O núcleo 68000 de áudio é interpretado. Não confundir binário x64 com recompilação estática de todo hardware.
+
+## Integração CI e Dependabot — 20/11/2026
+
+Treze testes de publicação/configuração passaram, incluindo recusa de YAML com objetos Python,
+evento privilegiado, token de escrita, interpolação de eventos no shell e Action sem SHA completo.
+actionlint 1.7.12 passou no workflow real; downloads de actionlint/Gitleaks têm SHA-256 fixo.
+CTest local repetido: 2/2, sem jogo/SDL. O teste isolado encontrou Pillow ausente do manifesto,
+agora declarado em requirements-dev.txt com a versão local 12.3.0.
+A suíte completa de código foi repetida nesse ambiente isolado: 126 passaram, sete integrações
+com janela deselecionadas pela restrição do usuário, sem alterar testes/asserts para essa configuração.
+
+GitHub Actions testa Python 3.11/3.13, a suíte upstream pelo uv.lock, runtime nativo Release e
+publicação/segredos em Ubuntu 24.04. A execução remota e o SHA verificado constam no PR #1.
+Ela não cobre SDL/Windows, GPU ou campanha. As provas locais anteriores continuam separadas.
+
+O papel feature-dev:code-reviewer foi carregado e executado em uma sessão nova do Codex.
+A revisão inicial do import foi inconclusiva por leitura parcial, sem achado confirmado;
+isso não é aprovação. Resultado final da revisão é registrado no PR, sem deduzir aprovação dos testes.

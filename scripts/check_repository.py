@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TEXT_EXTENSIONS = {'.py', '.cpp', '.c', '.h', '.hpp', '.inc', '.cmake', '.md', '.txt', '.hlsl',
                    '.json', '.toml', '.lock', '.sh', '.cmd', '.ps1', '.manifest', '.yml', '.yaml'}
 ROOT_FILES = {'.gitignore', '.gitattributes', '.gitleaks.toml', 'AGENTS.md', 'README.md', 'ROADMAP.md', 'HANDOFF.md',
-              'LICENSE', 'THIRD_PARTY.md', 'requirements-dev.txt', 'Jogar-SotN-Windows.cmd',
+              'LICENSE', 'THIRD_PARTY.md', 'requirements-dev.txt', 'requirements-ci.txt', 'Jogar-SotN-Windows.cmd',
               'Jogar-SotN-Amplo.cmd', 'Recompilar-SotN.cmd'}
 FONTS = {'engine/runtime/third_party/inter/Inter-Regular.ttf',
          'engine/runtime/third_party/inter/Inter-SemiBold.ttf'}
@@ -30,7 +30,9 @@ def allowed(name):
         return False
     if name in ROOT_FILES or name in FONTS or name in EXTENSIONLESS_SOURCES:
         return True
-    if name == '.github/dependabot.yml':
+    if name in {'.github/dependabot.yml', '.github/workflows/ci.yml'}:
+        return True
+    if len(path.parts) == 3 and path.parts[:2] == ('.codex', 'agents') and path.suffix == '.toml':
         return True
     if path.parts[0] not in {'engine', 'scripts', 'docs', 'sotn-experiment'}:
         return False
