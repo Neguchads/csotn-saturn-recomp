@@ -5,75 +5,79 @@
   "files": [
     {
       "path": "engine/LICENSE",
-      "sha256": "20f1e425fdc43998a56853d780523461e688fe617fd7b80ccc37f1cc13017c8a"
-    },
-    {
-      "path": "engine/pyproject.toml",
-      "sha256": "01cfe4797e42c5403d2c987301048ee9af4fa7ff22c9a6bc1af62b0ef78f16db"
+      "sha256": "cb79a2792717a7ec6744ed54f6dd6de1d96c66910ac8c4cf4f929d45aef7f84f"
     },
     {
       "path": "engine/README.md",
-      "sha256": "cb7776466e285dc8bd79ed060a6096f24c1f2322da2f203c1e114c878b7dd366"
+      "sha256": "fab72ef94c67891a761389e5bc2cf20e5b34d922751f27253f09d31aeaf15b52"
+    },
+    {
+      "path": "engine/THIRD_PARTY.md",
+      "sha256": "fba08208358afd94b536e451926b8f858a49406756ede12a025e8ed93048695d"
+    },
+    {
+      "path": "engine/pyproject.toml",
+      "sha256": "5383bd93acbca0cad9cfd7322e9e8ebf25cfb0f89654277ceffabc724cb741b1"
     },
     {
       "path": "engine/runtime/embed.cmake",
-      "sha256": "645156a3ef4f98772bf27a4b82f4cc1b0c6169d7087543c918f52eb41b69a231"
+      "sha256": "3173892adc496c3eded696f939b991c2a1360835b5160faa20af502e15035c2c"
     },
     {
       "path": "engine/runtime/include/saturn/sh2.h",
-      "sha256": "340735b31d8b076daa17aec152dc606799f0645a4f9493744a4f6976d094fca4"
+      "sha256": "dcf6c93a5a19f8d5034a17d3f3ba3b6d09217943541e60de39e9d59b7f7c3146"
     },
     {
       "path": "engine/runtime/runtime.cmake",
-      "sha256": "0887fd9dc937097c7a472446dd57c1562d0277efc1299913b4936c2db826cf47"
+      "sha256": "491396d1baf70980e1af60f70e9ff21094dbab1c3408718b67de4315b15b5ce4"
     },
     {
       "path": "engine/runtime/src/app/main.cpp",
-      "sha256": "d34b1a06cbd11bf7572a921df2f3e45d7bc9df43b3db4d19cae7aec504ee5e81"
+      "sha256": "d3266afa0da07ac344afef302cd6178674e23a74614cc06994cd3a3b9dbb7971"
     },
     {
       "path": "engine/runtime/src/app/selftest.cpp",
-      "sha256": "e35855b8a2551b8060691e5a8f4d85673e7970a83f92cadbf24b9cb9137f810f"
+      "sha256": "02afb013689cbbb192e0e8e9b164760a808862bf86550d061484cf24cebbe99c"
     },
     {
       "path": "engine/runtime/src/core/core.cpp",
-      "sha256": "15ebf9a614d4dbb344beceda83bccabda50e032361c11057d2c24b915cbf730d"
+      "sha256": "18fc44fb0aef3c5cf148d851c6e92ce013b6f01c5dc023bc5d3ae7d630f27928"
     },
     {
       "path": "engine/runtime/src/host/host.cpp",
-      "sha256": "11fa19b3647258f27160532ebfa33ac3d60bf2b0b1f8e450ef0522118782598b"
+      "sha256": "1e68b4416d31fdb3aebc6a712051f0bf36e94db39217fb3371e4e3429e977bdc"
     },
     {
       "path": "engine/runtime/src/host/host.h",
-      "sha256": "3b32803c1328b3fd3aaf077b226e6d7aab109038079bf60a540638a38f32cec4"
+      "sha256": "7d8fb865dcf22324da14157a2815a1c8cfc0d214f59ea760b70d2b1291ff5c45"
     },
     {
       "path": "engine/runtime/src/host/host_null.cpp",
-      "sha256": "bf7173a093ae4c04a51b14cdad880b2ce61c195f28219e9af396545db3833398"
+      "sha256": "ed27a63069347c7f8674a66d9a4cfd1414c5c40669204697c5ef88c50cfd606f"
     },
     {
       "path": "engine/runtime/src/host/host_sdl.h",
-      "sha256": "89b620575f70c6ea5132ba20f3694c6941696cdc15bd19758b0287afa272ae03"
+      "sha256": "eb8c94c1a66c4b2e33219624385c6f81809f308fbc5a26fad2fa95dd5a95019f"
     },
     {
       "path": "engine/runtime/src/host/launcher.cpp",
-      "sha256": "9c9073a51aecea79c813b66892c2089bbee702c8dcad6fc9f992b7e91742d0fc"
+      "sha256": "904243878fa376775df51b4f15631455f2398e2db2ab5a85ebf0785d9b9a8ab1"
     },
     {
       "path": "engine/runtime/src/host/pace.h",
-      "sha256": "87212988cf6fcc5b37738cad1e40a8d31ea5b1835599e8b9de03854785db9ec8"
+      "sha256": "7a98014d0b604e4f0f63df08537c2d7f96bb6ed475c5a6cd3fe9046105b66674"
     },
     {
       "path": "engine/runtime/src/host/pad_slots.h",
-      "sha256": "b8e0633005e6e5b3347c21be30ce81f5c1c96d6b8a02ad9e3d12b9824b1cc6ea"
+      "sha256": "128e43ee794aa75dab12058e8ca4ec9750a13b8ebdb9ec23bb6847fb8915b7d9"
     },
     {
       "path": "engine/runtime/src/host/settings.cpp",
-      "sha256": "bb15f5c9b6afa364e272b896025f60070598c073dd42c03aec120089d921a303"
+      "sha256": "8e0df6ad12aeb59033be516aaa2c04317e4c85e41c95afbd34816c3d0ed1ee16"
     },
     {
       "path": "engine/runtime/src/host/settings.h",
-      "sha256": "5a58d81a0f22626fbfeab6d4e1db380b0f7c0f6f51d7cf6681a5c67a4aefaebb"
+      "sha256": "815868344ae38f6c80ff5b891fc0e543cc274f44db1804c74df627271fe0955d"
     },
     {
       "path": "engine/runtime/src/host/sotn_bug_report.h",
@@ -145,11 +149,11 @@
     },
     {
       "path": "engine/runtime/src/host/sotn_vdp2_compute.hlsl",
-      "sha256": "1e88519758bd3a70b669228372f37217c932a440b3831e2673c4c55603b48f41"
+      "sha256": "dae50c5ed78a17b20aeb05093b82120f7c20c34edc3e2daad039f4dcc8cddf39"
     },
     {
       "path": "engine/runtime/src/host/sotn_vdp2_dxil.h",
-      "sha256": "b7bd4f370b80e45a7ddca79cc113be987533c97ae218b365cc939c0deff116d8"
+      "sha256": "ea306346d38a14d6aedf7d3e130874fb007e35022670bb3de20bbf17073422a9"
     },
     {
       "path": "engine/runtime/src/host/sotn_vdp2_gpu.h",
@@ -157,7 +161,7 @@
     },
     {
       "path": "engine/runtime/src/host/sotn_vdp2_spirv.h",
-      "sha256": "26aea1e331df41d3a3c6f456894b3b3ac6522c2f9324ad96911ccacf33d03eda"
+      "sha256": "7cda4b5da93a9bbf07c8e65fde73bcd7b3bdcb57d52199cac9128a77993b4d67"
     },
     {
       "path": "engine/runtime/src/host/sotn_video.h",
@@ -165,87 +169,87 @@
     },
     {
       "path": "engine/runtime/src/host/touch_pad.h",
-      "sha256": "717fade14ec472ca0a8e52503841b029c30690031ac6c5f895766b97ca512cf6"
+      "sha256": "3c0aa2e16c81ce00be55b826692469ac4eba85ed55449695fa97a9fe8508bdf1"
     },
     {
       "path": "engine/runtime/src/host/ui.cpp",
-      "sha256": "454806afad1ced9bc7db43b995ef582c532986b9d72f171410e0e72f677b11a9"
+      "sha256": "f01298ab0b09b17f3dad1744ecf7f544cfb9631a4798669381bd481277b9994d"
     },
     {
       "path": "engine/runtime/src/host/ui.h",
-      "sha256": "07e94313a8b2d4aeb7832c58442813f240e81e217725797d099531d280b7ee83"
+      "sha256": "092475fc1f6698f407578218a6be84dfe87a91fa9fec4d6eed42765efb8c5b10"
     },
     {
       "path": "engine/runtime/src/host/uinput_pad.cpp",
-      "sha256": "ef63f2c02f47cd6b0d5209b741043dec78a4fdc9803cdc03d496e9feed4acb18"
+      "sha256": "e946177441ac5d6458931047fc4fdb405b7930aeb4d897b9fcb198cb96b2fb95"
     },
     {
       "path": "engine/runtime/src/host/uinput_pad.h",
-      "sha256": "c3451e93355bda8f443f85327d92bd3a4d6e74a763e279bf045b95bd16a36196"
+      "sha256": "92b3e65fcb6b245569ea586614179cf37a872567e46b09ff9e2991ed28274603"
     },
     {
       "path": "engine/runtime/src/host/unplugs.h",
-      "sha256": "bd18e1e2acc093d5e05e230dfe2e81a39c9783145fc554f387abc5b11d56b847"
+      "sha256": "f7e15a43db0882ce616700d7f9c71778079b2e61db1952e2e16efaf2dcab7203"
     },
     {
       "path": "engine/runtime/src/host/windows/saturn.manifest",
-      "sha256": "bf9c399a748c41c0e8d9573eadf0cb5466c7b6b61edd58a7de8c198f204a9d5f"
+      "sha256": "2011d245f19e425fe360680ecde8be4403316cad27b1e5c136ab2ac667d46407"
     },
     {
       "path": "engine/runtime/src/machine/agent.cpp",
-      "sha256": "90ba94f62a1ef4c946aa341cead435a006ad944a18cff190d6ddc8361ff1712e"
+      "sha256": "66fa2f5bf38e7666d5e8556e6e38f224831695dff0ea1acdf98785aa73cf897e"
     },
     {
       "path": "engine/runtime/src/machine/bios.cpp",
-      "sha256": "ab5783d90f587cc54e42b45c74d4b21fd880b75ee823472adfd785dfc5f79ce1"
+      "sha256": "1246b0b8b61b8a4fbc39fd41fd3a7a7d5266b6f4257351ede914226177136600"
     },
     {
       "path": "engine/runtime/src/machine/cdblock.cpp",
-      "sha256": "37c30b4543e67fe26379723467c27abe8b3e607050e4ac92fd64ebc0dbae5175"
+      "sha256": "7d0658824e1591add9b2f179e736249462d9c2d483c37e9e46c87ab845f7f3c4"
     },
     {
       "path": "engine/runtime/src/machine/cdrom.cpp",
-      "sha256": "78ea47ac9084db8f0d2aab9d72bee6266f9f08b3a9ef5cab0cdcd85974e3a308"
+      "sha256": "018b46aeca9464ccafa616696a4dd028439c5c4098a674ececb32b221882e2f9"
     },
     {
       "path": "engine/runtime/src/machine/machine.cpp",
-      "sha256": "54e2ef957bcd8bbcf2a7bf43f35449736ef3e3a82b613145d91cc3d60bbf7b8a"
+      "sha256": "2d79918143bd4ad0c7b779874d0456bd77b218b18ec3ef04a72a435a025ca2d7"
     },
     {
       "path": "engine/runtime/src/machine/mmio.cpp",
-      "sha256": "18b281a9d00543c08665de40177f472417f25559a68b7d51bd2279b96e1327af"
+      "sha256": "00dbcb59a2a4cfc1c93e6f9412a701cc951505e8f4f7a8dad8f8b2130e40aee0"
     },
     {
       "path": "engine/runtime/src/machine/modem.cpp",
-      "sha256": "356388f29963ee7fcaec75ec17893cf10172dfb05c135c719acc308d7a1e266a"
+      "sha256": "fa67717c16aecb1f697b3dbbee68fc8a2c3d591cb9c81820506cbeeece41a4e5"
     },
     {
       "path": "engine/runtime/src/machine/modem.h",
-      "sha256": "7655140ef16d6a8ce50aa31f577d72bd55531aa7f6540c5eaeb9b79c1936f9fd"
+      "sha256": "84beb97262c129cdb277f1f41d0ec15774a30321798dcaee0ce2279ecbe51bb0"
     },
     {
       "path": "engine/runtime/src/machine/modem_tcp.cpp",
-      "sha256": "8e7c7bba6a2504191c26c1a0c99abded38019f01098f940cf2d4c40255fc4e81"
+      "sha256": "484c42bee54360b46576ac9d0cb6918ef35514b5c47f7e5c929985990175af73"
     },
     {
       "path": "engine/runtime/src/machine/onchip.cpp",
-      "sha256": "509de09f64db2fff2f1f2d3fa1ca1f67960b819592e2ccb3732eb2731f86b0f0"
+      "sha256": "ad6998ce588d9bb68c1cb3c6af3c35c08643823ee4391361f355b852845db8a4"
     },
     {
       "path": "engine/runtime/src/machine/saturn.h",
-      "sha256": "661bd898dad0b09c8ad394b4463874a114cbd82d648641cae697d335134080d5"
+      "sha256": "249070dcc172f2f853662142c2b8381a53c6507ef02c074193fb9b6cead51bcf"
     },
     {
       "path": "engine/runtime/src/machine/scu.cpp",
-      "sha256": "66afbcdeef61a5a6936310b5eeb332246e79b3fa7c7fdad31dd21a9fc3b76cc9"
+      "sha256": "301c2d0a4e57c91ec78cc476d31175852b0d86e0c2da1aa9230abdf98f910c43"
     },
     {
       "path": "engine/runtime/src/machine/scudsp.cpp",
-      "sha256": "ec6d470efed30aa5ea81752708aa1305ee2ef84f8d514fd863a897247d586019"
+      "sha256": "646321de09d348c4fd81752c55185b7a7f6113648eaeebdeadd31b3991b285ee"
     },
     {
       "path": "engine/runtime/src/machine/smpc.cpp",
-      "sha256": "2d36f809c057b17eab3932a793c4c4c531c07c0adc7f607ec836f148cd600e08"
+      "sha256": "bc45937e0c9a613ded8292c98909767d941b1f64217007b3292b7c79d5d61db7"
     },
     {
       "path": "engine/runtime/src/machine/sotn_mods.h",
@@ -253,7 +257,7 @@
     },
     {
       "path": "engine/runtime/src/machine/sotn_overlay_evidence.h",
-      "sha256": "447f55141de0d2fddb22fded73281a51272f4ec8893af96a552b206d7c780765"
+      "sha256": "6989ce8f66793cad908cc0311f146c0ed8e40fa4ebbe307fd88d80ed0bf79f27"
     },
     {
       "path": "engine/runtime/src/machine/sotn_presets.h",
@@ -261,59 +265,59 @@
     },
     {
       "path": "engine/runtime/src/machine/state.cpp",
-      "sha256": "2c97e50db9afb1c6c524aa94b7b5a03298d92d191d2de979fafd487a8038e18d"
+      "sha256": "600d275374fa5ee37f40f18124bf7ade473d6e4589fc868b3e13791dd50c4768"
     },
     {
       "path": "engine/runtime/src/machine/state.h",
-      "sha256": "cc507e3f6d2810b8edf6eabf821b8705bd69692a28f4325d6ba61cd12dde0c33"
+      "sha256": "55c4ab47e57382e78dbcdd3579c260ee9864ff4468196a0b76eee73e39da3487"
     },
     {
       "path": "engine/runtime/src/machine/tasks.cpp",
-      "sha256": "c27aed90894375b6a6ac771faa2fc83a12516424f4fbd526c7fd59e324516933"
+      "sha256": "08062c580d0c2aeeabf1172ca77882d4677f3d8bae6e568d03215bf61dd93fe6"
     },
     {
       "path": "engine/runtime/src/sound/m68k_state.c",
-      "sha256": "f4be32d375d9a67778a60f0a4ae1c64d6c320e79918dcfbfad289657e29f2fcb"
+      "sha256": "aeb00f293bfa3a1bb066f514edb58a2963d3513ba578007577ce4c9d03169f6e"
     },
     {
       "path": "engine/runtime/src/sound/scsp.cpp",
-      "sha256": "5ecf541b349a00e5394ca3a8160cff67361bc5b7ee10d37d7e3286e46265c446"
+      "sha256": "734975378213f47848b53d0bf9335aaaae36243bf3f1a9a235e5d8a96a55a2ff"
     },
     {
       "path": "engine/runtime/src/sound/sound.cpp",
-      "sha256": "de4e2f91a1cc9dba19cc11d7833779236f28599652467f9f4f0ab67294b93cdf"
+      "sha256": "47ab773fc9bc770f55878ec2d3dfc9cb1ba0e146c871d7f70466636f96df1879"
     },
     {
       "path": "engine/runtime/src/sound/sound.h",
-      "sha256": "86b1d18bc8d40ce2f45941c81d327ed3f7e1367061a2440cc499652ced30fc08"
+      "sha256": "fe8b27f2d052452e853e08bccc8a2dcc81ae24d82e186bfd15fa9855dfcabcbd"
     },
     {
       "path": "engine/runtime/src/stub/services_stub.cpp",
-      "sha256": "d14c345a8d103284a7381085518ce11d48bb284d78d5e4dbd85ddd504679243b"
+      "sha256": "4209ee9aec50d57ea48be2ba477163a543863b5e45902cd9397576bdf4af5dd1"
     },
     {
       "path": "engine/runtime/src/video/movie.cpp",
-      "sha256": "62f15dcfa47ed63641cb4acc85b7ed6540049657ec1aca9f0cd10ca6e0a88a1d"
+      "sha256": "d75aa19354bcaaa7831e7c216c0f902c0f8986e8e07291884452cf5babbf0e9f"
     },
     {
       "path": "engine/runtime/src/video/png.cpp",
-      "sha256": "416576b0324d54683ad2a1e201d7f16ca1e36e626989adf2ca62eeb20ac5ef29"
+      "sha256": "321ed360bcbc472d1c71cb2dd9016a9fd37f42ddad49b51f9e23e98c6a38cc3c"
     },
     {
       "path": "engine/runtime/src/video/vdp1.cpp",
-      "sha256": "aa75f231c38ddb07bb255152fc452283631b3acac5da2231a2da3cf5219f5522"
+      "sha256": "da1f21db46ed46b196be0632184bb0431ecedb199cc6373c8935d7e35533f374"
     },
     {
       "path": "engine/runtime/src/video/vdp1_raster.inc",
-      "sha256": "9747325bb73405b6f80f125519004a5971894e6b4901db96e9100efcd1b7dd01"
+      "sha256": "6ca9883a53ed19ab5ada367a07c83fa4d9ab6a392d6ebd5e381368f36d368833"
     },
     {
       "path": "engine/runtime/src/video/vdp1_raster_gpl.inc",
-      "sha256": "eb5647cc0a3d3930d869c6b2962b10a3c222957cba5c6b4e4ec9a72f826a0900"
+      "sha256": "553d210f2b19504165203122ee6505144ae979fef58041ece5c23db1efc31389"
     },
     {
       "path": "engine/runtime/src/video/vdp2.cpp",
-      "sha256": "f9c3b6c7a397e87e6aac128450e009167240d2348f382f62f7d16d06d9ba6cc2"
+      "sha256": "4b8339b73f45d6e60544886e47424d0c3fe9492ef80919eec6bf83e647176b8c"
     },
     {
       "path": "engine/runtime/src/video/vdp2_gpu_snapshot.h",
@@ -321,51 +325,51 @@
     },
     {
       "path": "engine/runtime/src/video/video.cpp",
-      "sha256": "0bbaa59f549e8c94671f15e96a3a3383dda0954ef1075a6fcb2412c6090d89fb"
+      "sha256": "d273e33c99e3b72d6d0250e885e818862c279c1fb3208b3683ce4ee56361a307"
     },
     {
       "path": "engine/runtime/src/video/video.h",
-      "sha256": "fe9dcd5aa711c42cfba4ec476dd40bb1b110d814821ab35c72449fd775fe055b"
+      "sha256": "9d1f86cbd885b4dd7b3c30206f9fd1a297dae50562795a831003631d1453ffa3"
     },
     {
       "path": "engine/runtime/src/video/video_perf.h",
       "sha256": "61ed3db65c8c9da1c2f0ee4395b053eef1a133b08389fa3a81c573b9ddd4000b"
     },
     {
+      "path": "engine/runtime/tests/CMakeLists.txt",
+      "sha256": "9ebbe72c385a96bc986f723058d5b614b8fbca09c5c4161bf655e79da55dfce1"
+    },
+    {
       "path": "engine/runtime/tests/bup_test.cpp",
-      "sha256": "7792c3ad7d8dcfd6c8e3df05b1c5a0b2032a6faa5e9d5a9f8a4c7f2161a19893"
+      "sha256": "fdda84be2a63ce4e031da92b3d2d261de6ddbc7e36a4f838b1f0ab0f50546cb6"
     },
     {
       "path": "engine/runtime/tests/cdblock_test.cpp",
-      "sha256": "8d102395f2bd24fb52a9ea77b8c8118cf410cc4a0bddbdaee477711b50f56151"
+      "sha256": "bcf7afb19981a405aa4bb872d57026cba11e01a54619e07bf0c944c24b710a3d"
     },
     {
       "path": "engine/runtime/tests/cdrom_test.cpp",
-      "sha256": "ecf93e4a34c06ac08e837b12b45d30b1f3ac033bcb37cf808cda97e3684a98c9"
+      "sha256": "274094a40e3d97cfaec81d81e4fcfc63a82438c9edb29542e121213bc1532ea0"
     },
     {
       "path": "engine/runtime/tests/clock_test.cpp",
-      "sha256": "83eb0bf42ef2062dd9b58c479f3df5edd3410bde8ba9729e03cf8d473cd2cce4"
-    },
-    {
-      "path": "engine/runtime/tests/CMakeLists.txt",
-      "sha256": "2710c0e94d30faa266d5ac2ed1663c85cae8985413efc89d741f9a92772c6fd0"
+      "sha256": "b1bff7ee256db10ea1b8153b09a31b17989047814c20c2258bd0236dd58b520e"
     },
     {
       "path": "engine/runtime/tests/frame_change_test.cpp",
-      "sha256": "ea45ab9925907efa4d5a0a2cf9eabd2c64e95b4839dd61bb481c0b10f0e19eb1"
+      "sha256": "c12bbd51858408f7b5892b594c7516ec7180b125e070c7b049d999ac588e622f"
     },
     {
       "path": "engine/runtime/tests/main.cpp",
-      "sha256": "fc368694e4880386c448d89bd2aae98df19b6510f405e049c91de968d4ab4701"
+      "sha256": "4dc89ed7500bfbff310a4f779b23f7ebd556d3adde3a0e17ceca660e641299a9"
     },
     {
       "path": "engine/runtime/tests/modem_test.cpp",
-      "sha256": "69600ba6712c685f0aa36fe260f9243aa0bddfbf9cff6791b1584074266ef6d9"
+      "sha256": "34eafc36cf263804188e05709937546f7f08fca2e3796adfec06242a693d4593"
     },
     {
       "path": "engine/runtime/tests/no_modules.cpp",
-      "sha256": "e3c786c0ab4b7ce9fc8466d6c70b1d956d05328cf1df2b8875978f0df7269f52"
+      "sha256": "72ab16c0957f8a895988cdadc6c99a320d7a33b46b9e8c12d20b515b26dad1eb"
     },
     {
       "path": "engine/runtime/tests/onchip_test.cpp",
@@ -373,39 +377,39 @@
     },
     {
       "path": "engine/runtime/tests/pace_test.cpp",
-      "sha256": "1a10bec1ea7059de921ffbf23fa08f62dc0220de77f8377b4a63fa9b43043f90"
+      "sha256": "1be4fbc75f6364abb967d8a00645fa7b9eeb3b30b1629a9b1b57d0bfdf86d316"
     },
     {
       "path": "engine/runtime/tests/pads_test.cpp",
-      "sha256": "82e5739921b64c5074c6e61a3ebfa779db881f4c7531b269078affb214b06d2c"
+      "sha256": "9ea827ada0c9d08892dbdc7041a4bc28ec77fa6dea0cb85d4677b6ad2b086301"
     },
     {
       "path": "engine/runtime/tests/scsp_test.cpp",
-      "sha256": "574ec8a1c9313f0245fead648f75e82d30fcf3a0ef7c3a7df1452c3c72dbe41c"
+      "sha256": "3f776cdc0de2b1f46f0f90afdaaac032e5f109bb579524a427e5cc11e0065d5e"
     },
     {
       "path": "engine/runtime/tests/scu_test.cpp",
-      "sha256": "41c0ec9d85f1bb255d7aeb2ff233e1f3be54ebdfbe921b9f11a33e7e7452ed00"
+      "sha256": "26b80118f03d51721ad4566f1846eb5f3a38da88018a1fa1596b2dfc678159b3"
     },
     {
       "path": "engine/runtime/tests/settings_test.cpp",
-      "sha256": "a193e7e80e9b1c72787ecfc5c7a67c6c5c457021fa8d06cff05ebc0a80fef470"
+      "sha256": "359188720f7f765b7f305f53dd1e4c562ddd1351eeff1626afb2fc87fc419ed4"
     },
     {
       "path": "engine/runtime/tests/tasks_test.cpp",
-      "sha256": "03cc01891b1a1860c1a492c253d47815e5aaeb5d5b432b0265a904eb7457c99e"
+      "sha256": "e2197fbd91f34784d93b166409ef2f75ebbe5654c8204b1358e6fe91dbb26b4d"
     },
     {
       "path": "engine/runtime/tests/test.h",
-      "sha256": "93a0035e4b1fce361a75e716fbd427bfda03d05b63929c42c30b437945a2e3a4"
+      "sha256": "a7460422f16ae8ebcc847fcd76323fbf21d32e16961699c9de9ca6a25d55cc0f"
     },
     {
       "path": "engine/runtime/tests/touch_test.cpp",
-      "sha256": "a993e47f2687d1e6cc02995cc2365de6ce2afbc679edac22b784cede3d612a1e"
+      "sha256": "469f86eda5b84a4ac107ec2539dfa9f7c3759906003ca92f41ec44da9e31060e"
     },
     {
       "path": "engine/runtime/tests/vdp1_timing_test.cpp",
-      "sha256": "8e80edd81b89f9bd739784d932227f040043e92bd7567bf14f46ad515f11ff93"
+      "sha256": "3e0e0767702538f6bf49da97d004c2f77bc5f859632030705b47269d72b4f156"
     },
     {
       "path": "engine/runtime/tests/vdp2_gpu_compare.cpp",
@@ -417,7 +421,7 @@
     },
     {
       "path": "engine/runtime/tests/vdp2_test.cpp",
-      "sha256": "dc13ce0c9547e8ca18c9a63e510b5df30d787bf21326823970bd6fc2c516fcdf"
+      "sha256": "826236a956bfed940a22c15abb7912442b82a59dfdea2d6168ac675e46622811"
     },
     {
       "path": "engine/runtime/tests/video_capture_test.cpp",
@@ -428,6 +432,10 @@
       "sha256": "9d887c714fe52e75f1ec56c27a995eca3437750f9a0cef35598e72e3dc33cb95"
     },
     {
+      "path": "engine/runtime/third_party/fsr1/LICENSE",
+      "sha256": "db089274ce766da70f5b7d791029c3486f9f9e27c8c79c652689603d3192e802"
+    },
+    {
       "path": "engine/runtime/third_party/fsr1/ffx_a.h",
       "sha256": "f60e2722fcd13989523b9164d776ab382b3692791767f3bf8bb19967f763f3fb"
     },
@@ -436,76 +444,72 @@
       "sha256": "93c3922362ea7fc99cbcc698ca30c98de4f8c246d1fbb0b09e015ddef38ce3a5"
     },
     {
-      "path": "engine/runtime/third_party/fsr1/LICENSE",
-      "sha256": "db089274ce766da70f5b7d791029c3486f9f9e27c8c79c652689603d3192e802"
-    },
-    {
       "path": "engine/runtime/third_party/fsr1/manifest.json",
-      "sha256": "21f0041d72511bc17393494f459f434219ef9f486324dbd73206a22dbad0b2ac"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdl3.cpp",
-      "sha256": "76c9f8afc82b9118e6433261a9e923304a075dfb95f2b1c8a33e4dcc17aa6bb5"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdl3.h",
-      "sha256": "1a7fbbc41af9c093da895ee2f48c5fcee0350303c18e4ab6ce7d3f265ef42b29"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdlrenderer3.cpp",
-      "sha256": "e4a0e5c88def2032f87a4acf6da12363809831ffb23dbf9993fd093bf7e120d6"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdlrenderer3.h",
-      "sha256": "3a21ac3d29044de2397b69e70651a71624b0b57b472fb85346845f85f0e734b2"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imconfig.h",
-      "sha256": "58ca417d54cc576fb89e69b24880b9d2ad4b380b2acdb149386c417ff36d7cdc"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imgui.cpp",
-      "sha256": "01cd8afb847fe33f6d3386eca9fa057bb87783364bf3bd13b0fc582d1f3fb5ff"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imgui.h",
-      "sha256": "9e172dc5b03d5b6a7795ddd24faae0912641f0a92c1c8b1d5423f35fad1b927a"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imgui_draw.cpp",
-      "sha256": "ce39607b566fac1123cd8089ce34f4a4cbe8c95fa2f78509aff9a7335333c438"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imgui_internal.h",
-      "sha256": "59e92be94d1a1443c68ad65d6c70ae713d234da97926564b45585d01ff40b314"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imgui_tables.cpp",
-      "sha256": "a0e7e3e874abb06da252cb8bf2b7ac87941aa176eeec51d9d81335d937851e0c"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imgui_widgets.cpp",
-      "sha256": "1938176e90bb32ed4e3a59ef269239a95a191615bc0251f48ca6e5534e3c9642"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imstb_rectpack.h",
-      "sha256": "7f9bffb8ac5e79d20787fdc20d29d29f7474dca673f64d4a9a8a9f9373e40972"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imstb_textedit.h",
-      "sha256": "24a8db00354af8f4057417841635a1b6dfd8986f1608336fe6f10d6fd9769aaa"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/imstb_truetype.h",
-      "sha256": "a4131c7a2e324c0625250830af6976adb5732b453f0fc6e8bc5ad70065bc2b79"
+      "sha256": "03dec931fbc374c61989782f6f4b486c411e80ec2b5feae13e156195f4369b0b"
     },
     {
       "path": "engine/runtime/third_party/imgui/LICENSE.txt",
-      "sha256": "f20418b409e53c8c9f4e90917ff395554a60320d4dfbf833da89b339cad8628a"
+      "sha256": "173506a2d6f7fb67990d257fb2507f188690eca39060c39469ae7bef43aae2a3"
     },
     {
       "path": "engine/runtime/third_party/imgui/VERSION.txt",
-      "sha256": "563d1b14a35585b1621c94a6f77eb5e308c949048a055e92ffd1cd3d2007202c"
+      "sha256": "a192199a0ebd9922274baccd535a79d59a74f567818aa70d24eab437612c7e3f"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdl3.cpp",
+      "sha256": "306060dffa276b574f0541194e8e079c1685c29c1095602a3972de0bb23171e7"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdl3.h",
+      "sha256": "fa184f17d59d31e986df2e827ef964d7b3c28bcba7789643a4aaaed344cb868e"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdlrenderer3.cpp",
+      "sha256": "8cb065251a41dcccfc181810b5fec979498c6ffe43fa389a3c86d4d5506e3ca5"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdlrenderer3.h",
+      "sha256": "553cd6cd3efb8b887954e7f2d804a79538651a5332ef68c812effe27c5c577bc"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imconfig.h",
+      "sha256": "5755e1b8d6ab0d7811a9d7cac0f509878b51fc5ee77e09bd0f235bcb414971e7"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui.cpp",
+      "sha256": "5a1e5128c0305f50b6556a77f71fde35836505883b74c1d6ae44723243f1e8de"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui.h",
+      "sha256": "0d8db1045db01d908853adfd26ae07c5bc5ab4789d4515f6ea34234a69ade0ca"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_draw.cpp",
+      "sha256": "83d30419a8e06a5f0a8692ee6de186f7ecfddecdc33769e76244837e2975b400"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_internal.h",
+      "sha256": "efba9bccc971cc49ec3da3168968ba412c7ea89745c104a7f5c004c8349bc71f"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_tables.cpp",
+      "sha256": "b5deabe5b569ab712c11b6556562a646bf88327320fc60a451071b2a36498d72"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imgui_widgets.cpp",
+      "sha256": "a8a0b2f65caa5711467d9e3ca4028fded48329ea65e11ec92a968293dc2aa231"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imstb_rectpack.h",
+      "sha256": "889b396795202d1457560a797a7242e96f6f132d4b88ca2d69be58bf05e1771f"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imstb_textedit.h",
+      "sha256": "a985f5fa0ed97353d493b497961e9eef52082edcd045cf6954b69990ec9d0741"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/imstb_truetype.h",
+      "sha256": "c51a0f7e7ea760f2366bd3752635ec58e21fccfec4a832501639990ba6ce0528"
     },
     {
       "path": "engine/runtime/third_party/inter/Inter-Regular.ttf",
@@ -517,99 +521,99 @@
     },
     {
       "path": "engine/runtime/third_party/inter/LICENSE.txt",
-      "sha256": "b3195af0fb14368d1b3b10fb9d3fe503b7163ea083859d2ee553bc74da07c320"
+      "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
     },
     {
       "path": "engine/runtime/third_party/minicoro/minicoro.h",
-      "sha256": "df94a4fc7f71a9be7c7581ad7a872bb8c651ec5897fc46f281eb59fb6ce82f60"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/history.txt",
-      "sha256": "0225deb29d8ceab2727637ed54207b9eec12379d793a17362adec36d6667b6a7"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68k.h",
-      "sha256": "1124004a772eb55887c1cae3c53810b26b58eff4171d75c1ade82868e9786641"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kconf.h",
-      "sha256": "0c82a4a8b27904e276572e28316b843da2df461bd36466f6ddcff719b1934ab0"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kcpu.c",
-      "sha256": "00fa82eee4f3d7ea966eab561a10361681b36b519d8fe8949f1a31f8225cdde1"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kcpu.h",
-      "sha256": "9cba59992d4e3adfcb6ff9c25ae9c8625df991e73e177305b5df4126308519d6"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kdasm.c",
-      "sha256": "97451eb69c2d761e49b6007ebb9fa7caf79e260d8f3baed3cf95a08c38b50451"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kfpu.c",
-      "sha256": "cb03019b2d00974feb023a80691fcee76db59821d6a350abae6f299b9659e972"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kmmu.h",
-      "sha256": "6bb2c4ca4d37acddbf3ab99d87a674e8bf656d3b254b30ddf59af7b71fdfd67b"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kops.c",
-      "sha256": "eb4bb8c9cb12bf10521658f9150d092438623164a11e35c6b46ddc6aa585a3fc"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/m68kops.h",
-      "sha256": "17676951e3eaaebdfd59dc4c4e6d030143ffa693589087be237fd0170c97407e"
+      "sha256": "c4205e8db0a95456dfde9f73f071609c6d2cad2ebfd1d74ed0a9254f121caa2f"
     },
     {
       "path": "engine/runtime/third_party/musashi/README.md",
-      "sha256": "ff5524e9d94aff8454c60875f5aa58a7200a6f38dfd1c4514f9cacbffcb466d4"
+      "sha256": "a0ba3677996973a30c563e8f5fe82678984483588e013909aaf5c0f42b8aa84c"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/history.txt",
+      "sha256": "0831ee0020bc52399456d76a41c8a16edd0136719ee50eb4df4431d91571ed15"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68k.h",
+      "sha256": "7fb10f51ee36d45f6e2be38d72aa0c57853810a816f1cf19e0f0c600bd1afa4a"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kconf.h",
+      "sha256": "236bfbbae2d19c2bc3c3455340dafd3a086a86d2de6f19371eb9c27be8de8abf"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kcpu.c",
+      "sha256": "0d98c1bfd104929ca393ab6020c05adaa3de5433961cbf924d0ab78a82778405"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kcpu.h",
+      "sha256": "372d2086a9c39aadf87d9e0fa42104c5849bd4972ce74b191c0d458208193635"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kdasm.c",
+      "sha256": "c31b1d3a9863c4271fd0ddcddf3cde8fadac691909ca994db6ec41941696dca2"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kfpu.c",
+      "sha256": "e86c9eaaa51993c2d0fac1f6d489bafbe3d4209ff74163e97b7720011fe4327a"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kmmu.h",
+      "sha256": "66bdbef424dc672c79d316cad6060d487a9cd574b0c12d008e82505a4a27df89"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kops.c",
+      "sha256": "f36a23ff55ba012081b0b28815c23c975782dbca5eb1e10dbaf8825d14bb117e"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/m68kops.h",
+      "sha256": "f7a4709892d071901c677afafbab575fd99945c76cf1e9869789b54fac13199a"
     },
     {
       "path": "engine/runtime/third_party/musashi/readme.txt",
-      "sha256": "995597498f5f3f8fa7d1c85ec7cbe290856463c1e1ad5c5757cf07daee76af4e"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/softfloat/mamesf.h",
-      "sha256": "75bdc490b75389c78abae0de57ca0b4f40c3cd1a8a17d9d9ad63d33e6f05e74c"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/softfloat/milieu.h",
-      "sha256": "c3af7dd07259773325574bf000bc391fd3b0f50b1ef0a8b66255e0e7d59d8daf"
+      "sha256": "ecff54ee43a229d39aaa6def046c95d5133f8f936ba83a6e62af50ac01832a4f"
     },
     {
       "path": "engine/runtime/third_party/musashi/softfloat/README.txt",
-      "sha256": "035ad9d003f77a87a311dc7acddb99cc5a03ced506c2db098e9e4c7435cfaa86"
+      "sha256": "c71e555b87858bcbd6629ca2a1b181babaf8fe129172c15489a9eeeb56a6dc1f"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/mamesf.h",
+      "sha256": "0060a07e2a2292bb98a79917a8ddd02ae3225173ce37d919eb7e76a8cc661aac"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/milieu.h",
+      "sha256": "48da7850cbd2481c3d87f7bde42815d0e64d08a2772afb847b5f91d90afcf9be"
     },
     {
       "path": "engine/runtime/third_party/musashi/softfloat/softfloat-macros",
-      "sha256": "12f2c8b581c8ab02ba14e4f1e4e7c5ad76ee45e645debf40306db69b927238d0"
+      "sha256": "003fd1da7dac65e74c3129af0a45a2fb238140d281ccf456b2f3d18ac633e840"
     },
     {
       "path": "engine/runtime/third_party/musashi/softfloat/softfloat-specialize",
-      "sha256": "bb06f1a272c951187e6efa0375080ba4ac4b4bf9893d786bfe7b2e82593729ad"
+      "sha256": "ec8df128b1ebd711215e39d35ac62c8bde59f8bcd0cf88718d8fa5d18a475d72"
     },
     {
       "path": "engine/runtime/third_party/musashi/softfloat/softfloat.c",
-      "sha256": "774708f04a859d39b800cc91925bf2db141c045aabcb747da23ca483e92fb835"
+      "sha256": "a9249098c1be64f346a20d72250be47e779764819afed2c6ecce7f8687476db6"
     },
     {
       "path": "engine/runtime/third_party/musashi/softfloat/softfloat.h",
-      "sha256": "b0be68f69e91cac7edd795de169f089c65911d432403d38076e313845902de80"
+      "sha256": "5cf048506ee233be66e1ec0ce7f15e0184e3758c14c41829a7f3ab0195f7b509"
     },
     {
       "path": "engine/runtime/third_party/stb/stb_truetype.h",
-      "sha256": "2d119d54c88197764a6494c3c79fb6cdb4bd3e8d6708c82b57cbb508b8a70090"
+      "sha256": "ecd30b05e0dd4fea3a13c26810dd9e1992dc379049482c393d5a19e6b5090aab"
     },
     {
       "path": "engine/src/saturnrecomp/__init__.py",
-      "sha256": "af7df2c9e577cf01f47e293ff19d2c4ce4031387de88d9b94781ab73e8ea2982"
+      "sha256": "5a350dd5478ad0518e40658f01b4cb4374bbb4183a8d83835a19bd5bfa2bbc2b"
     },
     {
       "path": "engine/src/saturnrecomp/agent.py",
-      "sha256": "0e1f680497d39e48baeb0840d7adf1dbbdc06f70d23e92275b2b46c78549a9ac"
+      "sha256": "51988d1516a46ababbe67c0333bd9efeda9e3be61bc8fc48920e997d0787f175"
     },
     {
       "path": "engine/src/saturnrecomp/analysis/__init__.py",
@@ -617,223 +621,219 @@
     },
     {
       "path": "engine/src/saturnrecomp/analysis/resume.py",
-      "sha256": "0474745d58f0d27ea1dcba27a014920bc075486ec4c6e3a068219a94d1bdeca3"
+      "sha256": "e98bd74af592cf2fb1bf4ae68ad089bee1174d9958ddebb0c5827a0f4499f2c2"
     },
     {
       "path": "engine/src/saturnrecomp/audio.py",
-      "sha256": "de966a0d2a9b515334adc388daeedfabe993372dc676564bd1d01fd0821e5015"
+      "sha256": "70bb780c81288dde0108020a9fdcabd6a6e7f0b677c2d0762a32b92dbe9f3a7e"
     },
     {
       "path": "engine/src/saturnrecomp/build.py",
-      "sha256": "2b2c48b2f3761c3e8b91873b0ed914a5d24530d9b060722de34bf716399ed688"
+      "sha256": "a5cd0b5ade47f85e5129c23825fcbc6ce9d540c83b8313eff29b8d22c1daddbd"
     },
     {
       "path": "engine/src/saturnrecomp/config.py",
-      "sha256": "f2c75a7c406a846dd0152bd0c63494d49ad568ca8436f6789053e7dfa62c2c74"
+      "sha256": "a31aed780ee595cc82b393e9fd394e1b8677b880b2788b594249b17678d4971f"
     },
     {
       "path": "engine/src/saturnrecomp/disc.py",
-      "sha256": "52837d7658ca24acaf9a6ec6f0025fcfdc3fdc14ae0ee350df195451fa6a77a0"
+      "sha256": "3a63f6c444677e5fb44f172de8331b6697def3c17c0f2be13ba5e973de220b6e"
     },
     {
       "path": "engine/src/saturnrecomp/executed.py",
-      "sha256": "4a89148ef02eb00d9e6f6e901ea2397f94b58773430956cbd4d328bfff27cee0"
+      "sha256": "ba0b34644696f06ac16cd1fd02d2d399bd0de6a071b2f86db40e42a60ed8a107"
     },
     {
       "path": "engine/src/saturnrecomp/hw.py",
-      "sha256": "c3eb2a951b209c73da8fda150bd7c31ff375215df067511a5686a6467398a61f"
+      "sha256": "a0a1e036358474b41fd594a1dd2fae9024e3e63059682367aca57eac257d231d"
     },
     {
       "path": "engine/src/saturnrecomp/inventory.py",
-      "sha256": "12ee88bd989a492c933b180d11e1715c383b97556e72e178fddcde9230cd44cf"
+      "sha256": "c9a1dcbd680d0687d7ac918edcfc9545419966ed92bb41f7fac52d8f9bf34e22"
     },
     {
       "path": "engine/src/saturnrecomp/learn.py",
-      "sha256": "81954795dba2df32b627a881141436595deb82bd81ad515c5aeb744e87a60ad3"
+      "sha256": "7e8c5509ae020137a64fb1001d7cc7f630bfb33872992482cb9ad4f36d40fcb7"
     },
     {
       "path": "engine/src/saturnrecomp/m68k.py",
-      "sha256": "856e1363b0a45612d71e7431a19f4be75ac9cdfee87a101ad735acf7288aa0a4"
+      "sha256": "9ef1cd11fc11cdac0a3c1c92f93260cb8c35063507f4701a03d6a8f87cfb9f47"
     },
     {
       "path": "engine/src/saturnrecomp/native.py",
-      "sha256": "cf4ac43f3ce2bcb00802224e5307a22800bf44d7e4c9358b303c1feb7c57a171"
+      "sha256": "a8bfb1592441f9000d0e88307ba521f8d4b66cbd5a6d6dbf34449b5343549581"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/__init__.py",
-      "sha256": "4caa9771ad61fe9d0d0a1bd75ac9abd86df17262afd2caea1959fd6f4654301f"
+      "sha256": "0845b60cff76d2f521b2edcecb8f3faa46e4fedf0e033c14a5bc7791ae1e1a28"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/__main__.py",
-      "sha256": "ec0359d0c7f149924f57d8bbfaca56385c7906507d262dd2453d171f5c2b65a1"
+      "sha256": "4686ffb1d694c3874043b9aaa300fbfe1bb1687d5b13c494a4752be96b0069dd"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/coverage.py",
-      "sha256": "9b72cf16b64b5e749dda6deb90268d4562406d6af56cfce01b03d8be05e1045a"
+      "sha256": "3af8ac9327ae85962824a17299d3c39c12e62490d1d038a47cc19e97dd516ba5"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/disc_image.py",
-      "sha256": "e7d71a7783e38794d9435f84d3bbbf86f9c1c88dd2c98088c06a6a49d1064ff8"
+      "sha256": "19d513ea422b167d1a60ba9dabacfbc78eedf5364ef921ea614db6468a7fd6a6"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/launcher.py",
-      "sha256": "5f0b50dcd99114d21e9d66156f86a28861c229d2764d01e7ee83f3209b3fc62f"
+      "sha256": "5234ab3fc8522f9f0423071aadaf94a60553da82ab12aff7b8469e6196ada061"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/paths.py",
-      "sha256": "af38f86466d4a469532a3a687d916c3749adddecbf9cdcc7506099bb568d2693"
+      "sha256": "be8f48c4662c9641681ddd7bfa2b1881f154b6e732e4b30fb2c3be954d3027bf"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/review.py",
-      "sha256": "9d5d3be9b32f82ce75e53b235ae8076ae7157699807679edaf6715ef021696eb"
+      "sha256": "09a5eddf0d200529af4c9c108f5d1345d19ea691674fc47c5d66318db445b883"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/session.py",
-      "sha256": "4afa08d64be2c2ca389b6bbd04196808cf4c15f3d323cf9c794a9d8c3bec75e0"
+      "sha256": "9373b4b7d8608181188a4e030c4f42bcdbc4e4c0778595bbe4f8b31f47a54329"
     },
     {
       "path": "engine/src/saturnrecomp/playtest/upload.py",
-      "sha256": "b1c1404f6194594ae335551f073711b734610d5972ba9d43e2e37e8cab0f3c9f"
+      "sha256": "45f27e9f1c0844e6f34af10cc416c4aaed70f4bf5cad5ea9bd9ac82ee0dcf2ec"
     },
     {
       "path": "engine/src/saturnrecomp/prereqs.py",
-      "sha256": "9ad37fe64d41f15c035ed0d68d0faa5b6c42760e308c3248bfc6df9191a69cc6"
+      "sha256": "7c9342a06930539cb72124f99ab693f8fb93779c00bcdf6b8170da72150f2892"
     },
     {
       "path": "engine/src/saturnrecomp/recomp/__init__.py",
-      "sha256": "dbb88eef54bb912e94edf397a103ca4c030edd82b66d23267333e7aa33055f2e"
+      "sha256": "25cb089f6db9c1c900be771892b5f8031a79c01be576ede7100dab456046cd76"
     },
     {
       "path": "engine/src/saturnrecomp/recomp/__main__.py",
-      "sha256": "53f55a2b4a2091a08346f0fd34bf043c25450dfa9b0adb669bc9ac6988a9d0fc"
+      "sha256": "09c8f1beea9bd5ce75996e9e617a9dbf070f8a16669cf6cbad77faae23400214"
     },
     {
       "path": "engine/src/saturnrecomp/recomp/discover.py",
-      "sha256": "11ddb6c94cd465ec5344acf0432760899153c761f937d4b7dbf0d25220599dc8"
+      "sha256": "7482483d175cc14f77c2825239a1546798fb3546cbb6737fc0e55ac76056bae2"
     },
     {
       "path": "engine/src/saturnrecomp/recomp/emit.py",
-      "sha256": "852428f78ce24064c654f00d5f8b57b809f5362a1a618a545a8b651e4e7a6049"
+      "sha256": "68dae69d8ce54690097337d0eeea486f4c02d6a77dd3889316f30136927ab28e"
     },
     {
       "path": "engine/src/saturnrecomp/recomp/match.py",
-      "sha256": "afa75de538f0cbb96b716edc458a71d24378154b1bd0a58818e4e6c2617c58ba"
+      "sha256": "389b0d45aa2948d5d83329e624b8042b7777d70b4aae3297dffaeb7b5b6d58ce"
     },
     {
       "path": "engine/src/saturnrecomp/recomp/selftest.py",
-      "sha256": "8a644187079f9415e4139f0214cd682a058fc1cb3d576b824f2b23dc5dd1f2cc"
+      "sha256": "a1d5a6100181353306022af13f3da7f6cee88fc3afe5d342f3729d0b46a523cb"
     },
     {
       "path": "engine/src/saturnrecomp/recomp/versions.py",
-      "sha256": "2fa590116530d01ca1c16dfe34614e78b8314e5c1c72d702061dd8658bf1be99"
+      "sha256": "145ae4e7205a791eb3597263fefaa6071892fc03ffdbee7ded497f924c2f497f"
     },
     {
       "path": "engine/src/saturnrecomp/reference.py",
-      "sha256": "d6b77610520c7adc9b5f3d7035e3e3507850fe4b146ef88aa10c0cb880d1301c"
+      "sha256": "08f15fa7e8ad7a5bfe7e97e242e1d26cd3e2749475a27d42ebd8cb4df0e4d423"
     },
     {
       "path": "engine/src/saturnrecomp/scudsp.py",
-      "sha256": "75a4823bcb4a00e2c12ff0697a1d036282b285844e5f67475bdf6ced44fb78a4"
+      "sha256": "c37b3bae919e1fe1b6fcbf80a589a5706661b8b1035e6de0747be3d63948aed1"
     },
     {
       "path": "engine/src/saturnrecomp/sh2.py",
-      "sha256": "80341878b090bfa3a59182fa87c31236102d7d0215395e7d784a0a7d9201f152"
+      "sha256": "0add78272f1ee398881fbca2850d8d89b4cbd5a7767448299b39498f60d703dd"
     },
     {
       "path": "engine/src/saturnrecomp/sh2emu.py",
-      "sha256": "d9ac8dd1508e34b53ff58fe12db376bb7d637b7263e0cdc3fe6957884e7de4e6"
+      "sha256": "c43458498cde2f4b727aab6298cfba84487b03fcecd544161ab0c7007e13c253"
     },
     {
       "path": "engine/tests/conftest.py",
-      "sha256": "fc813b57253720929dbd504d7f91d85b06549ace1f09abe45b39ddb8e728f5ed"
+      "sha256": "6fdcbd961d00061c031dbc25535eb091db270ce0fa0c94cfca98f2001249d6d3"
     },
     {
       "path": "engine/tests/test_agent.py",
-      "sha256": "917a15670cde7d603fe7f167370a201232dac780ea0a4e48e3a012e752db656c"
+      "sha256": "a5aadbc99fd114a4b0d546f45f9e4c20c9b7a4650a867bd101eb3a1d21e691ea"
     },
     {
       "path": "engine/tests/test_audio.py",
-      "sha256": "a4a32152ecf9477efa47864924dabdbce68ef2ceaec466af021a6f2b9bd68eb4"
+      "sha256": "2f16d83804ae675edb0ae028ca8452809773dff6231661c08e5d84290348e9d3"
     },
     {
       "path": "engine/tests/test_build.py",
-      "sha256": "f532abcd73f9abce7010541e7c712ae3024d67df6b679d9f2d25cc44639a9b9f"
+      "sha256": "aff792b2f3efd6912f38bdfafaed7a24975265d4d8f2dca9b52ae2cfcd359377"
     },
     {
       "path": "engine/tests/test_config.py",
-      "sha256": "15452d432fd1cc91286714ad09a94cd3a8cc5a277da198dd87d3a71a4472086a"
+      "sha256": "cfca8bb1a6ec0161d687135089ac717da2477cc10690f8e7d1b4324b8b527fac"
     },
     {
       "path": "engine/tests/test_disc.py",
-      "sha256": "7da17cf65dc526a7941d4a990794f84d0f8b89ee2248f2790c740848fba6300d"
+      "sha256": "c546a08bd4ed96a6827a46a5dc6c58e7216a0ced6620b3dc231f41906caed8ae"
     },
     {
       "path": "engine/tests/test_discover.py",
-      "sha256": "8985c20f823d6b9d15debd8a318c5aa4f4709d734eeab499085f66bf3ea20da3"
+      "sha256": "c367b93650647b42614fd7d1e044956b3714961d96ecac99735eaf190210b7fb"
     },
     {
       "path": "engine/tests/test_executed.py",
-      "sha256": "e0bc166db8bf7194f3a8d1ea518560a96b38348523b9fb5e89c943bd99c215cf"
+      "sha256": "94a5e88bcd0075a9271e7be8bdac96dda39f67580c74159871c137b95640daac"
     },
     {
       "path": "engine/tests/test_inventory.py",
-      "sha256": "a2afafeea82df62ddef46dd61c3a39f7e6e1a5076c9eee5ba3ba1d6c49b4bfec"
+      "sha256": "18ef27a5e5f68c54e05f640a6ca5bc989c9328d57d2739046a84ae5a01355b65"
     },
     {
       "path": "engine/tests/test_learn.py",
-      "sha256": "1c477c0c980ae307dde31ae3b757243c7c430020bdeda5ded3364eaa4bace120"
+      "sha256": "eccd825b83c7da0435a2c1eccfd9b807dae7c016d989f98a228ef3f87f5918ae"
     },
     {
       "path": "engine/tests/test_m68k.py",
-      "sha256": "9adf5995c53bfa22a8982505ec93ea2ae1b610ab076ec7624bf308c1cc62e2c0"
+      "sha256": "1ac1c47632b6da1abecc9301dc94c492534d5e001f9d3f82dc15482248a642fd"
     },
     {
       "path": "engine/tests/test_map.py",
-      "sha256": "3d3869b7a922a09b01c723c07ff88f7b65653a688bd044e91e64af61670354e3"
+      "sha256": "1b7f628a8dfc782d0b05aea86d4f7f0f17a0f10be40ec74426a83448ef417eb7"
     },
     {
       "path": "engine/tests/test_native.py",
-      "sha256": "9bfb24665b3dc3eb71c4d78f3b2dce35457481879624e4164d0af65e00df4494"
+      "sha256": "ddb60a0f9c130a977a5bf30b686e4d673ab29424ec36ac8c6bbb8a5a00a88d33"
     },
     {
       "path": "engine/tests/test_playtest.py",
-      "sha256": "e7e94a55cc4368a91446a625b50a4d18273377a114b05d1bc856c77065790b27"
+      "sha256": "cfcf4e85f7031c99104be19079d1869c143718ec59a6d8bde67a43e8b071261e"
     },
     {
       "path": "engine/tests/test_prereqs.py",
-      "sha256": "3dd500f72769bfeb77004a092cdda583e01a4f8b62009d1835fe9a635498bc27"
+      "sha256": "1e2f833211713d8a22c34b8f7056c3dd1cb87bb8c07b8547a0d95ffad4b70334"
     },
     {
       "path": "engine/tests/test_reference.py",
-      "sha256": "07611bfd6e00f0ed81a16faf26d6fe0ca3a9cc3895a9f5ad1a25d3aca02f80fc"
+      "sha256": "92ce2f7d268b0f6f0eedc53c6bdf19eb941e0d40cd2f4304dc62cde6da4c5292"
     },
     {
       "path": "engine/tests/test_resume.py",
-      "sha256": "8eed13546205e4a735d5e15914a2a7aa82e183834fd8ab9974bd50b0a4e27d68"
+      "sha256": "08ae28dc4268959c08a9543499a46791fdbe2db547e4c2ac3b144bb0d2996484"
     },
     {
       "path": "engine/tests/test_sh2.py",
-      "sha256": "ee21fbdc30a648c92d60bbb0884e9cd1140d89738848209537154021afd65f18"
+      "sha256": "9d4109e3323ca83d37e4eb6598d353da24a14d854cd1695f893cd123be6dd95d"
     },
     {
       "path": "engine/tests/test_versions.py",
-      "sha256": "a316c0414426b9d755c0dca3e8174c2934569f982a4f3c16f21ccaec760b7bbd"
-    },
-    {
-      "path": "engine/THIRD_PARTY.md",
-      "sha256": "a756d9f755fc67cb2216377d7ac62d1e5fa6014b60bd161f8ac2f2a50888013e"
+      "sha256": "21a0caab7aa526b38a9663e4f237631b06aa27010e791e6a74dd048be73e3a05"
     },
     {
       "path": "engine/tools/check.sh",
-      "sha256": "a9a184bec4816ea7230543c4839627d07a5b674c1b3852b71262bd0021c33e79"
+      "sha256": "47555fadd5a3753feed6abbe92da5231a2b8d12c36d786435cfcd20dc62813b7"
     },
     {
       "path": "engine/tools/windows-imports.sh",
-      "sha256": "b5bd8df6a899ffeb18b385eb36e566c0c5113afd4aec151eb32b421036db4793"
+      "sha256": "778b15151727efb3281dd278b83675077a9c1ec4103aa96f49dd4a1838d18119"
     },
     {
       "path": "engine/uv.lock",
-      "sha256": "d3760764316682dd82fec031c72fc22a9c6c0ba54994ce23d7f8610331407b30"
+      "sha256": "4411b497a60c374e4b8871a74376e86abe351dacc9b75fbb83a59597bc840abd"
     },
     {
       "path": "scripts/check-code.ps1",
@@ -861,19 +861,19 @@
     },
     {
       "path": "scripts/offscreen/bug_report_offscreen.cpp",
-      "sha256": "640103719eb3ef70e7a4ffc4c4f87ed3996871cd49ba0b4663159f45e564931c"
+      "sha256": "f1a24f6e4407bdd8459239fc35a50af25915affd998323443cbc9fcf9c4f1f5c"
     },
     {
       "path": "scripts/offscreen/differential_fuzz.cpp",
-      "sha256": "5e6ca73c8b760eb1730debbab4f76fa2f5fc6251244801102fbac20164c050c2"
+      "sha256": "5238e58ce999453a1540336a21132cbd84f5951a49486fee074b5b6171f46152"
     },
     {
       "path": "scripts/offscreen/fsr_offscreen.cpp",
-      "sha256": "61b56f41b700177528e99223461a639d39412937f6a340fa240e4a67ab7d66ee"
+      "sha256": "110c6b592250377ec68f5587f134db058dafc7db7a8a0e1850ac0a1402208f1c"
     },
     {
       "path": "scripts/offscreen/gpu_shader_offscreen.cpp",
-      "sha256": "c05fe00c5aef12088dc98bf8fde73bab47ea2de3a20b0ac182bd4e509ca76235"
+      "sha256": "dbd9d6e6ecef1647e15dd3adf64ef1d3220a046861f262d19ec59dcc70c4d3e3"
     },
     {
       "path": "scripts/runtime-host/CMakeLists.txt",
@@ -886,6 +886,10 @@
     {
       "path": "scripts/test_repository_checks.py",
       "sha256": "4f42defd96f36cb565b6d6ed7c00e924c936a3b27416df4ba6d2121aebab41e1"
+    },
+    {
+      "path": "scripts/test_vendor_checkout.py",
+      "sha256": "1a51eac698543dc0359f7edf2d4143e79cba95c737471fb80a9a851472296d01"
     },
     {
       "path": "sotn-experiment/tests/bug_report_test.cpp",

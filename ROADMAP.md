@@ -2,6 +2,8 @@
 
 ## Feito
 
+- Atualizações de ferramentas agrupadas dos PRs2–6; integridade FSR protegida no checkout Windows.
+
 - Exportação de fontes do motor, gerador, ferramentas, menu e testes com licenças.
 - Correções offline de overlays, salvamento, DMA e divisão; compositor GPU D3D12/Vulkan.
 - Separação explícita de mídia, saves e tabela privada de mapa.
