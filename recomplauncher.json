@@ -1,0 +1,25 @@
+{
+  "$schema": "https://recomplauncher.com/schema/recomplauncher.json",
+  "format": 1,
+  "repo": "Neguchads/csotn-saturn-recomp",
+  "name": "Castlevania: Symphony of the Night — Saturn recomp (developer preview)",
+  "game": {
+    "kind": "iso",
+    "label": "Japanese Saturn T-9527G V1.400: select the .cue with its BIN tracks beside it. / Selecione o .cue e mantenha os BINs ao lado.",
+    "check": { "iso9660": "GAME.PRG" }
+  },
+  "prepare": {
+    "program": ["CsotnSetup.exe"],
+    "args": ["--prepare", "--game", "{game}", "--data", "{data}"],
+    "label": "Compile locally from your original Saturn disc / Compilar localmente do seu disco Saturn",
+    "timeout": 7200,
+    "version": "developer-preview-1",
+    "done": ["{data}/build/ready.json", "{data}/game/saturn.exe", "{data}/game/SDL3.dll"]
+  },
+  "start": {
+    "program": ["CsotnSetup.exe"],
+    "args": ["--play", "--data", "{data}"]
+  },
+  "saves": ["{data}/saves", "{data}/settings.ini"],
+  "folders": { "logs": [{"path": "{data}/logs"}] }
+}

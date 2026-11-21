@@ -836,6 +836,10 @@
       "sha256": "4411b497a60c374e4b8871a74376e86abe351dacc9b75fbb83a59597bc840abd"
     },
     {
+      "path": "scripts/build_recomplauncher_bootstrap.py",
+      "sha256": "044121dd7694d7b63caa7bbb9d9eee6b45a3a22229a4a8a0765b1f2897a4c7fe"
+    },
+    {
       "path": "scripts/check-code.ps1",
       "sha256": "833e3b4d2278cdc85427abfbd543966f1330613e421c9983916c08ecfc437b8a"
     },
@@ -849,7 +853,7 @@
     },
     {
       "path": "scripts/check_repository.py",
-      "sha256": "d5e41b4d25a1027ee2146e8225916bc948b70c9f1c724e3046cf72db74f8bf11"
+      "sha256": "2e211402d407d7f88df7ebf876f7d4fe2263970eb75d5d9704870796614e8f07"
     },
     {
       "path": "scripts/code_only_plugin.py",
@@ -876,6 +880,22 @@
       "sha256": "c05fe00c5aef12088dc98bf8fde73bab47ea2de3a20b0ac182bd4e509ca76235"
     },
     {
+      "path": "scripts/package_recomplauncher.py",
+      "sha256": "a53df4c6df8765259a6c49ce8081db2a91b48522907a5291c4100af81db1d073"
+    },
+    {
+      "path": "scripts/prepare_player_build.py",
+      "sha256": "3ea32d45b6ff226de2aa5467da3506887ea41a7644f5cb70fdf3254852e3ae2a"
+    },
+    {
+      "path": "scripts/recomplauncher_adapter.py",
+      "sha256": "286691098d43a940a38e3cae0afad0ae344c166047ed0a727b5888f790f98a19"
+    },
+    {
+      "path": "scripts/recomplauncher_bootstrap.cpp",
+      "sha256": "4e86a222e1c8ba7f18c8f060646ccbec490ee1e8cd2522c5e560d921b7b93bb8"
+    },
+    {
       "path": "scripts/runtime-host/CMakeLists.txt",
       "sha256": "c07f1661a7d4d5d2ae4721d60ce940312694dfcefb09670bc279607b0e845696"
     },
@@ -886,6 +906,18 @@
     {
       "path": "scripts/test_ci_config.py",
       "sha256": "86b7c305fff38bf5f87625daf88882f4346f54ebe3fcd964fdee4204640c7c1f"
+    },
+    {
+      "path": "scripts/test_package_recomplauncher.py",
+      "sha256": "1dd4a88c9c58899288df5200a41d0b557a67c72e56ee070e9d9d30371db1f1f5"
+    },
+    {
+      "path": "scripts/test_prepare_player_build.py",
+      "sha256": "63901938a3bf74ffdbbfb6a47e14b3573bf450efe3d0092e9ab556aec5e6d349"
+    },
+    {
+      "path": "scripts/test_recomplauncher_adapter.py",
+      "sha256": "f4a924c216ccea0ca61af0383dbeb8907ad87eb5e263f7c31ae3d6670b2e2b60"
     },
     {
       "path": "scripts/test_repository_checks.py",

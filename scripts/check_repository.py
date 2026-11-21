@@ -9,7 +9,7 @@ TEXT_EXTENSIONS = {'.py', '.cpp', '.c', '.h', '.hpp', '.inc', '.cmake', '.md', '
                    '.json', '.toml', '.lock', '.sh', '.cmd', '.ps1', '.manifest', '.yml', '.yaml'}
 ROOT_FILES = {'.gitignore', '.gitattributes', '.gitleaks.toml', 'AGENTS.md', 'README.md', 'ROADMAP.md', 'HANDOFF.md',
               'LICENSE', 'THIRD_PARTY.md', 'requirements-dev.txt', 'requirements-ci.txt', 'Jogar-SotN-Windows.cmd',
-              'Jogar-SotN-Amplo.cmd', 'Recompilar-SotN.cmd'}
+              'Jogar-SotN-Amplo.cmd', 'Recompilar-SotN.cmd', 'recomplauncher.json'}
 FONTS = {'engine/runtime/third_party/inter/Inter-Regular.ttf',
          'engine/runtime/third_party/inter/Inter-SemiBold.ttf'}
 EXTENSIONLESS_SOURCES = {'engine/runtime/third_party/musashi/softfloat/softfloat-macros',

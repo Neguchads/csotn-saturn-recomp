@@ -44,6 +44,9 @@ on a new machine and generation from a fresh disc copy still require validation.
 This repository is not a ready-to-play release. Disc extraction and symbol/ASM preparation remain
 prerequisites; the guide does not yet provide a validated end-to-end fresh-machine procedure.
 
+For the source/bootstrap developer preview, prerequisites and local player compilation, see
+[RecompLauncher integration](docs/RECOMPLAUNCHER.md#english). It is not a published, ready-to-play package.
+
 ## Review and dependencies
 
 [GitHub Actions](.github/workflows/ci.yml) checks PRs, including Dependabot PRs: Python 3.11/3.13,
@@ -123,6 +126,9 @@ Os comandos de [instalação e testes](docs/SETUP.md) usam dependências forneci
 O provisionamento inteiro de uma máquina nova e a geração a partir de uma nova cópia do disco ainda
 precisam de validação. Este repositório não é uma release pronta para jogar. A extração do disco e a preparação de símbolos/ASM
 continuam como pré-requisitos; ainda falta um procedimento completo validado em máquina nova.
+
+Para o preview de fontes/inicializador, pré-requisitos e compilação local pelo jogador, veja
+[integração com RecompLauncher](docs/RECOMPLAUNCHER.md#portugues). Não é um pacote publicado pronto para jogar.
 
 ## Revisão e dependências
 

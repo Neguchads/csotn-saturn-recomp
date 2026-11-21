@@ -4,6 +4,9 @@
 
 # Installation and tests
 
+For the source/bootstrap developer preview and the local preparation pipeline, see
+[RecompLauncher integration](RECOMPLAUNCHER.md#english), including external prerequisites and validation limits.
+
 Local environment version references: Windows11, Python3.13, clang-cl21.1.8, MSVC14.44,
 SDL3 3.4.14, CMake3.31.6, Ninja1.11.1.4, pytest9.1.1. Binary packages are not stored in Git.
 
@@ -92,6 +95,9 @@ Tests generate synthetic data in a temporary folder without using the private bl
 <a id="portugues"></a>
 
 # Instalação e testes
+
+Para o preview de fontes/inicializador e o fluxo de preparação local, veja
+[integração com RecompLauncher](RECOMPLAUNCHER.md#portugues), incluindo pré-requisitos externos e limites de validação.
 
 Referências de versão do ambiente local: Windows11, Python3.13, clang-cl21.1.8, MSVC14.44,
 SDL3 3.4.14, CMake3.31.6, Ninja1.11.1.4, pytest9.1.1. Os pacotes binários não estão no Git.
