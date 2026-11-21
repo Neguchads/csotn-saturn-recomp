@@ -14,10 +14,13 @@ disc-generated C++, personal save or private map table is downloaded or distribu
 
 The root `recomplauncher.json` uses format 1 and has passed validation against the launcher's official
 schema. That validates the profile structure; it does not prove a successful installation or gameplay.
-The full fresh-media preparation has **not been validated**: the project's `roms/` folder was empty
-when this integration was prepared, and no original CUE was available for that test. No package has
-been published and no catalog inclusion has been requested. Request inclusion only after validating
-preparation with real media in a clean installation.
+Fresh-media preparation was validated on2026-11-21 from the extracted preview ZIP, with a new isolated
+data directory on the existing Windows development toolchain. The original Japanese CUE/BIN passed
+all12 reference hashes; public symbols were regenerated,205 modules translated and the Windows build
+completed651/651 steps, exit0. The generated game executable stayed local (SHA-256
+`4cfa0d4be24718e7507688ea602639baf6b604b0f26cdc7b2b72a1819dd4fd18`). Completion metadata and the
+launch/save command were verified without executing the game. This is not a clean-OS installation,
+RecompLauncher UI or gameplay test. No package release or catalog request has been published.
 
 ## External prerequisites
 
@@ -118,11 +121,13 @@ Nenhuma ROM, BIOS, programa extraído, C++ gerado do disco, partida pessoal ou t
 é baixada ou distribuída.
 
 O `recomplauncher.json` da raiz usa o formato 1 e passou na validação pelo schema oficial do launcher.
-Isso valida a estrutura do profile; não comprova instalação ou gameplay. A preparação completa a
-partir da mídia original **não foi validada**: a pasta `roms/` do projeto estava vazia quando esta
-integração foi preparada, sem CUE original disponível para esse teste. Nenhum pacote foi publicado e
-nenhuma inclusão no catálogo foi solicitada. Solicite inclusão somente após validar a preparação com
-mídia real em uma instalação limpa.
+Isso valida a estrutura do profile; não comprova instalação ou gameplay. A preparação a partir da mídia foi validada em21/11/2026 usando o ZIP extraído, uma pasta de dados
+nova e isolada e o ambiente Windows de desenvolvimento existente. O CUE/BIN japonês original passou
+nos12 hashes; símbolos públicos foram recriados,205 módulos traduzidos e o build Windows terminou
+651/651 etapas, saída0. O executável gerado ficou local (SHA-256
+`4cfa0d4be24718e7507688ea602639baf6b604b0f26cdc7b2b72a1819dd4fd18`). Metadados de conclusão e o
+comando de execução/save foram conferidos sem iniciar o jogo. Isso não testa instalação de sistema
+limpo, interface do RecompLauncher nem gameplay. Nenhuma release ou solicitação de catálogo foi publicada.
 
 ## Pré-requisitos externos
 

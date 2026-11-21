@@ -2,6 +2,16 @@
 
 <a id="english"></a>
 
+## RecompLauncher preparation from original media — 2026-11-21
+
+The extracted developer ZIP completed the real --prepare path in a fresh isolated data directory:
+12/12 retail hashes, public pinned references and splitter build, regenerated ASM,205 modules and
+Windows native build651/651 steps, exit0. Generated executable SHA-256:
+`4cfa0d4be24718e7507688ea602639baf6b604b0f26cdc7b2b72a1819dd4fd18`.
+Completion metadata and launch/save paths passed without game execution; no saves were written.
+External development tools were already installed. No clean OS, launcher UI or gameplay test.
+
+
 # Evidence and limits
 
 ## Original local audit — 26/10/2026
@@ -83,6 +93,16 @@ not that all installation data was copied or that the complete game is certified
 ---
 
 <a id="portugues"></a>
+
+## Preparação RecompLauncher com mídia original — 21/11/2026
+
+O ZIP de desenvolvimento extraído concluiu o caminho real --prepare numa pasta de dados isolada nova:
+12/12 hashes, referências públicas fixadas e build do splitter, ASM recriado,205 módulos e
+build Windows nativo651/651 etapas, saída0. SHA-256 do executável gerado:
+`4cfa0d4be24718e7507688ea602639baf6b604b0f26cdc7b2b72a1819dd4fd18`.
+Metadados de conclusão e caminhos de execução/save passaram sem iniciar o jogo; nenhum save gravado.
+Ferramentas externas já instaladas. Sem teste de sistema limpo, interface do launcher ou gameplay.
+
 
 # Provas e limites
 

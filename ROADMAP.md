@@ -18,7 +18,7 @@
 
 ## In progress
 
-- Validate the developer RecompLauncher package with the original CUE/BIN on a clean data folder.
+- Test the RecompLauncher UI and a new Windows installation; fresh-data preparation from the original CUE/BIN has passed.
 
 - Keep the public source selection synchronized with future local fixes.
 - Complete the full static import review; the user authorized merging with this limit recorded.
@@ -55,7 +55,7 @@ The port is not yet a complete campaign delivery or a guarantee of constant 60 F
 
 ## Em andamento
 
-- Validar o pacote de desenvolvimento RecompLauncher com CUE/BIN original numa pasta de dados limpa.
+- Testar a interface do RecompLauncher e uma instalação Windows nova; preparação do CUE/BIN original numa pasta limpa passou.
 
 - Manter a seleção pública sincronizada com as futuras correções locais.
 - Completar a revisão estática integral da importação; o usuário autorizou o merge com esse limite registrado.
