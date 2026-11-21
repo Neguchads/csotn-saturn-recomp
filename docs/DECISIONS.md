@@ -1,4 +1,60 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+# Decisions
+
+## Bilingual public documentation — 2026-11-21
+
+Keep complete English and Brazilian Portuguese versions in the same file, English first. Language anchors avoid separate copies drifting apart. An automated gate checks section order, fences and local links. Upstream license notices and command blocks retain their meaning. This translation does not complete or validate missing disc extraction and symbol preparation steps.
+
+## CI and Codex review — 20/11/2026
+
+Dependabot updates pip, uv.lock and Actions; PRs use the same CI without secrets. Standard Ubuntu
+runners in a public repository avoid cost and do not need game files. Actions are pinned by SHA,
+tools by checksum, and the token can only read contents. GPU/Windows and gameplay retain separate local evidence.
+
+PyYAML6.0.3 is a development-only dependency for validating the real YAML structure with
+SafeLoader. uv is in requirements-ci.txt so Dependabot can also update it.
+Pillow12.3.0 makes explicit the dependency already used when collecting capture tests; the isolated
+environment revealed its absence from the manifest. It is a test dependency, not part of the game runtime.
+
+Recreating feature-dev:code-reviewer in TOML lets Codex reuse the review without choosing
+another model. The session inherits its permissions; instructions require reading and do not authorize publication.
+Catalogs loaded before installation require a new session. Tests do not replace this review.
+
+## Public publication — 20/11/2026
+
+The user explicitly authorized creating Neguchads/csotn-saturn-recomp and requested public visibility.
+The isolated export preserves the installation, previous Git index and personal saves.
+Keeping project sources and runtime/licenses allows recovering the work without redistributing the game.
+
+Vendoring the engine in engine/ pins its revision and keeps patches visible. Do not use a submodule
+pointing to upstream without patches, because that would lose fixes. Preserve MIT/GPL and third-party notices.
+
+The map table derived from the private blueprint stays local. A validated generator and optional
+provider preserve the data boundary and make the functional difference without the header explicit.
+Tests use synthetic data and do not remove assertions to hide this dependency.
+
+Vulkan remains Auto's preference based on local medians; D3D12 remains supported.
+Do not change clocks/HD/CPU to promise60FPS. The GPU works on snapshots; RAM retains data,
+and logic with write dependencies remains ordered.
+
+## Combined dependencies and FSR checkout — 20/11/2026
+
+Integrating PRs2–6 into one branch allows testing pytest9.2.0, uv0.13.9, Pillow13 and Actions7 together.
+The local test revealed automatic CRLF conversion in FSR sources: pinning LF preserves upstream hashes.
+A new test exercises real checkout-index with autocrlf=true; no previous assertion was changed.
+
+---
+
+<a id="portugues"></a>
+
 # Decisões
+
+## Documentação pública bilíngue — 21/11/2026
+
+Manter versões completas em inglês e português do Brasil no mesmo arquivo, inglês primeiro. Âncoras de idioma evitam cópias separadas divergentes. Um gate verifica ordem, blocos de código e links locais. Avisos de licença upstream e comandos preservam o sentido. A tradução não completa nem valida as etapas ainda ausentes de extração do disco e preparação de símbolos.
 
 ## CI e revisão Codex — 20/11/2026
 

@@ -8,12 +8,16 @@
       "sha256": "20f1e425fdc43998a56853d780523461e688fe617fd7b80ccc37f1cc13017c8a"
     },
     {
-      "path": "engine/pyproject.toml",
-      "sha256": "01cfe4797e42c5403d2c987301048ee9af4fa7ff22c9a6bc1af62b0ef78f16db"
+      "path": "engine/README.md",
+      "sha256": "1cdaffd1fe846cd97683bc7746a3933eb4b2e85d368216c09cf05e116aada434"
     },
     {
-      "path": "engine/README.md",
-      "sha256": "cb7776466e285dc8bd79ed060a6096f24c1f2322da2f203c1e114c878b7dd366"
+      "path": "engine/THIRD_PARTY.md",
+      "sha256": "8f0e6086316575ff133559c71b4818d94c985d04f8e1ea454742b94f575d8756"
+    },
+    {
+      "path": "engine/pyproject.toml",
+      "sha256": "01cfe4797e42c5403d2c987301048ee9af4fa7ff22c9a6bc1af62b0ef78f16db"
     },
     {
       "path": "engine/runtime/embed.cmake",
@@ -332,6 +336,10 @@
       "sha256": "61ed3db65c8c9da1c2f0ee4395b053eef1a133b08389fa3a81c573b9ddd4000b"
     },
     {
+      "path": "engine/runtime/tests/CMakeLists.txt",
+      "sha256": "2710c0e94d30faa266d5ac2ed1663c85cae8985413efc89d741f9a92772c6fd0"
+    },
+    {
       "path": "engine/runtime/tests/bup_test.cpp",
       "sha256": "7792c3ad7d8dcfd6c8e3df05b1c5a0b2032a6faa5e9d5a9f8a4c7f2161a19893"
     },
@@ -346,10 +354,6 @@
     {
       "path": "engine/runtime/tests/clock_test.cpp",
       "sha256": "83eb0bf42ef2062dd9b58c479f3df5edd3410bde8ba9729e03cf8d473cd2cce4"
-    },
-    {
-      "path": "engine/runtime/tests/CMakeLists.txt",
-      "sha256": "2710c0e94d30faa266d5ac2ed1663c85cae8985413efc89d741f9a92772c6fd0"
     },
     {
       "path": "engine/runtime/tests/frame_change_test.cpp",
@@ -428,6 +432,10 @@
       "sha256": "9d887c714fe52e75f1ec56c27a995eca3437750f9a0cef35598e72e3dc33cb95"
     },
     {
+      "path": "engine/runtime/third_party/fsr1/LICENSE",
+      "sha256": "db089274ce766da70f5b7d791029c3486f9f9e27c8c79c652689603d3192e802"
+    },
+    {
       "path": "engine/runtime/third_party/fsr1/ffx_a.h",
       "sha256": "f60e2722fcd13989523b9164d776ab382b3692791767f3bf8bb19967f763f3fb"
     },
@@ -436,12 +444,16 @@
       "sha256": "93c3922362ea7fc99cbcc698ca30c98de4f8c246d1fbb0b09e015ddef38ce3a5"
     },
     {
-      "path": "engine/runtime/third_party/fsr1/LICENSE",
-      "sha256": "db089274ce766da70f5b7d791029c3486f9f9e27c8c79c652689603d3192e802"
-    },
-    {
       "path": "engine/runtime/third_party/fsr1/manifest.json",
       "sha256": "21f0041d72511bc17393494f459f434219ef9f486324dbd73206a22dbad0b2ac"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/LICENSE.txt",
+      "sha256": "f20418b409e53c8c9f4e90917ff395554a60320d4dfbf833da89b339cad8628a"
+    },
+    {
+      "path": "engine/runtime/third_party/imgui/VERSION.txt",
+      "sha256": "563d1b14a35585b1621c94a6f77eb5e308c949048a055e92ffd1cd3d2007202c"
     },
     {
       "path": "engine/runtime/third_party/imgui/backends/imgui_impl_sdl3.cpp",
@@ -500,14 +512,6 @@
       "sha256": "a4131c7a2e324c0625250830af6976adb5732b453f0fc6e8bc5ad70065bc2b79"
     },
     {
-      "path": "engine/runtime/third_party/imgui/LICENSE.txt",
-      "sha256": "f20418b409e53c8c9f4e90917ff395554a60320d4dfbf833da89b339cad8628a"
-    },
-    {
-      "path": "engine/runtime/third_party/imgui/VERSION.txt",
-      "sha256": "563d1b14a35585b1621c94a6f77eb5e308c949048a055e92ffd1cd3d2007202c"
-    },
-    {
       "path": "engine/runtime/third_party/inter/Inter-Regular.ttf",
       "sha256": "89dc9d7fbea042e7f91f16a92b0c2dc5afc75c4b8e54843a942a6b59665c4150"
     },
@@ -522,6 +526,10 @@
     {
       "path": "engine/runtime/third_party/minicoro/minicoro.h",
       "sha256": "df94a4fc7f71a9be7c7581ad7a872bb8c651ec5897fc46f281eb59fb6ce82f60"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/README.md",
+      "sha256": "e1ca343357ec1dbf5e10f524159c8eb4dc3776bbb1905af554228351cda0fac1"
     },
     {
       "path": "engine/runtime/third_party/musashi/history.txt",
@@ -564,12 +572,12 @@
       "sha256": "17676951e3eaaebdfd59dc4c4e6d030143ffa693589087be237fd0170c97407e"
     },
     {
-      "path": "engine/runtime/third_party/musashi/README.md",
-      "sha256": "ff5524e9d94aff8454c60875f5aa58a7200a6f38dfd1c4514f9cacbffcb466d4"
-    },
-    {
       "path": "engine/runtime/third_party/musashi/readme.txt",
       "sha256": "995597498f5f3f8fa7d1c85ec7cbe290856463c1e1ad5c5757cf07daee76af4e"
+    },
+    {
+      "path": "engine/runtime/third_party/musashi/softfloat/README.txt",
+      "sha256": "035ad9d003f77a87a311dc7acddb99cc5a03ced506c2db098e9e4c7435cfaa86"
     },
     {
       "path": "engine/runtime/third_party/musashi/softfloat/mamesf.h",
@@ -578,10 +586,6 @@
     {
       "path": "engine/runtime/third_party/musashi/softfloat/milieu.h",
       "sha256": "c3af7dd07259773325574bf000bc391fd3b0f50b1ef0a8b66255e0e7d59d8daf"
-    },
-    {
-      "path": "engine/runtime/third_party/musashi/softfloat/README.txt",
-      "sha256": "035ad9d003f77a87a311dc7acddb99cc5a03ced506c2db098e9e4c7435cfaa86"
     },
     {
       "path": "engine/runtime/third_party/musashi/softfloat/softfloat-macros",
@@ -820,10 +824,6 @@
       "sha256": "a316c0414426b9d755c0dca3e8174c2934569f982a4f3c16f21ccaec760b7bbd"
     },
     {
-      "path": "engine/THIRD_PARTY.md",
-      "sha256": "a756d9f755fc67cb2216377d7ac62d1e5fa6014b60bd161f8ac2f2a50888013e"
-    },
-    {
       "path": "engine/tools/check.sh",
       "sha256": "a9a184bec4816ea7230543c4839627d07a5b674c1b3852b71262bd0021c33e79"
     },
@@ -880,12 +880,20 @@
       "sha256": "c07f1661a7d4d5d2ae4721d60ce940312694dfcefb09670bc279607b0e845696"
     },
     {
+      "path": "scripts/test_bilingual_docs.py",
+      "sha256": "6e66c173c0c7c37fc5fe7bf56d11d46d2c410754caf0b03f2bb2d863cf8ae684"
+    },
+    {
       "path": "scripts/test_ci_config.py",
       "sha256": "86b7c305fff38bf5f87625daf88882f4346f54ebe3fcd964fdee4204640c7c1f"
     },
     {
       "path": "scripts/test_repository_checks.py",
       "sha256": "4f42defd96f36cb565b6d6ed7c00e924c936a3b27416df4ba6d2121aebab41e1"
+    },
+    {
+      "path": "scripts/test_vendor_checkout.py",
+      "sha256": "1a51eac698543dc0359f7edf2d4143e79cba95c737471fb80a9a851472296d01"
     },
     {
       "path": "sotn-experiment/tests/bug_report_test.cpp",
@@ -1154,10 +1162,6 @@
     {
       "path": "sotn-experiment/tools/write-crashlog.ps1",
       "sha256": "f8abe2ae96a54ee76337cd5f43fa7e2a776f9a4ab481c25d14060e4900111132"
-    },
-    {
-      "path": "scripts/test_vendor_checkout.py",
-      "sha256": "1a51eac698543dc0359f7edf2d4143e79cba95c737471fb80a9a851472296d01"
     }
   ],
   "excluded": [

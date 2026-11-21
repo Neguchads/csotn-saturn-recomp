@@ -1,3 +1,47 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+# Publication
+
+Authorized destination: https://github.com/Neguchads/csotn-saturn-recomp, public, account Neguchads.
+Explicit authorization on20/11/2026 supersedes the historical publication ban for this task.
+
+Included: engine/ sources/licenses, generator, synthetic tests, tools and documentation.
+Excluded: ROM/BIOS/extraction, disc-translated C++, saves, dumps, media, private blueprint/table,
+credentials, environments and executables. The licensed Inter fonts are two binary build exceptions.
+
+Before each upload: review the index/diff, run scripts/check_repository.py, code tests,
+runtime build and Gitleaks. Do not open the game to satisfy publication checks. A blocked privilege is
+not a passing test. Actions uses only standard runners in a public repository, without secrets or uploads.
+Dependabot checks pip, uv and Actions on Mondays at06:00 São Paulo time. Dependency PRs use
+the same workflow as other PRs; updates are not automatically merged.
+
+The GitHub bootstrap created only README/base main; PR1 contains the import and its CI integration.
+PRs, review and gate limits remain explicit. Do not present the import as a playable release.
+
+The Codex reviewer is in `.codex/agents/feature-dev-code-reviewer.toml`, with the exact name
+`feature-dev:code-reviewer`. A new session must load the catalog; existing sessions do not acquire
+the role retroactively. An inconclusive review keeps the PR open until the user's explicit decision.
+For PR1, the user authorized merge after learning that the full review was inconclusive;
+approval of the CI configuration remains a separately scoped review.
+
+Check the integration locally (PowerShell):
+
+```powershell
+.\test-results\ci-venv\Scripts\python.exe -m pip install -r requirements-ci.txt
+.\test-results\ci-venv\Scripts\python.exe -m unittest discover -s scripts -p 'test_*.py'
+.\test-results\ci-venv\Scripts\python.exe scripts/check_ci_config.py
+```
+
+Use an already created local Python environment; the path above was used to validate this configuration.
+`actionlint` validates the real workflow; `scripts/check_ci_config.py` and its tests protect events,
+permissions, SHAs, checkout without credentials and coverage of all three Dependabot managers.
+
+---
+
+<a id="portugues"></a>
+
 # Publicação
 
 Destino autorizado: https://github.com/Neguchads/csotn-saturn-recomp, público, conta Neguchads.

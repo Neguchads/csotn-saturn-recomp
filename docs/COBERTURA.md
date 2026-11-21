@@ -1,3 +1,75 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+> Historical manual from the local installation, exported on 20 November 2026. Referenced builds, captures and `validacao/` folders are not distributed. For this checkout, follow [SETUP](SETUP.md), [VALIDATION](VALIDATION.md) and [SOURCES](SOURCES.md).
+
+# Experimental broad profile
+
+## Recompilation of all programs present — 25 October 2026
+
+New disc generation: **80 PRG files present plus0.BIN, 205 modules, 11020 functions**. Includes18 previously missing entries: ZERO `0600EE64`, 5 from BOSS_04, 9 from BOSS_07 and3 from BOSS_R09. JSR consumers and targets checked in the original. Discovery also added `060E72C0` and removed10 false functions starting in literal pools; therefore the net count grows by9. Slices and identity CRCs preserved, all present programs represented and inventory valid, with4121836 mapped instruction bytes. `BOSS_15.PRG` does not exist on disc; do not fabricate a file.
+
+Clean Windows build651/651 in `sotn-experiment/build/jp/windows-reference-disc-20261025/game/saturn.exe`, SHA-256 **969604F7B30F78E7C42C49DB85EB633224D0A515523B05D3493CE19389EDA09E**. The **SotN HD** shortcut and default launcher point to this build; version `1CEDB170` preserved. **122 project tests and158 SH-2/discovery tests** passed. The130 engine sources are identical to the previous snapshot, which passed197 native tests; that suite was not repeated in this slice. Boot without inputs, a window or personal save up to3000 VBlanks exited0, without a fatal error, with all three RGB frames identical to the previous version.
+
+This delivers recompilation of all programs present and fixes proven gaps; it does not demonstrate discovery of every possible indirect call or the full campaign. The user will perform gameplay: Maria/STAGE16/STAGE01 transitions, saving/healing/loading in rooms and FPS in reported rooms remain manual criteria. Savestates are out of scope. No personal save read, copied or modified. No commit, remote, push, PR, merge or publication. Evidence: `validacao/recomp-disc-20261025/RESULTADO.md`. Configuration: `sotn-experiment/game-jp-disc-20261025.toml`.
+
+Requested on23 October2026: compile available disc programs in advance, before fixing individual areas. Later the user requested unification: the broad profile is the launchers' main target; previous builds are preserved historical versions. Broader generation does not prove every room playable.
+
+## Prepared content
+
+- 80 extracted PRG files classified, plus `0.BIN`.
+- 59 stage programs from the game table: normal/inverted stages, bosses, teleporters and library.
+- Boot, menus, players, RICHTER2, ending and seven familiars.
+- 128 weapon records; two complete duplicates are aliases, leaving126 distinct records.
+- Total:205 modules. After preserving the SUB submenu export:11,011 functions,2,075,513 instructions and606 files.
+
+The table contains100 stageIDs and60 unique program names. `BOSS_15.PRG`, associated with stageID `0x11`, is absent from the extraction and local disc copy used for analysis. This reference remains recorded as absent. Do not create a fictional binary or substitute another boss.
+
+Later investigation: the original executable itself contains PRG/CHR/MAP names, but the JP CUE's ISO directory does not contain those files. None of the targets or reloads in171 teleport records, checked against GAME.PRG, selects `0x11`; the boss teleport source table does not use it either. Current classification is a likely residual reference, without evidence of missing required content. Absence of every special/debug path was not proven. Evidence is in `validacao/all-programs/boss15-disc-proof.json` and the game/mapping study.
+
+## Reproducing on this machine
+
+PowerShell from the root:
+
+```powershell
+& '.\referencias\pc-saturnbomberman\.venv\Scripts\python.exe' '.\sotn-experiment\tools\make_all_config.py'
+& '.\referencias\pc-saturnbomberman\.venv\Scripts\python.exe' '.\sotn-experiment\tools\generate-jp.py' '.\sotn-experiment\game-jp-all.toml'
+& '.\sotn-experiment\tools\build-windows-all.cmd'
+```
+
+Configuration: `sotn-experiment/game-jp-all.toml`; slices/C++: `sotn-experiment/build/jp-all/`; Windows build: `sotn-experiment/build/jp/windows-reference-all/`. `game-jp.toml`, the previous C++ and `windows-reference-current` executable are preserved. Learned seeds remain shared through `seeds-jp.json`, without being overwritten during generation.
+
+The local engine contains the discovery fix recorded in `validacao/all-programs/discover-delay-slots.patch`. The heuristic accepted `bt/bf` inside delay slots, promoting data to functions in four modules. Invalid candidates are now rejected before promotion. An illegal explicit entry still produces a diagnostic/error; there is no silent fallback. This fix must accompany any reproduction in another engine checkout.
+
+After compilation, test the broad version:
+
+```powershell
+.\Jogar-SotN-Amplo.cmd
+```
+
+`Jogar-SotN-Windows.cmd` and `Jogar-SotN-Amplo.cmd` default to `windows-reference-all/game/saturn.exe`. On25 October, the **SotN HD** shortcut explicitly uses `windows-reference-engine-20261025/game/saturn.exe`, hash `1CEDB170`, retaining the STAGE16 profile, engine fixes and enabled profiler. The previous STAGE16 candidate `9553656C` and `windows-reference-current` are preserved. To test without touching the personal save, add `-DisposableSave` to the launcher. `Recompilar-SotN.cmd` prepares, generates and builds the main profile; the shortcut uses the explicit target stated in the handoff.
+
+## Coverage criterion
+
+25 October audit:436 files match the manifest; both profiles represent the80 PRGs present, with205 modules/11011 functions. New inventories valid, zero omitted discovered instructions and no gaps in the typed callbacks checked. Report and limits (local reference not distributed). The user will play the campaign manually; the audit did not open the game.
+
+Stages use `EntityEntry.func` as seeds, keeping headers, banks and layouts as data. The two known shared entries belong to ZERO/GAME; their registration addresses do not become stage functions. Proven YAML/RAM boundaries take priority. For new stages, discovery is bounded by the first typed data structure. Weapons/familiars use callback fields whose size is confirmed by the consumer, excluding the resource at `+0x40`.
+
+Slices are checked byte for byte against sources and offsets. No identical slice identity was duplicated at the same address; the two weapon aliases have fully identical original records. These are static proofs: mutable data can still invalidate new modules' CRCs. CRC protection remains active.
+
+Generation and build expand available code. Accepting a room requires executing its legitimate entry and exit, confirming the correct module and expected image/state. Saving, the full campaign, every weapon/familiar and every boss still require their own tests. Do not write RAM to simulate progress.
+
+## Local evidence
+
+The Windows build finished and the profile passed the old Laboratory failure up to55000 VBlanks, exiting0 with earlier captures identical. Another replay up to55600 demonstrated movement, jumping and sword use in the entrance room. This enables broader manual testing; it does not certify other rooms or the boss.
+
+`validacao/all-programs/` contains program surveys, slice audit, original emission failure, discovery regressions, generation, build, tests, inventory and replay. The Ghidra database remains prepared for STAGE_02; Serena/GhidraMCP are available in this session. Actually proven state and next blocker: [HANDOFF](../HANDOFF.md) and [ROADMAP](../ROADMAP.md).
+
+---
+
+<a id="portugues"></a>
+
 > Manual histórico da instalação local, exportado em 20/11/2026. Builds, capturas e pastas `validacao/` citadas não são distribuídas. Para este checkout, siga [SETUP](SETUP.md), [VALIDATION](VALIDATION.md) e [SOURCES](SOURCES.md).
 
 # Perfil amplo experimental
