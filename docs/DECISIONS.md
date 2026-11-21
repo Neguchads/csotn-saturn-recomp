@@ -2,6 +2,11 @@
 
 <a id="english"></a>
 
+## RecompLauncher developer package — 2026-11-21
+
+Ship public sources and our own bootstrap only. The existing saturn.exe incorporates translated disc functions and constants, so it stays local under the project publication boundary. Preparation fetches pinned public references, validates the original Japan disc and generates/compiles locally. Saves stay separate under {data}/saves; preparation never starts the game. Python, Git, Rust, MSVC, LLVM, CMake, Ninja and SDL remain explicit external prerequisites for this developer preview. Do not publish a ready-to-play release or request catalog inclusion until fresh-media preparation is validated.
+
+
 # Decisions
 
 ## Bilingual public documentation — 2026-11-21
@@ -49,6 +54,11 @@ A new test exercises real checkout-index with autocrlf=true; no previous asserti
 ---
 
 <a id="portugues"></a>
+
+## Pacote de desenvolvimento RecompLauncher — 21/11/2026
+
+Distribuir apenas fontes públicos e nosso próprio inicializador. O saturn.exe existente incorpora funções e constantes traduzidas do disco, portanto permanece local pela fronteira de publicação do projeto. A preparação obtém referências públicas fixadas, valida o disco japonês original e gera/compila localmente. Saves ficam separados em {data}/saves; preparar nunca inicia o jogo. Python, Git, Rust, MSVC, LLVM, CMake, Ninja e SDL são pré-requisitos externos explícitos desta prévia. Não publicar release pronta para jogar nem pedir inclusão no catálogo antes de validar a preparação com mídia real.
+
 
 # Decisões
 
