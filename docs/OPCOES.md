@@ -1,3 +1,108 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+> Historical manual from the local installation, exported on 20 November 2026. Referenced builds, captures and `validacao/` folders are not distributed. For this checkout, follow [SETUP](SETUP.md), [VALIDATION](VALIDATION.md) and [SOURCES](SOURCES.md).
+
+# Game options
+
+The current panel is the **Dev Menu**: [manual and limits](DEV-MENU.md). **F1 / L3+R3** opens/closes it, L1/R1 switches tabs. Start alone keeps the Saturn menu. F8 captures and opens the text report. The world pauses in the panel. Original room saves; savestates out of scope at the user's request.
+
+The `Jogar-SotN-Windows.cmd` and `Jogar-SotN-Amplo.cmd` launchers keep `windows-reference-all` as default. The desktop shortcut explicitly uses the current `windows-reference-engine-20261025` build, hash `1CEDB170`, with `-VideoProfile`. Earlier executables remain preserved.
+
+Arrow keys navigate and adjust the panel; Enter confirms. The mouse also works. Esc goes back or closes open screens; F1/L3+R3 opens the Dev Menu. Start opens the original Saturn menu.
+
+The current menu separates Screen and resolution, Quality and shaders, Controls, Audio and system, and Hacks/GameShark. The panel uses a dark background, burgundy highlight and gold focus. The bottom line explains the selected option. It does not use a web interface or a new library.
+
+## Capture a bug
+
+Press **F8**, **F12** or **PrintScreen** when you notice a defect. The panel's capture button uses the same mechanism. The Report tab opens with a preview; each activation creates a separate folder.
+
+Open `G:\Recomps e Mods\Sega Saturn\logs-e-bugs\partidas\` and enter the latest session. Packages in `bugs/bug-.../`: `original.png`, `rendered.png`, `report.json`, `settings.ini`, available session metadata and excerpts of logs/commands. The current build also writes `graphics.bin` and `graphics-capture.txt` with complete VDP1/VDP2 components for diagnosis. They contain no CPU, WRAM or save and cannot resume a game. Give Codex the path; optionally add `descricao.txt` with the defect and expected result.
+
+The rendered image includes internal filters/shaders, scale and aspect ratio, before Esc. The original allows comparison of Saturn composition and presentation. No automatic capture, upload or save/ROM/BIOS copy. External ReShade effects may not appear in this readback.
+
+If the game closes before the screenshot, preserve the session. The launcher retains logs and exit code; `erros.log` collects possible shutdown failures. A fallback can appear without being a crash. Normal configuration and personal save remain in their previous locations.
+
+## Video / effects
+
+| Option | Behavior |
+|---|---|
+| Resolution | Window at640×480,960×720,1280×720,1280×960,1920×1080,1920×1440,2560×1440 or3840×2160; image fitted to the selected aspect ratio. |
+| Window scale | 1x to8x of a320×240 base window. Selecting scale disables the resolution preset. |
+| Fullscreen | Uses the current desktop resolution. Does not change monitor mode. |
+| Integer scale | Multiplies original frame pixels by integers, with borders. If the window is smaller than the frame, scales down proportionally. Can change the aspect ratio relative to4:3 fitting. |
+| Aspect ratio | TV4:3, original pixels, fill,16:9,16:10,21:9,3:2,5:4 or1:1. Explicit ratios/fill take priority over integer scaling. Can stretch the image; do not reveal additional scenery. |
+| HD filter | Off or2x/4x/6x/8x. Scale2x/Scale3x edge reconstruction in GPU passes. More than resizing the window. |
+| Pixel / Smooth filter | Nearest neighbor or linear interpolation when enlarging the image. |
+| Visual effect | Original, scanlines or LCD mask, calculated per pixel on the CPU. |
+| GPU shader | Off, CRT with scanlines/vignette or LCD mask, executed on the GPU. |
+| Show FPS | Presented frames per second and selected factor; does not measure unique game animation frames. F10 toggles. |
+| Restore default video | Returns to a960×720 window, TV4:3, smooth filter, no effects/shaders, without changing saves or scripts. |
+| Backend* | Auto GPU, GPU D3D12, Direct3D11 or Vulkan. Selection is saved and requires restarting the game; does not automatically end your session. Custom HD/shaders/FSR require GPU D3D12 or Vulkan. |
+| AMD FSR1 | Two official AMD passes: EASU spatial upscaling and RCAS sharpening. Targets the displayed frame size; enabling it disables edge HD, and vice versa. Not temporal FSR2/3 or frame generation. |
+
+Original graphics code and sprite resolution do not increase. These are Saturn frame presentation options. This delivery has no HD texture pack, RetroArch/ReShade shader loading or external graphics scripts.
+
+The HD filter changes edges by comparing neighbors while preserving the palette; it does not invent new textures.4x combines two2x passes;6x combines2x and3x;8x uses three2x passes. GPU target dimensions do increase, but this reconstructs a completed frame. Do not confuse it with rendering geometry again at a higher internal resolution, as in the PSP hardware backend. Our VDP1/VDP2 still rasterizes/composes on the processor at Saturn resolution. Even PPSSPP distinguishes [internal resolution and texture scaling](https://www.ppsspp.org/docs/settings/graphics/); pixel-aligned sprites do not gain details from internal resolution alone.
+
+The algorithm is Scale2x/Scale3x, not HQx or xBRZ. [Original rules](https://www.scale2x.it/algorithm). Factors were GPU-tested against every pixel of a CPU reference, including edges, frame updates, target restoration, memory limits and fallback. Visual preference must be checked in-game. Allocation/driver failures disable HD and preserve the original image.
+
+The desktop launcher tries the SDL_GPU/D3D12 renderer; if unavailable, it uses the default renderer and reports the limitation on the page. Custom shaders are embedded DXIL, compatible with the SDL3 3.4.14 binary signature. The menu is drawn after removing the shader. A presentation failure disables the shader and logs the reason. CPU filters remain independent.
+
+Vulkan uses the same shaders in SPIR-V with a combined sampler and an input signature confirmed by testing. Official portable DXC1.9.2609 was required because Windows SDK DXC lists the SPIR-V option in help but lacks that generator. The compiler stays local to the project, does not enter the game or change global PATH. The runtime still uses SDL3 and the installed graphics driver.
+
+## ReShade, DLSS, DLAA and frame generation
+
+ReShade is external, BSD3-clause, and [states D3D11/D3D12/Vulkan support](https://reshade.me/). Official package6.8.0 was extracted into test directories without running its installer or registering a global layer. An SDL probe confirmed loading/interception in D3D12 through a local DLL and Vulkan through `VK_LAYER_PATH`/`VK_INSTANCE_LAYERS` only in the child process. Presentations exited0. This **does not certify effects**: logs did not confirm test-effect compilation or the in-game ReShade overlay. The normal launcher received no DLLs/layer. Evidence: `validacao/hd-performance/reshade/result.json` and per-backend `ReShade.log`. ReShadeFX packages are not the internal SPIR-V/DXIL shaders.
+
+DLSS and DLAA are not implemented. [Official NVIDIA integration](https://github.com/NVIDIA-RTX/Streamline/blob/main/docs/ProgrammingGuideDLSS.md) requires color, depth, motion vectors and temporal data. The current compositor only provides a completed RGB frame; filling the other inputs with fictional values would not be valid integration. On the RTX3060 used in testing, DLSS Super Resolution is possible in a compatible engine, but [DLSS Frame Generation officially supports RTX40/50](https://forums.developer.nvidia.com/t/dlss-4-faq/321939). FSR3/framegen also requires a different integration and latency/artifact evidence. The menu has no fake options for these features.
+
+## Measure a performance drop
+
+The **SotN HD** shortcut already records profiling. In the slow room, keep1×, wait around20 seconds and press F8. F7 toggles measurement. For a disposable command-line run:
+
+```powershell
+.\Jogar-SotN-Windows.cmd -Executable ".\sotn-experiment\build\jp\windows-reference-engine-20261025\game\saturn.exe" -DisposableSave -VideoProfile
+```
+
+The launcher records actual commands in `input.txt` and timing summaries in `run.log` every300 presentations. `VIDEO_PROFILE` separates VDP1 rasterization, VDP2 composition, upload, drawing and presentation. Drawing includes presentation: do not add the two averages. Bracketed log values are virtual time, not elapsed real time. Preserve the session folder to reproduce the exact room. This mode does not touch the personal save.
+
+## Controls
+
+SDL detects compatible USB/Bluetooth controllers, including Xbox and PlayStation families. The page shows the first connected controller, enables/disables gamepad, selects Auto/Xbox/PlayStation names, adjusts the analog dead zone and restores default mapping. Choosing names does not turn physical hardware into another model.
+
+| Default action | Xbox | PlayStation | Keyboard |
+|---|---|---|---|
+| Attack / Saturn A | X | Square | Z |
+| Jump / Saturn B | A | Cross | Space or X |
+| Cancel / Saturn C | B | Circle | C |
+| Game Start | Menu | Options/Start | Enter |
+| Dev Menu | Start + right stick click | Options + R3 | F1 or Esc |
+| Map | View/Back | Share/Select | Start then L in original menu |
+
+The driver must expose the device to SDL; connection of every physical model was not validated in this slice. Names and options were checked in the interface. Custom mappings remain available in the INI, including per-GUID mappings. Restoring defaults also resets sections for currently connected models.
+
+## Speed and persistence
+
+Speeds:1x,2x,4x,6x,8x and10x. The factor reduces PC waiting; the game's virtual clock does not change. Actual limits depend on the computer. Acceleration mutes audio;1x restores the selected volume. Every process starts at1x.
+
+Video, volume and controls are stored in `sotn-experiment/tools/sotn-windows.ini`. The launcher no longer forces `--scale 3`, which would prevent restoring the selected resolution. Selecting resolution or scale exits fullscreen to show the selected size.
+
+Mute (F9) preserves the selected volume. Pause on focus loss opens Esc when the window loses focus, for example with Alt+Tab; returning keeps it paused until Continue is selected. Capture image/F12 writes the original Saturn frame to `shot-VBLANK.png` in session output, without menu or shader. These options reuse behaviors studied in Ymir; comparison and limits (local reference not distributed).
+
+Hacks/GameShark: [separate manual](MODMENU.md). Every hack starts disabled. To test without changing the personal save:
+
+```powershell
+.\Jogar-SotN-Windows.cmd -DisposableSave
+```
+
+Current evidence and limits: [VALIDATION](VALIDATION.md) and [HANDOFF](../HANDOFF.md). Alucard's original menu has its own investigation; Esc options do not replace fixing its SH-2 calls.
+
+---
+
+<a id="portugues"></a>
+
 > Manual histórico da instalação local, exportado em 20/11/2026. Builds, capturas e pastas `validacao/` citadas não são distribuídas. Para este checkout, siga [SETUP](SETUP.md), [VALIDATION](VALIDATION.md) e [SOURCES](SOURCES.md).
 
 # Opções do jogo

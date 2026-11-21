@@ -1,6 +1,45 @@
 # Roadmap
 
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+## Done
+
+- Tool updates from PRs2–6 integrated together; FSR integrity protected on Windows checkout.
+- Engine, generator, tools, menu and test sources exported with licenses.
+- Offline overlay, save, DMA and division fixes; D3D12/Vulkan GPU composition.
+- Explicit separation of media, saves and private map data.
+- Local windowless test commands and separate gameplay evidence.
+- Public snapshot validated locally: code, native runtime, SDL host and offscreen GPU.
+- PR CI passed on Python 3.11/3.13, Release runtime and publication/secrets.
+- Dependabot pip/uv/Actions and Codex reviewer configured; security alerts enabled.
+- Public documentation in English first, followed by Brazilian Portuguese in each file.
+
+## In progress
+
+- Keep the public source selection synchronized with future local fixes.
+- Complete the full static import review; the user authorized merging with this limit recorded.
+
+## Planned
+
+- Complete setup on a new machine with locally supplied media.
+- Cover DMA IRQ/external requests and unimplemented hardware services.
+- Extend GPU VDP2 to modes still using CPU when measurements justify it.
+- Attribute master SH-2 cost per function and confirm FPS during manual campaign play.
+- Validate routes, bosses, endings, healing and save/close/load in save rooms.
+
+The port is not yet a complete campaign delivery or a guarantee of constant 60 FPS.
+
+---
+
+<a id="portugues"></a>
+
+# Roadmap
+
 ## Feito
+
+- Documentação pública em inglês primeiro e português abaixo no mesmo arquivo.
 
 - Atualizações de ferramentas agrupadas dos PRs2–6; integridade FSR protegida no checkout Windows.
 

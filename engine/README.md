@@ -1,3 +1,7 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
 # saturn-recomp
 
 Static recompilation of Sega Saturn games to native PC. It reads a disc, translates the games'
@@ -266,3 +270,262 @@ from MAME's (BSD-3-Clause): their terms are in
 [THIRD_PARTY.md](THIRD_PARTY.md).
 
 Its interfaces will still change as the next game asks things of it.
+
+---
+
+<a id="portugues"></a>
+
+# saturn-recomp
+
+Recompilação estática de jogos Sega Saturn para PC nativo. Lê um disco, traduz o código SH-2
+dos jogos para C++ e o compila com um runtime que substitui o hardware do Saturn: os dois SH-2,
+VDP1 e VDP2, SCU, SMPC, bloco de CD e subsistema de áudio (68000 e SCSP).
+
+saturn-recomp começou como fork do [saturnkit](https://github.com/vs-sr-dev/saturnkit) de
+Samuele Voltan, cujo histórico preserva, e hoje é desenvolvido separadamente. Contém o que todos
+os jogos Saturn compartilham. As necessidades específicas de cada jogo ficam no repositório
+do próprio jogo, que utiliza saturn-recomp como submódulo.
+
+## Jogos que o utilizam
+
+| Jogo | Repositório | O que acrescentou |
+|---|---|---|
+| Virtual Hydlide (1995) | [vs-sr-dev/pc-virtualhydlide](https://github.com/vs-sr-dev/pc-virtualhydlide) (sobre saturnkit) | disco, decodificador SH-2, mapa de endereços, descoberta de funções, correspondência entre programas, interpretador, recompilador, núcleo do runtime (boot HLE e BIOS, SCU, SMPC, slave como corrotina, bloco de CD), VDP1 e VDP2 em software em janela com controle, 68000 e SCSP (áudio), hooks do recompilador para a camada do jogo e campos intermediários entre quadros desenhados em movimento (`--interp`) |
+| Deep Fear (1998) | [vs-sr-dev/pc-deepfear](https://github.com/vs-sr-dev/pc-deepfear) (sobre saturnkit) | descoberta de funções GCC/SGL (switches GCC, tabelas e ponteiros `mova`, tabelas de registros, saltos calculados para código desenrolado, handlers SGL escritos à mão), SCU DSP (desmontador e interpretador no runtime), `SYS_CHGUIPR` e máscaras SCU por interrupção, slots de literal pool gravados pelo código |
+| X JAPAN Virtual Shock 001 (1995) | [vs-sr-dev/pc-xjapan](https://github.com/vs-sr-dev/pc-xjapan) (sobre saturnkit) | sistema de arquivos sobre faixa Mode 1 e CD-ROM XA, arquivos intercalados e registros de faixas CD-DA, descoberta por saltos distantes e callbacks vazios, HBLANK de TVSTAT, leitura direta do controle pelas portas SMPC, código de região do disco e gravação da partida (`--record-input`, `--input @FILE`) |
+| Saturn Bomberman (1996) | [callumjenkins/pc-saturnbomberman](https://github.com/callumjenkins/pc-saturnbomberman) | tarefas próprias do jogo trocadas por setjmp/longjmp (`--tasks`), multitaps para seis jogadores, framebuffer VDP1 de 8 bits, alta resolução/interlace/janelas VDP2, prioridade especial e cálculo de cor por caractere, relógio SMPC (`--clock`) e descoberta de jump tables acessadas por `bra` |
+
+## Uso
+
+O repositório do jogo incorpora saturn-recomp como submódulo e o instala no ambiente Python:
+
+```sh
+git submodule add https://github.com/callumjenkins/saturn-recomp.git saturn-recomp
+uv add --editable ./saturn-recomp      # or: pip install -e saturn-recomp
+```
+
+A instalação precisa ser editável: o recompilador aponta o build para o runtime C++ no checkout.
+Cada jogo fixa um commit de saturn-recomp e o atualiza deliberadamente.
+
+O jogo se descreve em `game.toml`: programas a recompilar e seus endereços de carga, nomes de
+endereços, troca de tarefas própria quando existe, pontos de hook e arquivo de sementes aprendidas.
+`src/saturnrecomp/config.py` documenta o formato. A partir dele:
+
+```sh
+python -m saturnrecomp.build game.toml [--recompile]    # recompile if needed, then build
+python -m saturnrecomp.learn game.toml -- --cue GAME.cue --headless --vblanks 3600
+    # run; while it stops at code discovery missed, add the seed, recompile and run again
+python -m saturnrecomp.analysis.resume game.toml --check   # where the game's tasks can resume
+python -m saturnrecomp.inventory game.toml      # every disc file and what became of it, each module's
+    # bytes by class, and a check that every discovered instruction has a generated line; each 68000
+    # program in [[inventory.sound]] gets the same split from a descent from its vectors
+python -m saturnrecomp.m68k FILE.BIN --offset 44   # one 68000 program's descent, or --at ADDR to disassemble
+python -m saturnrecomp.native game.toml         # each instruction's native address ranges, from line
+    # tables of a second build whose code must equal the built executable's
+python -m saturnrecomp.executed game.toml RUN.tsv ...   # whether every instruction a reference run
+    # executed (CPU, address, opcode a line) is translated; fails if one a module holds is not, if a
+    # 68000 program holds one its descent did not find, or if no note explains one nothing holds
+```
+
+Nos comandos acima, `build` recompila quando necessário e compila; `learn` executa e acrescenta
+sementes quando a descoberta deixa código de fora; `analysis.resume` identifica retomadas de tarefas.
+`inventory` inventaria arquivos e classes de bytes, verifica instruções com linhas geradas e aplica
+a mesma divisão aos programas 68000 de `[[inventory.sound]]` por descida a partir dos vetores.
+`m68k` analisa um programa ou desmonta em `--at ADDR`. `native` obtém intervalos de endereços nativos
+pelas tabelas de linhas de um segundo build cujo código deve ser igual ao executável existente.
+`executed` verifica se cada instrução executada numa referência (CPU, endereço, opcode por linha)
+foi traduzida: falha se um módulo a contém mas não a traduz, se a análise 68000 não a encontrou,
+ou se uma instrução não pertence a nada e não tem nota explicativa.
+
+Um programa também pode controlar uma execução, permitindo que um bot ou teste jogue sem
+roteiro totalmente definido de antemão. `saturnrecomp.agent` inicia o executável com `--agent`,
+pausa no VBlank 1 e então avança VBlanks, pressiona controles, lê/escreve memória e captura quadros:
+
+```python
+from saturnrecomp import agent
+
+with agent.start("build/recomp-build/saturn", ["--cue", "GAME.cue", "--headless"], "build/run/bot") as run:
+    run.step(1900)
+    run.pad("START")
+    run.step(10)
+    run.pad("")
+    work_ram = run.read(0x06000000, 64)    # bytes, as the CPU reads them
+    run.frame().save_png("build/run/bot/now.png")
+    print(",".join(run.presses))    # the presses as an --input script, to replay the run
+```
+
+A pausa não consome tempo no relógio do Saturn; as mesmas entradas nos mesmos VBlanks produzem
+a mesma execução, independentemente de como foram enviadas. O protocolo usa uma linha de texto
+por comando e está documentado em `runtime/src/machine/agent.cpp`.
+
+As ferramentas de nível mais baixo recebem suas entradas como argumentos:
+
+```sh
+python -m saturnrecomp.disc GAME.cue --info              # IP.BIN, ISO 9660, tracks
+python -m saturnrecomp.disc GAME.cue --list
+python -m saturnrecomp.disc GAME.cue --extract build/extract   # files + IP.BIN
+python -m saturnrecomp.disc GAME.cue --audio build/audio       # CD-DA as WAV
+python -m saturnrecomp.sh2 FILE.BIN --find-base               # where it loads
+python -m saturnrecomp.sh2 FILE.BIN --base 0600B000 --at 0600B000 --count 64
+python -m saturnrecomp.sh2 FILE.BIN --base 0600B000 --refs 25D00000:25D00018
+python -m saturnrecomp.sh2 FILE.BIN --base 0600B000 --census
+python -m saturnrecomp.hw 25D00002 25F80114 06000310
+python -m saturnrecomp.recomp.discover FILE.BIN --base 0600B000 --report     # functions, code/data
+python -m saturnrecomp.recomp.match A.BIN@0600B000 B.BIN@0600B000 --names a.tsv --out b.tsv
+python -m saturnrecomp.sh2emu FILE.BIN --base 0600B000 --call 060224DC --regs r1=100,r0=7
+python -m saturnrecomp.recomp --out build/recomp A=A.BIN@0600B000 B=B.BIN@0600B000 --optest   # to C++
+python -m saturnrecomp.recomp --out build/recomp A=A.BIN@0600B000 --hook A:0600B6F4   # sh2_hook after that instruction
+python -m saturnrecomp.recomp.selftest --out a.txt --image A=A.BIN@0600B000 --test A --auto  # vectors
+cmake -S build/recomp -B build/recomp-build -G Ninja -DCMAKE_CXX_COMPILER=clang++
+ninja -C build/recomp-build && build/recomp-build/selftest build/recomp/selftest/optest.txt a.txt
+build/recomp-build/saturn --cue GAME.cue                              # the game in a window, with the pad and sound
+build/recomp-build/saturn --cue GAME.cue --interp                     # the fields between the game's frames drawn moving
+build/recomp-build/saturn --cue GAME.cue --headless --vblanks 3600 --wav run.wav   # the run's sound as a WAV
+build/recomp-build/saturn --cue GAME.cue --hook 0600B6F4:r5=1         # a register set at a hooked instruction
+build/recomp-build/saturn --cue GAME.cue --headless --vblanks 600 --trace --shot 300,600   # headless, pictures
+build/recomp-build/saturn --cue GAME.cue --headless --input 1200:START,1210: --peek 25F80000:8 --watch 05A00000:05A01000
+build/recomp-build/saturn --cue GAME.cue --record-input play.txt          # the pad as played in the window, as a script
+build/recomp-build/saturn --cue GAME.cue --headless --input @play.txt --vblanks 9000 --shot 7760   # that game again, headless
+build/recomp-build/saturn --cue GAME.cue --headless --watch 06058D6C:06058DCF --watch-vblanks 7300:7310   # every store, by function
+build/recomp-build/saturn --cue GAME.cue --headless --write 4250:060C179A=0201   # memory set at a VBlank, such as a stage select
+build/recomp-build/saturn --cue GAME.cue --headless --save -        # saves kept for this run alone, starting empty
+build/recomp-build/saturn --cue GAME.cue --coverage cov.txt --checkpoint 600   # which functions ran, rewritten every 10 minutes
+build/recomp-build/saturn --cue GAME.cue --state-out game.state --state-every 60   # the machine dumped every minute and at a quit (a game with --tasks)
+build/recomp-build/saturn --cue GAME.cue --state-in game.state       # the run going on from that dump
+build/recomp-build/saturn --cue GAME.cue --progress p.txt --progress-keep 060C029C:2,060C0690:8   # both ranges noted whenever the first changes
+```
+
+Os comentários dos exemplos originais foram preservados. Os comandos cobrem informações e extração
+do disco e áudio, análise SH-2/base/referências, mapa de hardware, descoberta e correspondência de
+funções, interpretador, geração C++, hooks e vetores de autoteste. Também mostram build CMake/Ninja,
+execução com janela/controle/áudio ou headless, interpolação, WAV, hooks de registradores, traces e
+capturas, leitura/monitoramento/escrita de memória, gravação/replay de entradas, save descartável,
+cobertura com checkpoint, dumps de estado para jogos com `--tasks` e registro de progresso.
+
+Saves do jogo vão para um arquivo por jogo no diretório de dados do usuário, a menos que `--save`
+indique outro: `saturn-recomp/PRODUCT_VERSION/backup.bin` em `$XDG_DATA_HOME` (ou `~/.local/share`),
+`~/Library/Application Support` ou `%APPDATA%`. Testes devem usar `--save -` ou arquivo próprio,
+começando sem saves e preservando os do jogador.
+
+## Testes com jogadores
+
+`playtest/` prepara o jogo para outras pessoas jogarem e devolve sessões para revisão: launcher
+para testadores, Cloudflare Worker para armazenar sessões, workflow de release para Linux/Windows/macOS
+e `python -m saturnrecomp.playtest` para o mantenedor. `playtest/README.md` explica a configuração.
+
+## Licença
+
+saturn-recomp usa MIT, exceto um arquivo opcional GPL (`THIRD_PARTY.md`). Com `-DSATURN_VDP1_GPL=ON`,
+ou `cmake = ["SATURN_VDP1_GPL=ON"]` em `[game]` do `game.toml`, o VDP1 desenha segundo as regras do
+Mednafen: as bordas de sprites escalados passam a coincidir pixel a pixel com Mednafen e o build
+é uma obra GPL. Sem essa opção, as regras são próprias, baseadas no manual Sega, e o build continua MIT.
+
+## Comparação com emulador de referência
+
+`python -m saturnrecomp.reference` executa um disco em núcleo libretro headless, quadro a quadro,
+com entradas na sintaxe `--input`, e salva imagens `shot-N.png`. Foi escrito para Beetle Saturn
+(Mednafen Saturn), que exige BIOS real: `--bios` indica a pasta com `mpr-17933.bin` para disco US
+ou europeu. Compile github.com/libretro/beetle-saturn-libretro removendo `-D_LOW_ACCURACY_` de
+`FLAGS` no Makefile; essa opção ativa um caminho de branch mais rápido inexistente no Mednafen upstream.
+
+```sh
+python -m saturnrecomp.reference mednafen_saturn_libretro.so --bios BIOS_DIR --cue GAME.cue \
+    --frames 3600 --input 3000:START,3010: --shot 3300,3400 --out ref/
+```
+
+As imagens do núcleo são 330x240 para uma tela 320x224, com nossa imagem em x+5, y+8 dentro delas.
+Só o controle 1 fica conectado, salvo `--pads 2`, como no runtime: o jogo pode consultar coisas
+diferentes quando há um segundo controle conectado.
+
+Os quadros do núcleo não coincidem com nossos VBlanks. A BIOS real inicia primeiro e as leituras
+CD levam o tempo de um drive, aumentando a diferença a cada leitura. O contador de quadros do próprio
+jogo coincide, pois para durante cargas. `reference.play_synced` posiciona cada entrada e captura
+no mesmo valor desse contador e no mesmo deslocamento de quadros; `reference.difference` compara
+um quadro ao nosso. O repositório do jogo rastreia o contador via agente e informa o endereço;
+`bomberman compare` de pc-saturnbomberman faz isso.
+
+O restante é o jogo executando de forma diferente. Alguns jogos executam tarefas em cada VBlank
+durante cargas; uma carga mais longa deixa seu estado alguns quadros adiante.
+
+`saturnrecomp.audio` compara áudio do mesmo modo, por janelas. `--wav` grava amostras do runtime;
+o núcleo conserva as próprias em `Core.audio`. `audio.window` compara uma janela nossa e da referência
+no mesmo ponto do jogo, acha o deslocamento de maior correlação e informa correlação, níveis,
+amostras saturadas e canais trocados. Dois chips de áudio emulados separadamente não geram bytes
+idênticos: uma janela corresponde quando a correlação se aproxima de 1, não quando as amostras são
+iguais. Numa janela correspondente, `audio.parts` compara trechos de 10 ms no deslocamento encontrado,
+mostrando estalos ou falhas curtas demais para alterar um segundo inteiro.
+
+`audio.live` verifica a outra ponta: áudio entregue ao dispositivo versus `--wav` da própria execução.
+O driver SDL de disco (`SDL_AUDIO_DRIVER=disk`) grava as amostras do dispositivo. `audio.live` alinha
+as duas gravações e identifica silêncio temporário, amostras puladas e qualquer outra diferença.
+Essas amostras devem ser idênticas e são comparadas exatamente.
+
+## Verificação de mudanças
+
+`tools/check.sh` executa todas as verificações sem dados de jogo, as mesmas do CI em cada push:
+
+- Testes Python.
+- Autoteste de instruções do recompilador.
+- Testes unitários do runtime.
+
+Todos compilam sem SDL. Com `SATURN_SDL` apontando à instalação SDL3, também compila o programa de
+autoteste no host SDL. O CI o executa assim no Linux com Clang e GCC, Windows com Clang e macOS.
+No Windows também verifica se `saturn.exe` dispensa DLLs ausentes numa instalação nova. Testes de
+funcionalidades exclusivas de Linux são pulados nas outras plataformas: build a partir do disco,
+agente e ferramentas de pesquisa. Uma mudança de runtime também deve passar nos testes de quadros
+de cada jogo, que exigem o disco daquele jogo.
+
+## Camadas
+
+| Camada | Pergunta respondida | Agora | Próximo |
+|---|---|---|---|
+| 1. Reconhecer | O que existe neste disco? | `disc --info`: IP.BIN (produto, regiões, periféricos, pilhas, primeira leitura), volume ISO9660 e faixas com pregaps | `fingerprint`: SBL/SGL e versões por assinatura, middleware CRI, versões de drivers de áudio |
+| 2. Extrair | Transformar formatos padrão em arquivos padrão | `disc --extract` (sistema sobre MODE1/MODE2, arquivos intercalados, registros CD-DA omitidos), `disc --audio` (CD-DA para WAV) | decodificadores VDP1/VDP2 (4/8/16bpp, CLUT, CRAM), Sega FILM/Cinepak, bancos SCSP |
+| 3. Mapear código | O que faz o código e onde? | `sh2` (SH7604, desmontagem com literal pools resolvidos/registradores nomeados, `--refs`, `--census`, `--find-base`), `hw` (mapa, registradores, ponteiros de serviços BIOS, vetores SCU), `sh2emu` (interpretador SH-2 para funções isoladas, oráculo do recompilador) | mapa executável (crt0, BSS, programas trocados no mesmo endereço), `fingerprint` (SBL por assinatura) |
+| 4. Traduzir | Transformar SH-2 em C++ | `recomp.discover` (descida recursiva em SHC sem símbolos, propagação de constantes para chamadas por registrador, quatro formas de switch, sementes por ponteiros/prólogos), `recomp.match` (funções equivalentes em programas relocados com nomes preservados), `recomp` (função C++ por entrada, delay slots, retorno de chamadas verificado, dispatch protegido por registrador, switches, pontos seguros; módulo por programa reconhecido por crc32), `recomp.selftest` (vetores de `sh2emu` para cada forma de instrução e funções isoladas), hooks (`--hook`, chamada `sh2_hook` após instruções escolhidas, para registradores ou camada específica do port) | substituir função inteira por implementação manual |
+| 5. Runtime | Substituir hardware | `runtime/` C++20: contexto SH-2, Work RAM e endereços cache-through, dispatch por módulos ativos, harness de autoteste; executável `saturn` com tempo virtual/host, entrada de programa desenrolando pilha host, boot/BIOS HLE (interrupções, máscaras SCU, semáforos, BUP em arquivo), SCU (interrupções/timers/DMA), SMPC (INTBACK, PDR1/DDR1, região, controles roteirizados e gravados, slave/áudio on/off), slave SH-2 como corrotina determinista, CD nos registradores sobre .cue/.bin (`--accurate-drive` com seeks/leituras duplas/diretórios nos tempos Mednafen), divisão/FRT/DMAC SH7604 (FRT/watchdog em φ: clock mestre/65 até CKCHG352, depois /61), raster TVSTAT VBLANK/HBLANK, VDP1 software com todos comandos/modos/cálculos e quadriláteros, conclusão após ciclos de comandos (custos Mednafen com SATURN_VDP1_GPL, aproximação sem), VDP2 software NBG0–3 célula/bitmap com zoom, sprites/prioridades/cores/offsets/back screen, janela SDL3 com teclado/gamepad/controle de toque e menu de pausa; 68000 Musashi e SCSP (slots/envelopes/LFO/FM/timers/interrupções/DMA/DSP/CD-DA externo) em tempo virtual, saída SDL3 ou WAV; `--interp` move comandos VDP1 parcialmente entre quadros por chaves da camada do jogo; logs de registradores e monitor de escritas Work RAM | VDP1 GPU, restante do VDP2 (rotação/janelas/line scroll…), `--interp` sem um quadro de latência |
+
+## Princípios
+
+- Python puro, sem dependências, nas camadas 1–4; runtime (camada 5) C++20/SDL3, compilado com CMake, Ninja e clang.
+- Cada afirmação é conferida num disco real antes de entrar.
+- Conhecimento específico de jogo fica de fora.
+- Cada mudança é verificada em todos os jogos que utilizam o motor antes de entrar.
+
+## Verificações de cada módulo
+
+| Módulo | Verificado por |
+|---|---|
+| `disc` | Virtual Hydlide europeu, .cue Redump de28 faixas: IP.BIN MK-81380/regiãoE,458 arquivos ISO9660 extraídos, primeira leitura A.BIN idêntica a OPEN.BIN, LBAs/pregaps. ISO9660 atravessando MODE1/2352 e MODE2/2352 Form1:270 arquivos, cinco intercalados (unidade4/3, gap15/16),45546 setores com número XA correto; demais arquivos idênticos em Virtual Hydlide e jogo SGL de dois discos |
+| `sh2` | todas65536 palavras16bits contra capstone5 SH-2:53752 com mesmos mnemônicos/operandos;452 decodificadas só por capstone são extensões SH-2A ausentes no SH7604 (`movua`, `divs`, `jsr/n`, `clips`…). `--find-base` situa14 de15 executáveis Virtual Hydlide na base indicada pelo crt0 |
+| `recomp.discover` |15 programas Virtual Hydlide: nenhuma descida encontra dados/opcode indefinido; todo alvo switch resolvido é código. Comparação com Ghidra12 no programa de campo:571/576 funções; outras cinco são caudas compartilhadas seguidas como parte dos chamadores |
+| `recomp.match` | limitador de quadros Virtual Hydlide, localizado pelos bytes: nome propagado corretamente em11/11 programas |
+| `sh2emu` | quatro helpers de divisão SHC com3000 operandos aleatórios cada: quociente/resto, com/sem sinal,12000/12000 iguais ao Python |
+| `recomp` (emissão) | Virtual Hydlide:15 programas,10259 funções,1,5milhão de instruções compiladas/ligadas com clang22; nenhum alvo estático fora dos módulos. Autoteste:775 funções de teste (126 formas, isoladas/em delay slot, fluxo) e2653 do jogo,51532 vetores, zero diferenças de registradores/memória |
+| `runtime` (Saturn) | boot da primeira leitura até primeiro campo Virtual Hydlide: filme pelo CD e handshake PCM, três entradas de programa (HYDSYS, título, campo), ambas CPUs, laço limitado a12fps;120s de tempo de jogo sem retorno errado/chamada não entrada, execução repetível |
+| `runtime` (controle/HBLANK/gravação) | jogo FMV1995 com Cinepak SBL espera HBLANK TVSTAT para escrever TVMD e lê controle só PDR1 (ID0xB, START, direções, A); boot/filmes/título/backstage/primeiro item jogados pelo usuário em janela e repetidos headless por `--input @FILE`. Virtual Hydlide e jogo SGL dois discos com imagens/áudio byte a byte iguais antes/depois |
+| `runtime` (áudio) | Virtual Hydlide versus Beetle Saturn: correlação0,99 no filme, mesma imagem estéreo/deslocamento constante (1,6dB acima antes da escala27/32); título silencioso em ambos; menus/campo com música/efeitos dos drivers próprios do jogo |
+| `runtime` (`--interp`) | campo Virtual Hydlide com chaves da camada do jogo:500 campos andando/girando, sem rachaduras além das do jogo, árvores inteiras na curva; filme/título/menus pixel a pixel iguais sem interpolação; jogado pelo usuário |
+| `runtime` (VDP1/VDP2/janela) | Virtual Hydlide versus Beetle Saturn: título/quadros do filme iguais, menus/primeiro campo com mesmo layout/aspecto; filme15fps controlado pela posição PCM |
+| `sh2.encode` | todas53752 palavras decodificáveis entre65536 recodificadas pelo formato/campos:53752/53752 iguais |
+| `hw` | nomes de registradores usados no código Virtual Hydlide lidos no contexto (VDP1 FBCR/PTMR/EDSR, VDP2 TVSTAT/offset de cor, SMPC COMREG, FRT FTCSR na espera slave) |
+
+## Lacunas conhecidas
+
+- Descoberta não alcança o que nada referencia: funções folha sem prólogo chamadas só por código morto (cerca de7% do texto do programa inicial). Runtime para e registra chamada a endereço sem entrada para acrescentá-lo como semente; Virtual Hydlide não fez nenhuma do boot ao primeiro campo.
+- Salto calculado fora das quatro formas switch permanece não resolvido; código recompilado tenta cada instrução da própria função e então faz dispatch. Em Virtual Hydlide, os36 restantes são chamadas de cauda por tabelas de ponteiros resolvidas em execução.
+- A semântica do recompilado é a de `sh2emu`. Onde o interpretador pode divergir do hardware (saturação `mac.w`, casos limite `div1`), autoteste não distingue; o jogo em execução é a verificação.
+- Interrupções chegam só em pontos seguros (back-edges, chamadas, `ldc …,sr`); não há contagem de ciclos. Interrupção levantada duas vezes antes de um poll é atendida uma vez (timer SCU por linha chega aproximadamente uma vez por poll).
+- Áudio: MIDI ausente (entrada vazia); CD-DA chega à entrada externa SCSP, mas nenhum jogo ainda o reproduziu. VDP1 software na resolução Saturn; planos de rotação, janela de sprites, scroll por linha/célula, mosaico, tela de cor por linha e sombras VDP2 ausentes (runtime registra a solicitação). Não emulados: SCU DSP, interrupções internas SH-2, caches.
+- `match` exige fingerprint único em ambos lados; funções pequenas idênticas (cópias de biblioteca) só correspondem pelos chamadores.
+- `--find-base` pontua literais apontando a prólogos. Programa pequeno que chama residente grande pode obter pontuação maior na base errada (MENU.BIN Virtual Hydlide): conferir crt0, cujo BSS começa no fim do arquivo.
+- `hw.BIOS`: nomes de ponteiros de serviço vêm dos headers SBL; os não marcados como conferidos por jogo permanecem não confirmados.
+- `sh2.Image.literal_refs` lê cada `mov.l @(disp,PC)` do arquivo, inclusive dados; alguns resultados em dados são ruído.
+
+## Licença
+
+MIT: veja [LICENSE](LICENSE). saturn-recomp não contém dados de jogo nem código Sega: lê e substitui,
+sem incluí-los. O runtime inclui Musashi (68000, MIT) com SoftFloat; o SCSP deriva parcialmente do
+MAME (BSD-3-Clause). Os termos ficam em [THIRD_PARTY.md](THIRD_PARTY.md).
+
+As interfaces ainda mudarão conforme novos jogos exigirem recursos.

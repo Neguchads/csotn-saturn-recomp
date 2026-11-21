@@ -1,3 +1,89 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+# Evidence and limits
+
+## Original local audit — 26/10/2026
+
+Before export: 205 modules/11020 functions and 606 generated C++ files; Windows build2870742E in a clean destination.
+Passed:126 project tests without a window,203 native tests,163 focused SH-2/discovery tests,54 VDP2 tests per backend
+with140 compared fields and96 additional D3D12/Vulkan combinations. These counts overlap; do not add them together.
+Extended Python suite:238 passed, one upstream skip and one WinError1314 symlink failure. No game was opened in this audit.
+
+This historical evidence does not certify the public snapshot on its own. The public snapshot redirects
+paths to engine/, takes external dependencies from environment variables and provides local marker data.
+Published tests retain their assertions; real private markers were replaced by an explicit synthetic
+fixture only in the test that depends on them.
+
+## Publication — 20/11/2026
+
+New results, run against this checkout's files:
+
+- `python -m unittest discover -s scripts -p 'test_*.py'`: seven tests passed.
+- `python -m pytest sotn-experiment/tests -p code_only_plugin -q`:126 passed, seven deselected because of the window restriction.
+- `python -m pytest engine/tests/test_sh2.py engine/tests/test_discover.py -q`:158 passed.
+- Runtime CMake/CTest in a fresh directory:203 native tests, zero failures; profiler and CTest2/2 passed.
+- Separate Release compilation of real `saturn_host`, `saturn_core` and `saturn_machine` objects with SDL3: passed.
+- `python scripts/check-gpu.py`: eight offscreen runs passed; CRT/LCD, HD2/4/6/8, FSR, capture,
+  VDP2 54 tests/140 fields and96 more combinations on each D3D12/Vulkan backend.
+- Public index: path gate, data boundary, Python syntax and credential patterns.
+- Gitleaks runs against the final commit before push; its result is recorded in the PR description.
+
+An ImGui keyboard enum comparison was incorrectly classified as generic-api-key.
+The file is identical to upstream v1.92.9b, blob7fa2d49e8dfa3d676399b4863126ba9ab1609ca6.
+The .gitleaks.toml exception requires the exact path AND the complete expression on that line; a test
+checks that a different file or extra content on the line is not accepted. Default rules remain active.
+
+The first run found two tests depending on external sotn-decomp and a hardcoded compiler path.
+Environment overrides were fixed without reducing assertions; the entire suite was rerun successfully.
+The first export build revealed two omitted extensionless SoftFloat files. They were included with
+their notices, and the gate explicitly allowed those two source files; compilation/tests then passed.
+
+Window integrations and the three launcher tests with a WindowStyle Normal child were not run.
+Offscreen drivers cover graphics pipelines, not the window contract. Both relic oracles
+used the exact public sotn-decomp revision specified in SETUP. No game-derived executable,
+dump, save or private evidence package was uploaded. The campaign was not run.
+
+## Not proven
+
+The complete campaign, all transitions/bosses/endings, saving/healing/loading in gameplay and constant60FPS.
+DMA with IRQ/external requests and some hardware services/modes remain explicit gaps.
+The audio68000 core is interpreted. An x64 binary does not imply static recompilation of all hardware.
+
+## CI and Dependabot integration — 20/11/2026
+
+Thirteen publication/configuration tests passed, including rejection of YAML Python objects,
+privileged events, write tokens, event interpolation in shell commands and Actions without a full SHA.
+actionlint1.7.12 passed against the real workflow; actionlint/Gitleaks downloads have fixed SHA-256 checksums.
+Local CTest rerun:2/2, without game/SDL. The isolated test found Pillow missing from the manifest;
+it was then declared in requirements-dev.txt at the local version12.3.0.
+The complete code suite was rerun in that isolated environment:126 passed, seven window integrations
+deselected under the user's restriction, without changing tests/assertions for this configuration.
+
+GitHub Actions tests Python3.11/3.13, the upstream suite through uv.lock, the native Release runtime
+and publication/secrets on Ubuntu24.04. The remote run and verified SHA are recorded in PR #1.
+It does not cover SDL/Windows, GPU or the campaign. Earlier local evidence remains separate.
+
+The feature-dev:code-reviewer role was loaded and run in a new Codex session.
+The initial import review was inconclusive because reading was partial, with no confirmed finding;
+this is not approval. The final review result is recorded in the PR, without inferring approval from tests.
+
+The CI/Dependabot/reviewer slice was approved by the exact role, without a confirmed finding, in diff
+351d59c..c8ec6d4. The user authorized merging PR1 after learning the limit of the full review.
+[Actions44785895307](https://github.com/Neguchads/csotn-saturn-recomp/actions/runs/44785895307)
+passed:13 unittest,94 portable and309 upstream tests on each Python3.11/3.13; runtime/CTest2/2;
+actionlint, publication boundaries and Gitleaks. The final documentation adjustment preserves tested sources.
+
+Before merge, the282 export-manifest records were compared with the current private sources:
+no source changed since export and none was missing. Documented public adaptations
+remain distinct from the private files. This check confirms that selected sources are current,
+not that all installation data was copied or that the complete game is certified.
+
+---
+
+<a id="portugues"></a>
+
 # Provas e limites
 
 ## Auditoria local de origem — 26/10/2026

@@ -1,3 +1,39 @@
+# Continuity — 2026-11-21
+
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+Public publication in Neguchads/csotn-saturn-recomp was explicitly authorized by the user.
+This checkout is a separate export. The private installation and personal saves remain on the PC.
+
+Current engine and generator: engine/, derived from saturn-recomp f20de940e8013fc84103a5b39c4069ed8071b1f9.
+Overlay residence/CRC, STAGE15/ENDING, save, GPU composition, turbo presentation cadence,
+DMA TS3, division overflow and FSR/HD selection fixes are preserved. No game binary is in Git.
+
+Content exception: the public sotn_map_markers.h provides local data support without the private table.
+Generate sotn_map_markers.local.h as described in docs/SETUP.md. Do not publish the result.
+
+Next: follow ROADMAP.md and check docs/VALIDATION.md. Do not open game/windows routinely.
+The campaign is manual; keep normal room saves. Passing tests do not certify 100% functionality/60 FPS.
+
+Integration on2026-11-20: Python3.11/3.13 CI, Release runtime and publication/secrets passed;
+weekly pip/uv/Actions Dependabot, alerts and security updates are enabled. The CI configuration was
+approved by feature-dev:code-reviewer. Full import review was inconclusive; the user explicitly
+authorized merging PR1 after being informed of that limitation.
+
+Current local sources were compared with the export manifest:282 records, no drift or missing file.
+Public differences are identified path, fixture and documentation adaptations. The two extensionless
+SoftFloat files were added during export build validation; private map data remains excluded.
+Future local installation changes require an explicit GitHub update.
+
+PR7 integrated dependency updates and the Windows FSR LF checkout fix; tests, review and CI passed.
+The bilingual documentation update places English first and Portuguese below in the same files.
+
+---
+
+<a id="portugues"></a>
+
 # Continuidade — 20/11/2026
 
 Publicação autorizada explicitamente pelo usuário em Neguchads/csotn-saturn-recomp, com visibilidade pública.
@@ -22,3 +58,6 @@ Conferência dos fontes locais atuais contra o manifesto de exportação: 282 re
 arquivo ausente. Diferenças públicas são adaptações de caminhos, fixtures e documentação identificadas.
 Os dois arquivos SoftFloat sem extensão foram acrescentados no build do export; marcadores privados
 continuam excluídos. Mudanças futuras na instalação local precisam de envio explícito para o GitHub.
+
+PR7 integrou atualizações de dependências e a correção LF do FSR no Windows; testes, revisão e CI passaram.
+A atualização bilíngue coloca inglês primeiro e português abaixo nos mesmos arquivos.

@@ -1,3 +1,116 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
+> Historical manual from the local installation, exported on 20 November 2026. Referenced builds, captures and `validacao/` folders are not distributed. For this checkout, follow [SETUP](SETUP.md), [VALIDATION](VALIDATION.md) and [SOURCES](SOURCES.md).
+
+# SotN Saturn Dev Menu
+
+## Code audit without opening the game — 26 October 2026
+
+Build2870742E adds Vulkan preference in renderer Auto mode when started by the GPU wrapper. Explicit DirectX12, Direct3D11 or Vulkan selections still take priority; compute and renderer are separate devices. `-Backend direct3d12` remains available in the wrapper. Do not change personal preferences based on a benchmark.
+
+FSR retains priority and enabling it in the menu preserves existing HD exclusion. The HD failure test was fixed so that FSR does not erase a persisted HD preference when both come from configuration. No shortcut/control/hack changed. The Dev Menu was not opened in this round; evidence is code/offscreen only. Report: `../validacao/auditoria-codigo-20261026/RESULTADO.md`.
+
+## Turbo and smoothness — 25 October 2026
+
+GPU build C618676F: acceleration2×/4×/6×/8×/10× changes the simulation speed target. If the CPU cannot reach it, the requested number is not the actual multiplier. Presentation now follows real time in turbo; at1× every field is drawn. Audio remains muted in turbo as before. More drawing may reduce achieved speed; choose1× to evaluate normal-speed drops. F8 and logs report requested/actual speed, stage/room/VB. Original D90 and previous1D3549BD preserved.
+
+## Extended GPU and diagnostics — 25 October 2026
+
+The experimental GPU shortcut uses1D3549BD; the original remains D90EB056. F8 records vdp2_cpu_fallback_reason and vsync_status in addition to backend/counters/timings. Per-line scroll/zoom and mosaic no longer force CPU fallback; rotation, vertical cell scroll and other sequential modes still use the reference compositor. Stay in the slow room for20 seconds at1×, then F8. HD8, controls, audio and room saves remain unchanged.
+
+## Experimental GPU variant — 25 October 2026
+
+The **SotN HD - GPU experimental** shortcut uses build2D4087D1. The panel, shortcuts and hacks are the same; the original shortcut remains D90EB056. F8 records vdp2_backend, GPU frames and CPU fallbacks. Stay around20 seconds in the slow room at1× before capture. Profiling includes master, synchronized GPU and per-VBlank percentiles; do not add inclusive costs. Profile percentiles are bounded approximations; the offline benchmark retains its own measurements. Original image/capture and filters remain available because the compositor returns a complete Frame. No save changes.
+
+Current shortcut build: `D90EB056`, with per-stage profiling enabled. F8 includes full graphics components in `graphics.bin`, without CPU/WRAM/save; this is not a savestate. Game saving remains in rooms and savestates are out of scope at the user's explicit request.
+
+Open through **SotN HD**. **F1** or **L3 + R3** opens/closes the panel. R3 is the right stick click. **Esc** goes back in open screens; it does not open the panel. Release L3/R3 before repeating. Start alone keeps the original menu.
+
+**The world pauses while the Dev Menu is open.** This is not the Curse of Darkness menu behavior. D-pad/arrows navigate, A/cross or Enter confirms, B/circle goes back. **L1/R1** or **Shift+Tab/Tab** switches tabs; clicking tabs works too. Writing a report uses the keyboard.
+
+| Tab | Available features |
+|---|---|
+| Dev | Speed1/2/4/6/8/10x, return1x, frame advance, profiler, capture and lightweight graphics profile. |
+| Report | F8 captures original/rendered images and opens title/description; Save local report writes `relato.json` beside the package. |
+| Graphics | Integrated page: resolution/fullscreen, aspect ratios, integer scaling, backend, HD2/4/6/8x, FSR1, CRT/LCD, sampling, FPS and Save options. |
+| Audio | Volume, mute and existing session options. Game output44.1kHz stereo. |
+| Controls | Auto/Xbox/PlayStation, dead zone and mapping reset. |
+| Cheats |15 presets and four GameShark scripts, pages of12, individual help, healing, disable all and reload. |
+| Diagnostics | Stage/room, character/HP, VBlank, time, PC/PR, modules and renderer. Read-only. |
+| States | Technical savestate limit, with save/load unavailable until SH-2 resumption is validated. |
+
+## Map on Select
+
+Select/Back no longer opens the Dev Menu. SaturnJP opens the map through the Start menu followed by L. The shortcut sends these buttons and waits for the original menu to be ready; it does not modify memory or unlock the map. The map must be available. Alucard's flow was confirmed in source; controller opening in gameplay still needs a manual test. Outside gameplay or with a locked map, Select does not force opening.
+
+## Boot and saved preferences
+
+The SotN HD shortcut and both launchers boot normally from disc, without automatic inputs, boot skipping or prologue selection. Choose character/save through the game itself. `-Prologue` is retained only as an explicit test.
+
+This update set local configuration to1920×1080 fullscreen. Subsequently your saved choices take priority: the launcher does not force FullHD/fullscreen on every launch. **Salvar opções** (Save options) writes `sotn-experiment/tools/sotn-windows.ini`; changes also persist when controls are adjusted. F11/Alt+Enter now use the same fullscreen saving path. Changing resolution preserves current window/fullscreen mode; the monitor may offer a close mode if the resolution is unavailable. Backend requires a restart. The game save is not moved.
+
+## Report a problem
+
+1. Press **F8** in the defective scene. Capture occurs before the interface, and the Report tab opens paused.
+2. Choose **Editar título** (Edit title) or **Editar descrição** (Edit description). Type, use Backspace to delete and Enter to finish; Tab switches the edited field.
+3. Choose **Salvar relato local** (Save local report). `relato.json` stays in the same folder as `report.json`, images and logs.
+
+Folder: `G:\Recomps e Mods\Sega Saturn\logs-e-bugs\partidas\<sessão>\session-NNN\bugs\bug-...\`. Do not create another `reports/` root: old and new reports stay together. Nothing is sent automatically. Capture failure is explicit in the report. Limits: title160 UTF-8 bytes, description4096bytes; log copies are bounded, full records stay in the session.
+
+## Speed and diagnostics
+
+The requested factor is a ceiling, not a performance promise. Turbo stops composing/presenting every intermediate frame; simulation, interrupts and input reading continue. The footer and `run.log` show the **actual factor**, separately from the request. Audio is muted above1x; do not change its pitch as in COD. **F5** returns to1x, **F6** advances one frame and pauses, **F7** toggles profiling; **F9** toggles mute. Measurement excludes time paused in the menu.
+
+**Lightweight profile** disables HD/FSR/shaders/effects and selects nearest neighbor; preserves resolution and aspect ratio. It is a comparison tool, not a proven fix for slow rooms. **Save options** retains preferences; hacks always start disabled and speed at1x in the normal launcher.
+
+## Cheats
+
+Godmode, mana, hearts, gold; infinite life without invincibility; HP/MP999 and hearts99 maximums; base STR/CON/INT/LCK99. New stats/maximums are guarded for Alucard. Presets do not reduce values already higher. Totals depend on normal game recalculation. Disabling a hack does not undo values the game already saved. GameShark codes must target SaturnJP; Xbox/PS1/PS2 codes are not interchangeable.
+
+## Savestates: a real pending item
+
+The runtime has a machine serializer but records only at safe task-switch points. The current SotN build has `g_sh2_tasks={0,0}` and `g_sh2_ntask_switches=0`; the recorder is not enabled. Live restoration also requires reconstructing SH-2 execution, not just copying RAM. Therefore the States tab reports unavailability and does not write fake files. Normal in-game room saving remains separate.
+
+Historical technical note for a possible future request, with no action in the current roadmap: resumption needs real boundaries for both processors and evidence of save/restore/continue. Do not use the personal save for tests. Coverage checkpoints are not savestates.
+
+## Curse of Darkness ideas not yet ported
+
+Complete per-action remapping, audio balance, mouse camera, BMP packs/file replacement/texture export,50–200% internal resolution,16x anisotropy and VSync/FPS limit controls were not imported. SotN is2D and this engine composes VDP1/VDP2 on the CPU; sliders with those names would not implement those features. Existing HD/FSR/aspect options remain. There is no empty Mods tab or HD texture claim without an implemented, tested loader.
+
+## Original menu and map
+
+Start opens Alucard's original inventory. Select/Back triggers Start→L for the map; F1/L3+R3 remain reserved for the development panel. Build357B fixes compressed text and colored strips on these screens in the compositor. Comparison test and limits in `validacao/map-menu-fix/`.
+
+Current minimap: upper-right corner, gold border and transparent background, enabled when starting gameplay. Select/Back or Tab hides/shows it; gameplay continues. Squares reduced by10%, with a local region following the player.
+
+## Compact minimap and browsable map
+
+The minimap starts enabled in the screen's upper-right corner, with minimal margin, a smaller gold frame and transparent background. Select/Back (Share on PS4) alone shows/hides it; Tab does the same on keyboard. Gameplay continues in real time.
+
+**Select + PS4 X** (Back + Xbox A) opens the enlarged map. D-pad or left stick moves the view; on keyboard, Shift+Tab opens and arrows navigate. Select, circle/B or Esc returns to the minimap. The combination reserves up to180ms to distinguish Select alone; jumping is blocked while Select is held. The world stays active in the enlarged map, but navigation commands do not move the character.
+
+Discovered save rooms receive red fill; discovered teleporters green. Positions come from fills in the original Saturn JP disc's graphical blueprint, mirrored in the inverted castle. The initial rule based on0x50 rooms was discarded: they were transitions, not saves. Undiscovered rooms receive no markers. The local generator and source/hash manifest are in `validacao/minimap-navigation/`; the derived header is private and excluded from publication.
+
+## Relics, transformations and mobility
+
+**F1 or L3+R3 → Cheats → Próxima página** (Next page). The three new options are Alucard-only and start disabled. Enabled during menus/title/cutscenes, they wait for valid gameplay.
+
+- **All relics:** unlocks31 normal relics, including Saturn running boots and all familiars. Select a familiar in the original menu; current selection is preserved.
+- **Complete transformations:** bat, wolf, mist and their powers.
+- **Complete mobility:** double jump, super jump and Saturn running boots.
+
+Each option applies once when enabled. Close the panel so gameplay can execute the grant. You can then adjust relics in the original menu. To reapply, disable and enable the hack again. Disabling does not remove unlocked items; saving in a room can retain the relics. The game's hidden entry31 is not forced.
+
+## Extended profile — 25 October 2026
+
+Performance measurement also records periodic processing (devices), audio (sound), reader (cd), auxiliary processor (slave) and intentional waiting (pace). These are inclusive costs: do not add the averages. Panel pauses are excluded by restarting the window. The shortcut already enables profiling; stay in the slow room around20 seconds at1× and press F8 to attach measurements. Profiling locates costs; it does not change game speed.
+
+---
+
+<a id="portugues"></a>
+
 > Manual histórico da instalação local, exportado em 20/11/2026. Builds, capturas e pastas `validacao/` citadas não são distribuídas. Para este checkout, siga [SETUP](SETUP.md), [VALIDATION](VALIDATION.md) e [SOURCES](SOURCES.md).
 
 # Dev Menu do SotN Saturn

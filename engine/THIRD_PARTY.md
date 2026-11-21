@@ -1,3 +1,7 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
 # Third-party code in saturn-recomp
 
 saturn-recomp is MIT-licensed (`LICENSE`). Some parts of it come from, or
@@ -126,3 +130,128 @@ must offer its complete source under the GPL. Without the option the file is
 not compiled, `vdp1_raster.inc` draws the shapes instead, and the build is
 under the MIT licence and the permissive terms above.
 
+---
+
+<a id="portugues"></a>
+
+# Código de terceiros em saturn-recomp
+
+saturn-recomp usa licença MIT (`LICENSE`). Algumas partes vêm de trabalhos de outras pessoas,
+ou seguem esses trabalhos, sob suas próprias licenças permissivas. Um arquivo opcional segue
+Mednafen sob GPL; o build o exclui, a menos que solicitado (última seção).
+
+## Musashi (o 68000) — MIT
+
+`runtime/third_party/musashi/`: Musashi 4.60 de Karl Stenerud, incorporado como lançado com
+uma alteração de configuração (o `README.md` dessa pasta). A licença está no início de
+`m68kcpu.c` e em `readme.txt`. O aviso legal original em inglês é preservado abaixo:
+
+> Copyright © 1998-2001 Karl Stenerud
+>
+> Permission is hereby granted, free of charge, to any person obtaining a
+> copy of this software and associated documentation files (the
+> "Software"), to deal in the Software without restriction, including
+> without limitation the rights to use, copy, modify, merge, publish,
+> distribute, sublicense, and/or sell copies of the Software, and to permit
+> persons to whom the Software is furnished to do so, subject to the
+> following conditions:
+>
+> The above copyright notice and this permission notice shall be included
+> in all copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+> OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+> MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+> NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+> DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+> OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+> USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Dear ImGui (menu do launcher) — MIT
+
+`runtime/third_party/imgui/`: Dear ImGui 1.92.9b de Omar Cornut e colaboradores, com o núcleo
+e os backends SDL3 e SDL_Renderer3, sem alterações (`VERSION` nessa pasta). Somente o host SDL
+compila esse código. Sua licença está em `LICENSE.txt`: a licença MIT acima,
+copyright © 2014-2026 Omar Cornut.
+
+## SoftFloat (dentro do Musashi) — termos próprios do SoftFloat 2b
+
+`runtime/third_party/musashi/softfloat/`: SoftFloat Release 2b de John R. Hauser, conforme
+reempacotado pelo MAME e distribuído pelo Musashi (o código de FPU do Musashi precisa dele).
+Os termos são os quatro parágrafos no início de `softfloat.c` e `softfloat.h`, mantidos sem
+alteração: obras derivadas são aceitas, inclusive comerciais, desde que o fonte informe
+que é derivado e preserve esses parágrafos.
+
+## minicoro (tarefas do jogo) — MIT No Attribution, com partes MIT
+
+`runtime/third_party/minicoro/minicoro.h`: minicoro 0.2.0 de Eduardo Bart, no commit 02dad0f8
+do GitHub, sem alterações. O arquivo oferece escolha entre domínio público e MIT No Attribution,
+ambas no final. As trocas de contexto em assembly vêm do LuaCoco de Mike Pall, sob a licença
+MIT citada ao lado delas no arquivo.
+
+## stb_truetype (texto do menu) — MIT ou domínio público
+
+`runtime/third_party/stb/stb_truetype.h`: stb_truetype 1.26 de Sean Barrett, conforme lançado.
+A licença no final oferece escolha entre MIT e Unlicense (domínio público).
+
+## Inter (fonte do menu) — SIL Open Font License 1.1
+
+`runtime/third_party/inter/`: Inter 4.1 Regular e SemiBold dos Inter Project Authors
+(https://github.com/rsms/inter), reduzidas com pyftsubset do fontTools a ASCII e aos poucos
+outros caracteres usados pelo menu. A licença, sem nome de fonte reservado,
+fica em `LICENSE.txt` nessa pasta.
+
+## SCSP do MAME (envelope, LFOs, FM, DSP) — BSD-3-Clause
+
+`runtime/scsp.cpp` é código próprio do saturn-recomp, mas tempos de envelope e escala por tecla,
+tabelas e escalas de LFO, escala de FM e passo do DSP (com formato de ponto flutuante do buffer
+circular) seguem `scsp.cpp` e `scspdsp.cpp` do MAME de forma suficiente para serem derivados.
+Esses arquivos trazem `license:BSD-3-Clause`, `copyright-holders:ElSemi, R. Belmont`
+(`thanks-to:kingshriek`). Aviso legal original preservado:
+
+> Copyright (c) ElSemi, R. Belmont
+>
+> Redistribution and use in source and binary forms, with or without
+> modification, are permitted provided that the following conditions are
+> met:
+>
+> 1. Redistributions of source code must retain the above copyright notice,
+>    this list of conditions and the following disclaimer.
+>
+> 2. Redistributions in binary form must reproduce the above copyright
+>    notice, this list of conditions and the following disclaimer in the
+>    documentation and/or other materials provided with the distribution.
+>
+> 3. Neither the name of the copyright holder nor the names of its
+>    contributors may be used to endorse or promote products derived from
+>    this software without specific prior written permission.
+>
+> THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+> IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+> THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+> PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+> CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+> EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+> PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+> PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+> LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+> NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+> SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+## Consultado, não copiado
+
+Mednafen (GPL-2.0) e Beetle Saturn foram consultados para fatos do hardware (comportamento dos
+timers SCSP, escalas de pan e nível) e são usados como oráculo para comparar os ports;
+nenhum código deles está em saturn-recomp.
+
+## Rasterização VDP1 do Mednafen (opcional) — GPL v2 ou posterior
+
+`runtime/src/video/vdp1_raster_gpl.inc` desenha sprites, polígonos e linhas VDP1 segundo as
+regras do VDP1 do Mednafen 1.32.1 (`src/ss/vdp1.cpp`, `vdp1_common.h`, `vdp1_sprite.cpp`,
+`vdp1_poly.cpp`, `vdp1_line.cpp`; Copyright (C) 2015-2020 Mednafen Team), sob a mesma licença:
+GNU General Public License, versão 2 ou, à sua escolha, qualquer versão posterior.
+
+Só é compilado quando o runtime usa `-DSATURN_VDP1_GPL=ON` (o jogo solicita isso com
+`cmake = ["SATURN_VDP1_GPL=ON"]` em `game.toml`). Esse build é uma obra GPL como um todo:
+quem o distribuir deve oferecer o fonte completo sob GPL. Sem a opção, esse arquivo não é
+compilado; `vdp1_raster.inc` desenha as formas e o build fica sob MIT e os termos permissivos acima.
