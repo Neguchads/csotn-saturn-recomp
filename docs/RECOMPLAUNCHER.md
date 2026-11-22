@@ -4,6 +4,17 @@
 
 <a id="english"></a>
 
+## Official SDK integration
+
+The profile exposes existing INI display/audio options inside the launcher without changing gameplay or defaults. It edits {data}/settings.ini; only declared keys are mapped and no always overrides are used. The supported copy is Japan Saturn **T-9527G V1.400 (Japan 2M)**. The serial/version are also recorded in the profile, preparation validator and SETUP. No game.dumps size/CRC values were added: the existing12 per-program SHA-1 checks are not equivalent to a verified Redump whole-disc CRC.
+
+CHD preparation uses an optional externally installed chdman (PATH or SOTN_CHDMAN), extracts a local CUE/BIN in a new attempt folder and keeps the original CHD untouched. The converted media remains needed by the runtime. The existing CUE path is unchanged. No CHD support was added to the runtime itself. No tool or media is downloaded at game startup; explicit preparation still fetches pinned public sources and Rust dependencies as documented.
+
+Remaining standards: external build-tool installation (large simplification task); clean Windows and actual launcher Developer-tab testing (medium); Linux/macOS packages (large); Recomp Achievements/Beaten/Mastered/leaderboards (large). No gameplay/UI launch was run for this SDK update because the user restricted testing to code. Existing source-only preparation/build evidence remains separate. CHD conversion requires a real converter test before claiming it validated.
+
+The badge currently links to the launcher homepage because no exact repo match was found in the catalog snapshot. A developer can claim the project with a free GitHub-linked account at https://recomplauncher.com/dev; verification and catalog acceptance are controlled by the launcher maintainers.
+
+
 ## Status and distribution boundary
 
 This is a **developer preview**, not a ready-to-play release. The package contains public sources and
@@ -110,6 +121,17 @@ to the catalog. This preview does not certify campaign completion, stability or 
 ---
 
 <a id="portugues"></a>
+
+## Integração com o SDK oficial
+
+O perfil expõe opções existentes de tela/áudio do INI no launcher, sem alterar gameplay ou padrões. Edita {data}/settings.ini; apenas chaves declaradas são mapeadas, sem always para sobrescrever escolhas. Cópia suportada: Saturn Japão **T-9527G V1.400 (Japan 2M)**. Serial/versão também estão no perfil, validador e SETUP. Não inventamos game.dumps: os12 SHA-1 por programa não equivalem a CRC de disco inteiro confirmado pelo Redump.
+
+Preparação CHD usa chdman externo opcional (PATH ou SOTN_CHDMAN), extrai CUE/BIN local numa tentativa nova e preserva o CHD original. A mídia convertida permanece necessária ao runtime. O caminho CUE existente não muda; o runtime não ganhou leitor CHD. Nada é baixado ao iniciar o jogo; a preparação explícita ainda obtém fontes públicos fixados e dependências Rust como documentado.
+
+Padrões pendentes: simplificar instalação de ferramentas externas (grande); Windows limpo e teste real da aba Developer do launcher (médio); pacotes Linux/macOS (grande); Recomp Achievements/Beaten/Mastered/leaderboards (grande). Nenhuma execução de jogo/interface foi feita nesta atualização do SDK por restrição do usuário a testes de código. As provas anteriores de preparação/build permanecem separadas. Conversão CHD precisa de teste com conversor real antes de ser declarada validada.
+
+Badge aponta à página inicial do launcher porque o catálogo consultado não tinha correspondência exata do repo. Conta gratuita vinculada ao GitHub em https://recomplauncher.com/dev permite reivindicar o projeto; verificação e aprovação do catálogo dependem dos mantenedores.
+
 
 ## Estado e limite de distribuição
 

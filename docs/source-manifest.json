@@ -889,7 +889,7 @@
     },
     {
       "path": "scripts/recomplauncher_adapter.py",
-      "sha256": "286691098d43a940a38e3cae0afad0ae344c166047ed0a727b5888f790f98a19"
+      "sha256": "b4ffcdd32376524e14feb66b59ef429b500343edb5923fb857cdc6d2d837648b"
     },
     {
       "path": "scripts/recomplauncher_bootstrap.cpp",
@@ -917,7 +917,11 @@
     },
     {
       "path": "scripts/test_recomplauncher_adapter.py",
-      "sha256": "f4a924c216ccea0ca61af0383dbeb8907ad87eb5e263f7c31ae3d6670b2e2b60"
+      "sha256": "ca0c4122b25486d59cca49452ef03c37247a8458692ce534762e0ea778da0cdd"
+    },
+    {
+      "path": "scripts/test_recomplauncher_sdk.py",
+      "sha256": "e5bf55e84069b777e084f3bc97d87c56f6c64553386bd11a70785ada2dc65a40"
     },
     {
       "path": "scripts/test_repository_checks.py",

@@ -1,8 +1,12 @@
 # csotn-saturn-recomp
 
+<a href="https://recomplauncher.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://recomplauncher.com/assets/press/launcher/badge-light.svg"><img alt="Get it on RecompLauncher" src="https://recomplauncher.com/assets/press/launcher/badge-dark.svg" height="48"></picture></a>
+
 [English](#english) | [Português](#portugues)
 
 <a id="english"></a>
+
+**How to prepare:** bring your original Japanese Saturn T-9527G V1.400 (Japan 2M) disc. See [RecompLauncher setup](docs/RECOMPLAUNCHER.md); this developer preview requires external build tools.
 
 Experimental **Castlevania: Symphony of the Night, Sega Saturn JP** port for Windows x64.
 SH-2 code is translated into C++ before compilation; the runtime reconstructs Saturn devices.
@@ -84,6 +88,8 @@ without treating generation or compilation as gameplay evidence.
 ---
 
 <a id="portugues"></a>
+
+**Como preparar:** use seu disco japonês original Saturn T-9527G V1.400 (Japan 2M). Veja a [preparação RecompLauncher](docs/RECOMPLAUNCHER.md); esta prévia exige ferramentas externas.
 
 # csotn-saturn-recomp
 

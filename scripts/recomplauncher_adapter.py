@@ -76,22 +76,57 @@ def atomic_json(path, content):
     os.replace(temp, path)
 
 
+def find_chdman(environment):
+    configured = environment.get('SOTN_CHDMAN')
+    executable = configured or shutil.which('chdman', path=environment.get('PATH', ''))
+    if not executable or not Path(executable).is_file():
+        raise ValueError('CHD requires chdman from MAME on PATH, or SOTN_CHDMAN pointing to its executable')
+    return str(Path(executable).resolve())
+
+
+def prepare_media(game, attempt, environment, chdman=None, run=None):
+    """Converte só CHD; mantém CUE/BIN na tentativa para uso posterior pelo runtime."""
+    if game.suffix.lower() == '.cue':
+        return game.resolve()
+    if game.suffix.lower() != '.chd':
+        raise ValueError('Select a .cue with BIN tracks, or an original .chd disc')
+    converter = chdman or find_chdman(environment)
+    media = attempt / 'media'
+    media.mkdir(parents=True, exist_ok=False)
+    cue, binary = media / 'disc.cue', media / 'disc.bin'
+    options = {'creationflags': subprocess.CREATE_NO_WINDOW} if os.name == 'nt' else {}
+    runner = subprocess.run if run is None else run
+    print('progress 0.01 Verifying and extracting the player CHD locally', flush=True)
+    with (media / 'chdman.log').open('w', encoding='utf-8') as log:
+        for arguments in (['verify', '-i', str(game.resolve())],
+                          ['extractcd', '-i', str(game.resolve()), '-o', str(cue), '-ob', str(binary)]):
+            runner([converter, *arguments], cwd=media, env=environment, check=True,
+                   stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, **options)
+    for output in (cue, binary):
+        if output.is_symlink() or not output.is_file() or not output.stat().st_size:
+            raise ValueError('chdman did not produce a complete local CUE/BIN; inspect media/chdman.log')
+    return cue
+
+
 def prepare_player(game, data, source=SOURCE):
-    if not game.is_file() or game.suffix.lower() != '.cue':
-        raise ValueError('Select the original Japanese T-9527G V1.400 .cue, with its BIN tracks beside it')
+    if not game.is_file() or game.suffix.lower() not in {'.cue', '.chd'}:
+        raise ValueError('Select the original Japanese T-9527G V1.400 .cue with BIN tracks, or .chd')
     errors, environment = check_tools()
     if errors:
         raise ValueError('\n'.join(errors))
+    chdman = find_chdman(environment) if game.suffix.lower() == '.chd' else None
     identity, files = source_identity(source)
     attempts = data / 'build'
     attempts.mkdir(parents=True, exist_ok=True)
-    workspace = Path(tempfile.mkdtemp(prefix='work-', dir=attempts)) / 'source'
+    attempt = Path(tempfile.mkdtemp(prefix='work-', dir=attempts))
+    cue = prepare_media(game, attempt, environment, chdman)
+    workspace = attempt / 'source'
     print('progress 0.05 Copying public build sources', flush=True)
     for path in files:
         target = workspace / path.relative_to(source)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(path.read_bytes())
-    executable = prepare(workspace, game.resolve(), env=environment)
+    executable = prepare(workspace, cue, env=environment)
     destination = data / 'game'
     destination.mkdir(parents=True, exist_ok=True)
     for name in ('saturn.exe', 'SDL3.dll'):
@@ -100,7 +135,7 @@ def prepare_player(game, data, source=SOURCE):
         shutil.copyfile(executable.parent / name, pending)
         os.replace(pending, target)
     atomic_json(data / 'build/ready.json', {'format': 1, 'source_sha256': identity,
-                                          'cue': str(game.resolve()), 'executable': 'game/saturn.exe',
+                                          'cue': str(cue), 'executable': 'game/saturn.exe',
                                           'executable_sha256': hashlib.sha256((destination / 'saturn.exe').read_bytes()).hexdigest()})
     print('progress 1.0 Local compilation complete; the game was not started', flush=True)
 

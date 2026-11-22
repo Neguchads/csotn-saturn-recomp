@@ -2,6 +2,11 @@
 
 <a id="english"></a>
 
+## SDK settings and CHD preparation — 2026-11-21
+
+Map existing display/audio INI keys in the launcher instead of changing the runtime or defaults. Do not expose VSync or GPU renderer controls that are not proven in this launch path. CHD conversion is optional, external and only runs during explicit preparation; CUE behavior is preserved. Keep schema validation and package inclusion separate from launcher UI/gameplay validation. No verified whole-disc CRC is invented from the12 program hashes.
+
+
 ## RecompLauncher developer package — 2026-11-21
 
 Ship public sources and our own bootstrap only. The existing saturn.exe incorporates translated disc functions and constants, so it stays local under the project publication boundary. Preparation fetches pinned public references, validates the original Japan disc and generates/compiles locally. Saves stay separate under {data}/saves; preparation never starts the game. Python, Git, Rust, MSVC, LLVM, CMake, Ninja and SDL remain explicit external prerequisites for this developer preview. Do not publish a ready-to-play release or request catalog inclusion until fresh-media preparation is validated.
@@ -54,6 +59,11 @@ A new test exercises real checkout-index with autocrlf=true; no previous asserti
 ---
 
 <a id="portugues"></a>
+
+## Configurações SDK e preparação CHD — 21/11/2026
+
+Mapear chaves INI de tela/áudio existentes no launcher sem mudar runtime ou padrões. Não expor VSync ou seletor GPU sem prova nesse caminho de execução. A conversão CHD é externa, opcional e só roda na preparação explícita; comportamento CUE preservado. Schema e presença no ZIP não equivalem a validação da interface/gameplay. Não inventar CRC de disco inteiro a partir dos12 hashes por programa.
+
 
 ## Pacote de desenvolvimento RecompLauncher — 21/11/2026
 

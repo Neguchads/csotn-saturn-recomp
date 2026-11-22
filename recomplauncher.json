@@ -1,25 +1,387 @@
 {
-  "$schema": "https://recomplauncher.com/schema/recomplauncher.json",
+  "$schema": "https://raw.githubusercontent.com/elripalda/RecompLauncher-SDK/main/schema/recomplauncher.json",
   "format": 1,
   "repo": "Neguchads/csotn-saturn-recomp",
-  "name": "Castlevania: Symphony of the Night — Saturn recomp (developer preview)",
+  "name": "Castlevania: Symphony of the Night \u2014 Saturn recomp (developer preview)",
   "game": {
     "kind": "iso",
-    "label": "Japanese Saturn T-9527G V1.400: select the .cue with its BIN tracks beside it. / Selecione o .cue e mantenha os BINs ao lado.",
-    "check": { "iso9660": "GAME.PRG" }
+    "label": "Japan Sega Saturn T-9527G V1.400 (Japan 2M): select .cue with BIN tracks, or .chd (requires external chdman). Modified/translated copies are not validated.",
+    "check": {
+      "iso9660": "GAME.PRG"
+    }
   },
   "prepare": {
-    "program": ["CsotnSetup.exe"],
-    "args": ["--prepare", "--game", "{game}", "--data", "{data}"],
+    "program": [
+      "CsotnSetup.exe"
+    ],
+    "args": [
+      "--prepare",
+      "--game",
+      "{game}",
+      "--data",
+      "{data}"
+    ],
     "label": "Compile locally from your original Saturn disc / Compilar localmente do seu disco Saturn",
     "timeout": 7200,
     "version": "developer-preview-1",
-    "done": ["{data}/build/ready.json", "{data}/game/saturn.exe", "{data}/game/SDL3.dll"]
+    "done": [
+      "{data}/build/ready.json",
+      "{data}/game/saturn.exe",
+      "{data}/game/SDL3.dll"
+    ]
   },
   "start": {
-    "program": ["CsotnSetup.exe"],
-    "args": ["--play", "--data", "{data}"]
+    "program": [
+      "CsotnSetup.exe"
+    ],
+    "args": [
+      "--play",
+      "--data",
+      "{data}"
+    ]
   },
-  "saves": ["{data}/saves", "{data}/settings.ini"],
-  "folders": { "logs": [{"path": "{data}/logs"}] }
+  "saves": [
+    "{data}/saves",
+    "{data}/settings.ini"
+  ],
+  "folders": {
+    "logs": [
+      {
+        "path": "{data}/logs"
+      }
+    ]
+  },
+  "config": [
+    {
+      "id": "main",
+      "format": "ini",
+      "file": [
+        {
+          "path": "{data}/settings.ini"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "id": "mute",
+      "label": "Mute",
+      "group": "Audio",
+      "help": "Mute game audio.",
+      "choices": [
+        {
+          "label": "Off",
+          "set": {
+            "audio/muted": "false"
+          }
+        },
+        {
+          "label": "On",
+          "set": {
+            "audio/muted": "true"
+          }
+        }
+      ],
+      "defaults": {
+        "audio/muted": "false"
+      }
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "group": "Audio",
+      "slider": {
+        "key": "audio/volume",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "format": "%d"
+      },
+      "defaults": {
+        "audio/volume": "100"
+      }
+    },
+    {
+      "id": "fullscreen",
+      "label": "Fullscreen",
+      "group": "Display",
+      "help": "Switch between windowed and fullscreen.",
+      "choices": [
+        {
+          "label": "Off",
+          "set": {
+            "display/fullscreen": "false"
+          }
+        },
+        {
+          "label": "On",
+          "set": {
+            "display/fullscreen": "true"
+          }
+        }
+      ],
+      "defaults": {
+        "display/fullscreen": "false"
+      }
+    },
+    {
+      "id": "integer_scale",
+      "label": "Integer scaling",
+      "group": "Display",
+      "help": "Use whole source pixels; explicit aspect ratios may take precedence.",
+      "choices": [
+        {
+          "label": "Off",
+          "set": {
+            "display/integer_scale": "false"
+          }
+        },
+        {
+          "label": "On",
+          "set": {
+            "display/integer_scale": "true"
+          }
+        }
+      ],
+      "defaults": {
+        "display/integer_scale": "false"
+      }
+    },
+    {
+      "id": "show_fps",
+      "label": "Show FPS",
+      "group": "Display",
+      "help": "Show the runtime performance counter.",
+      "choices": [
+        {
+          "label": "Off",
+          "set": {
+            "display/show_fps": "false"
+          }
+        },
+        {
+          "label": "On",
+          "set": {
+            "display/show_fps": "true"
+          }
+        }
+      ],
+      "defaults": {
+        "display/show_fps": "false"
+      }
+    },
+    {
+      "id": "pause_unfocused",
+      "label": "Pause without focus",
+      "group": "Display",
+      "help": "Pause when another window receives focus.",
+      "choices": [
+        {
+          "label": "Off",
+          "set": {
+            "display/pause_unfocused": "false"
+          }
+        },
+        {
+          "label": "On",
+          "set": {
+            "display/pause_unfocused": "true"
+          }
+        }
+      ],
+      "defaults": {
+        "display/pause_unfocused": "false"
+      }
+    },
+    {
+      "id": "resolution",
+      "label": "Window resolution",
+      "group": "Display",
+      "help": "Choose a window resolution; does not unlock game speed.",
+      "choices": [
+        {
+          "label": "Game scale",
+          "set": {
+            "display/resolution": "-1"
+          }
+        },
+        {
+          "label": "640x480",
+          "set": {
+            "display/resolution": "0"
+          }
+        },
+        {
+          "label": "960x720",
+          "set": {
+            "display/resolution": "1"
+          }
+        },
+        {
+          "label": "1280x720",
+          "set": {
+            "display/resolution": "2"
+          }
+        },
+        {
+          "label": "1280x960",
+          "set": {
+            "display/resolution": "3"
+          }
+        },
+        {
+          "label": "1920x1080",
+          "set": {
+            "display/resolution": "4"
+          }
+        },
+        {
+          "label": "1920x1440",
+          "set": {
+            "display/resolution": "5"
+          }
+        },
+        {
+          "label": "2560x1440",
+          "set": {
+            "display/resolution": "6"
+          }
+        },
+        {
+          "label": "3840x2160",
+          "set": {
+            "display/resolution": "7"
+          }
+        }
+      ],
+      "defaults": {
+        "display/resolution": "-1"
+      }
+    },
+    {
+      "id": "aspect",
+      "label": "Aspect ratio",
+      "group": "Display",
+      "help": "Fit the image without changing the game simulation.",
+      "choices": [
+        {
+          "label": "TV 4:3",
+          "set": {
+            "display/aspect": "0"
+          }
+        },
+        {
+          "label": "Source pixels",
+          "set": {
+            "display/aspect": "1"
+          }
+        },
+        {
+          "label": "Fill",
+          "set": {
+            "display/aspect": "2"
+          }
+        },
+        {
+          "label": "16:9",
+          "set": {
+            "display/aspect": "3"
+          }
+        },
+        {
+          "label": "16:10",
+          "set": {
+            "display/aspect": "4"
+          }
+        },
+        {
+          "label": "21:9",
+          "set": {
+            "display/aspect": "5"
+          }
+        },
+        {
+          "label": "3:2",
+          "set": {
+            "display/aspect": "6"
+          }
+        },
+        {
+          "label": "5:4",
+          "set": {
+            "display/aspect": "7"
+          }
+        },
+        {
+          "label": "1:1",
+          "set": {
+            "display/aspect": "8"
+          }
+        }
+      ],
+      "defaults": {
+        "display/aspect": "0"
+      }
+    },
+    {
+      "id": "sampling",
+      "label": "Sampling",
+      "group": "Display",
+      "help": "Choose sharp pixels or linear filtering.",
+      "choices": [
+        {
+          "label": "Nearest",
+          "set": {
+            "display/sampling": "0"
+          }
+        },
+        {
+          "label": "Linear",
+          "set": {
+            "display/sampling": "1"
+          }
+        }
+      ],
+      "defaults": {
+        "display/sampling": "1"
+      }
+    },
+    {
+      "id": "filter",
+      "label": "Presentation effect",
+      "group": "Display",
+      "help": "Select an existing presentation effect.",
+      "choices": [
+        {
+          "label": "Original",
+          "set": {
+            "display/filter": "0"
+          }
+        },
+        {
+          "label": "Scanlines",
+          "set": {
+            "display/filter": "1"
+          }
+        },
+        {
+          "label": "LCD",
+          "set": {
+            "display/filter": "2"
+          }
+        }
+      ],
+      "defaults": {
+        "display/filter": "0"
+      }
+    }
+  ],
+  "system": {
+    "windows": {
+      "version": "11"
+    }
+  },
+  "exit_codes": {
+    "2": "Check the setup log, original T-9527G V1.400 media and required build tools. For CHD, install chdman or set SOTN_CHDMAN."
+  }
 }
