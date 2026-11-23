@@ -30,7 +30,8 @@ def allowed(name):
         return False
     if name in ROOT_FILES or name in FONTS or name in EXTENSIONLESS_SOURCES:
         return True
-    if name in {'.github/dependabot.yml', '.github/workflows/ci.yml'}:
+    if name in {'.github/dependabot.yml', '.github/workflows/ci.yml',
+                '.github/workflows/workflow-security.yml'}:
         return True
     if len(path.parts) == 3 and path.parts[:2] == ('.codex', 'agents') and path.suffix == '.toml':
         return True
