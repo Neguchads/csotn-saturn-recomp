@@ -25,7 +25,7 @@ def inspect(workflow, dependabot):
     if workflow.get('permissions') != {'contents': 'read'}:
         errors.append('CI exige somente contents:read')
     for job in workflow.get('jobs', {}).values():
-        if job.get('runs-on') != 'ubuntu-24.04' or 'permissions' in job:
+        if job.get('runs-on') not in {'ubuntu-24.04', 'windows-2025'} or 'permissions' in job:
             errors.append('Usar runner público padrão e não ampliar permissões por job')
         for step in job.get('steps', []):
             if 'uses' in step and not re.fullmatch(r'[\w.-]+/[\w./-]+@[0-9a-f]{40}', step['uses']):
