@@ -168,3 +168,9 @@ Nenhuma licença das ferramentas concede direitos sobre arquivos do jogo.
 
 Não afiliado à Konami ou à Sega. Trabalho desenvolvido com assistência de IA; testes e limitações
 são registrados sem converter geração ou compilação em prova de gameplay.
+
+## Automação de CI e distribuição — Etapa 2
+
+As verificações de navegador, as propostas de versão e os artefatos de
+integridade estão descritos em [docs/CI_AUTOMATION.md](docs/CI_AUTOMATION.md).
+A publicação de releases permanece sujeita a revisão humana.
