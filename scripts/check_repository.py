@@ -32,7 +32,8 @@ def allowed(name):
         return True
     if name in {'.github/dependabot.yml', '.github/workflows/ci.yml',
                 '.github/workflows/workflow-security.yml', '.github/workflows/codeql.yml',
-                '.github/workflows/supply-chain.yml'}:
+                '.github/workflows/supply-chain.yml', '.github/workflows/advanced-quality.yml',
+                '.github/advanced/fuzz.py', '.github/advanced/benchmark.py'}:
         return True
     if len(path.parts) == 3 and path.parts[:2] == ('.codex', 'agents') and path.suffix == '.toml':
         return True
