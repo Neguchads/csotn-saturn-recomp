@@ -37,7 +37,7 @@ def allowed(name):
         return True
     if len(path.parts) == 3 and path.parts[:2] == ('.codex', 'agents') and path.suffix == '.toml':
         return True
-    if path.parts[0] not in {'engine', 'scripts', 'docs', 'sotn-experiment'}:
+    if not path.parts or path.parts[0] not in {'engine', 'scripts', 'docs', 'sotn-experiment'}:
         return False
     return path.suffix in TEXT_EXTENSIONS or path.name in {'LICENSE', 'VERSION'}
 
