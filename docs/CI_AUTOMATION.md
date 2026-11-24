@@ -1,27 +1,44 @@
-# CI / release automation — Stage 2
+[English](#english) | [Português](#portugues)
 
-This repository contains **Saturn recompilation project**.
+<a id="english"></a>
 
-## Browser tests
-Not applicable: native runtime regression tests already run in CI without copyrighted media.
+# Stage 2 — CI and integrity automation
 
-## Version/changelog proposals
-Automatic versioned GitHub Releases are deliberately NOT enabled for this game port. Release packaging still requires a separate reviewed clean-room/native-build procedure.
+The `Package integrity and SBOM (manual)` workflow is available via GitHub Actions →
+Run workflow. It checks the published source boundary using the repository's
+existing publication gate, calculates SHA-256 hashes of eligible public source
+files, generates an SPDX-JSON SBOM, creates an evidence-only archive, and signs
+both the archive provenance and its SBOM with GitHub Artifact Attestations.
 
-## Source inventory and signed evidence
-Use Actions → `Package integrity and SBOM (manual)` → `Run workflow`. This workflow is opt-in and never publishes a Release. The manual action attests source-only metadata and SPDX inventory. No Japanese Saturn disc, generated code or executable is distributed.
+**No commercial Saturn disc, ROM, game executable, generated recompiled code,
+BIOS, private symbols, or game assets are packaged.** The workflow does not
+create a GitHub Release and cannot certify gameplay, Vulkan, or DirectX behavior.
 
-The resulting workflow artifact contains an SPDX-JSON SBOM, a SHA-256 checksum and a package/evidence archive. GitHub's attestation service signs the package's provenance and SBOM. Verify with GitHub CLI after downloading the archive:
+The existing source-only native runtime tests (including backup saves),
+Python tests, and Zizmor/CodeQL continue to run in pull requests. Full native
+packages need a separately reviewed clean-room build and legally supplied disc.
 
-```sh
-gh attestation verify ./PACKAGE_NAME -R Neguchads/csotn-saturn-recomp
-sha256sum -c PACKAGE_NAME.sha256
-```
+To verify a downloaded archive, use `gh attestation verify ./source-evidence.tar.gz
+-R Neguchads/csotn-saturn-recomp` and
+`sha256sum -c source-evidence.tar.gz.sha256` in the evidence directory.
 
-Replace PACKAGE_NAME with the archived filename and run the SHA-256 command in the directory containing the downloaded archive. Attestations prove *which workflow produced the bytes*, not that third-party licenses or program behavior are correct.
+<a id="portugues"></a>
 
-## Safety boundaries
-- Never put credentials, real user content, proprietary ROMs, BIOS or generated game code into workflows.
-- Each workflow uses a minimal applicable GitHub token permission set and SHA-pinned external actions.
-- Human review remains mandatory before enabling a production release or uploading anything to a software store.
-- For external websites or paid APIs, end-to-end smoke tests are intentionally limited to public or synthetic fixtures.
+# Etapa 2 — Automação da CI e integridade
+
+O workflow `Package integrity and SBOM (manual)` pode ser executado em
+GitHub Actions → Run workflow. Ele valida a fronteira de publicação usando
+os verificadores existentes, calcula SHA-256 de arquivos de código público,
+gera um inventário SPDX-JSON (SBOM), cria um pacote somente de evidências
+e assina a origem do pacote e a SBOM com Artifact Attestations do GitHub.
+
+**Nenhum disco comercial de Saturn, ROM, executável do jogo, código recompilado
+extraído, BIOS, símbolos privados ou arquivos do jogo entram no pacote.**
+Esse workflow não publica releases e não comprova funcionamento de todo o jogo,
+do Vulkan ou do DirectX. Os testes existentes de runtime, saves, Python,
+CodeQL e Zizmor continuam independentes deste empacotamento manual.
+
+Pacotes executáveis completos exigem revisão específica, build limpo e
+mídia legítima do usuário. Para conferir o arquivo, use
+`gh attestation verify ./source-evidence.tar.gz -R Neguchads/csotn-saturn-recomp`
+e `sha256sum -c source-evidence.tar.gz.sha256` após baixar as evidências.
