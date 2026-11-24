@@ -54,16 +54,21 @@ jobs:
   runtime:
     name: Native runtime
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
+    env:
+      SCCACHE_GHA_ENABLED: "true"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Install compiler cache
+        uses: mozilla-actions/sccache-action@fc920bf0ec8de6ee65d409111f7ec508035751ba # v0.0.11
       - name: Configure a fresh source-only runtime
         run: >-
           cmake -S engine/runtime/tests -B build/runtime-tests -G Ninja
           -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang
-          -DCMAKE_CXX_COMPILER=clang++ -DSATURN_NO_SDL=ON -DSATURN_VDP1_GPL=ON
+          -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER_LAUNCHER=sccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DSATURN_NO_SDL=ON -DSATURN_VDP1_GPL=ON
       - name: Build real runtime and tests
         run: cmake --build build/runtime-tests --target runtime_tests video_perf_tests -j 2
       - name: Run native tests without SDL or game
