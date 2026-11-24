@@ -104,3 +104,20 @@ jobs:
         run: actionlint
       - name: Scan public Git history for credentials
         run: gitleaks git . --config .gitleaks.toml --redact --no-banner
+
+  windows-runtime:
+    name: Windows source-only native runtime
+    runs-on: windows-2025
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Configure Windows x64 headless runtime with ClangCL
+        run: cmake -S engine/runtime/tests -B build/windows-runtime-tests -A x64 -T ClangCL -DSATURN_NO_SDL=ON -DSATURN_VDP1_GPL=ON
+      - name: Compile release runtime and tests
+        run: cmake --build build/windows-runtime-tests --config Release --target runtime_tests video_perf_tests --parallel 2
+      - name: Run Windows native tests
+        run: ctest --test-dir build/windows-runtime-tests -C Release --output-on-failure --no-tests=error
+      - name: Verify unchanged rebuild
+        run: cmake --build build/windows-runtime-tests --config Release --target runtime_tests video_perf_tests --parallel 2
