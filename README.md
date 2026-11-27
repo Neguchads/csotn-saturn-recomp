@@ -90,6 +90,13 @@ without treating generation or compilation as gameplay evidence.
 
 ---
 
+
+## Final release verification
+
+[AutoVerify](docs/AUTOVERIFY.md) is an optional final stable release-only integrity and VirusTotal hash lookup. No development builds or PRs are queried.
+
+---
+
 <a id="portugues"></a>
 
 **Como preparar:** use seu disco japonês original Saturn T-9527G V1.400 (Japan 2M). Veja a [preparação RecompLauncher](docs/RECOMPLAUNCHER.md); esta prévia exige ferramentas externas.
@@ -177,3 +184,7 @@ são registrados sem converter geração ou compilação em prova de gameplay.
 As verificações de navegador, as propostas de versão e os artefatos de
 integridade estão descritos em [docs/CI_AUTOMATION.md](docs/CI_AUTOMATION.md).
 A publicação de releases permanece sujeita a revisão humana.
+
+## Verificação da release final
+
+[AutoVerify](docs/AUTOVERIFY.md) é a verificação opcional de integridade e consulta de hash no VirusTotal, exclusiva de releases estáveis finais. Builds de desenvolvimento e PRs não são consultados.

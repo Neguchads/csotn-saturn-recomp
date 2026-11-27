@@ -1,0 +1,37 @@
+name: AutoVerify final release
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Published stable release tag (vX.Y.Z)
+        required: true
+        type: string
+      asset_name:
+        description: Exact public final release filename
+        required: true
+        type: string
+      expected_sha256:
+        description: Independently verified lowercase SHA-256
+        required: true
+        type: string
+      lookup_public_noncommercial:
+        description: Confirm authorized non-commercial VirusTotal hash lookup
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'release' && github.event.release.prerelease == false && github.event.release.draft == false && vars.NAVI_RELEASE_ASSET != '')
+    uses: Neguchads/navi-core/.github/workflows/autoverify-published.yml@c6037185830f24770f856d4cd69791c686095bc5
+    with:
+      core_sha: c6037185830f24770f856d4cd69791c686095bc5
+      release_tag: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
+      asset_name: ${{ github.event_name == 'release' && vars.NAVI_RELEASE_ASSET || inputs.asset_name }}
+      expected_sha256: ${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha256 || '' }}
+      lookup_public_noncommercial: ${{ (github.event_name == 'release' && vars.NAVI_AUTOVERIFY_ENABLED == 'true') || (github.event_name == 'workflow_dispatch' && inputs.lookup_public_noncommercial) }}
+    secrets:
+      VT_API_KEY: ${{ secrets.VT_API_KEY }}

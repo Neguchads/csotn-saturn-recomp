@@ -31,6 +31,7 @@ def allowed(name):
     if name in ROOT_FILES or name in FONTS or name in EXTENSIONLESS_SOURCES:
         return True
     if name in {'.github/dependabot.yml', '.github/workflows/ci.yml',
+                '.github/workflows/autoverify-release.yml',
                 '.github/workflows/workflow-security.yml', '.github/workflows/codeql.yml',
                 '.github/workflows/supply-chain.yml', '.github/workflows/advanced-quality.yml',
                 '.github/advanced/fuzz.py', '.github/advanced/benchmark.py'}:
