@@ -1,3 +1,7 @@
+[English](#english) | [Português](#portugues)
+
+<a id="english"></a>
+
 # NAVI AutoVerify — final release only
 
 This optional integration verifies the exact authorized, non-commercial
@@ -62,6 +66,81 @@ across repositories; repository concurrency is not an account quota
 manager. Stop on quota errors. Do not upload unauthorized material.
 This integration has no paid-service fallback.
 
-Core pin: c6037185830f24770f856d4cd69791c686095bc5, pending latest CI and independent review.
+Core pin: c6037185830f24770f856d4cd69791c686095bc5, CI passed; independent review pending.
 [Core PR #36](https://github.com/Neguchads/navi-core/pull/36).
 [API conditions](https://docs.virustotal.com/reference/public-vs-premium-api).
+
+---
+
+<a id="portugues"></a>
+
+# NAVI AutoVerify — somente release final
+
+Esta integração opcional verifica o artefato exato de distribuição pública,
+autorizada e não comercial de uma versão estável (vX.Y.Z). PRs, pushes
+comuns, nightly, beta, RC, builds de desenvolvimento, ROMs, BIOS e
+artefatos privados ficam excluídos. Não há upload, reanálise, publicação
+automática ou execução do artefato.
+
+## Configuração única após revisão e merge
+
+1. Em Settings > Secrets and variables > Actions > Variables, configure
+   NAVI_RELEASE_ASSET com o nome exato do pacote final ou um modelo contendo
+   {tag}. Deixe ausente para desativar a execução automática.
+2. Para consultar o VirusTotal, após confirmar os termos gratuitos e os
+   direitos sobre o artefato, adicione o secret VT_API_KEY e configure
+   NAVI_AUTOVERIFY_ENABLED como true. Sem isso, o job automático verifica
+   somente a integridade. Nunca coloque chaves no código ou em argumentos.
+3. Publique a versão estável revisada com o pacote já anexado. O evento
+   release published seleciona somente o artefato configurado. Digest
+   ausente ou bytes divergentes causam falha.
+4. Para release estável existente, execute manualmente AutoVerify final
+   release na branch padrão. Informe tag, nome exato e SHA-256 verificado
+   independentemente. A consulta externa é desativada por padrão.
+5. Baixe integrity.json e, quando autorizado, virustotal.json nos artefatos
+   do Actions. Só um arquivo selecionado é verificado. O hash de um ZIP
+   não demonstra a situação de cada executável dentro dele.
+
+A verificação automática compara os metadados do GitHub com os bytes
+baixados; não é prova independente de procedência do build. A verificação
+da release publicada é posterior à entrega, não um bloqueio da publicação.
+Releases criadas com GITHUB_TOKEN podem não disparar outros workflows;
+nesse caso use execução manual confiável.
+
+## Build final antes da publicação
+
+Para pacotes montados localmente, use a revisão do Core indicada abaixo e
+o SHA-256 exato registrado no recibo/checksum do build final. Execute
+somente no pacote final de entrega. O segundo comando requer VT_API_KEY no
+ambiente do processo e autorização explícita para uso não comercial.
+
+```powershell
+git -C PATH_TO_NAVI_CORE rev-parse HEAD
+python -I PATH_TO_NAVI_CORE/navi_core/autoverify.py PATH_TO_FINAL_PACKAGE --expected-sha256 EXPECTED_SHA256 --lookup-public-noncommercial
+```
+
+Revise o script e confirme a revisão aprovada e a ausência de alterações
+locais. Saída 0 indica relatório recente correspondente com zero detecções,
+não garantia de ausência de malware; saída 2 exige revisão ou indica
+ausência de verificação. Use antivírus local e provas de origem independentes.
+Hash desconhecido requer envio autorizado separado e revisão; a integração
+nunca envia arquivos. Escolha a consulta pré-entrega OU a consulta após
+publicação, evitando repetir automaticamente o mesmo hash.
+
+Um pipeline de release disparado por tag pode chamar o job reutilizável
+autoverify.yml do Core com final_delivery=true, expected_sha256 e a entrada
+approved_public_noncommercial explícita. Consulte a documentação do Core.
+Nunca conecte a integração aos builds comuns ou testes de PR.
+
+## Cota e situação
+
+API pública do VirusTotal: 4 requisições/minuto, 500/dia por conta, sem
+uso comercial nem substituição do antivírus. Serialize consultas entre
+repositórios; a concorrência de um repositório não controla a cota da conta.
+Pare em erros de cota. Não envie material sem autorização. Não há
+fallback pago.
+
+Revisão do Core: c6037185830f24770f856d4cd69791c686095bc5, CI aprovado,
+revisão independente pendente.
+[Core PR #36](https://github.com/Neguchads/navi-core/pull/36).
+[Condições da API](https://docs.virustotal.com/reference/public-vs-premium-api).
